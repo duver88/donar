@@ -1,0 +1,85 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\User;
+use App\Models\Veterinarian;
+use App\Models\BloodRequest;
+use App\Models\Pet;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+
+class VeterinarianController extends Controller
+{
+    public function register()
+    {
+        return view('veterinarians.register');
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'phone' => 'required|string',
+            'document_id' => 'required|string|unique:users,document_id',
+            'professional_card' => 'required|string|unique:veterinarians,professional_card',
+            'specialty' => 'nullable|string',
+            'clinic_name' => 'required|string',
+            'clinic_address' => 'required|string',
+            'city' => 'required|string',
+            'password' => 'required|string|min:8|confirmed'
+        ]);
+
+        // Crear usuario veterinario
+        $user = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'phone' => $validated['phone'],
+            'document_id' => $validated['document_id'],
+            'role' => 'veterinarian',
+            'status' => 'pending',
+            'password' => Hash::make($validated['password']),
+            'email_verified_at' => now()
+        ]);
+
+        // Crear perfil de veterinario
+        Veterinarian::create([
+            'user_id' => $user->id,
+            'professional_card' => $validated['professional_card'],
+            'specialty' => $validated['specialty'],
+            'clinic_name' => $validated['clinic_name'],
+            'clinic_address' => $validated['clinic_address'],
+            'city' => $validated['city']
+        ]);
+
+        return redirect()->route('login')->with('success', 
+            'Registro exitoso. Tu solicitud está en revisión por el administrador.');
+    }
+
+    public function dashboard()
+    {
+        // Verificar que el usuario esté autenticado y sea veterinario
+        if (!Auth::check() || Auth::user()->role !== 'veterinarian') {
+            return redirect()->route('home');
+        }
+
+        $user = Auth::user();
+        
+        $stats = [
+            'my_requests' => BloodRequest::where('veterinarian_id', $user->id)->count(),
+            'active_requests' => BloodRequest::where('veterinarian_id', $user->id)
+                                            ->where('status', 'active')->count(),
+            'available_donors' => Pet::where('donor_status', 'approved')
+                                     ->where('species', 'perro')
+                                     ->count()
+        ];
+
+        $myRequests = BloodRequest::where('veterinarian_id', $user->id)
+                                 ->latest()
+                                 ->get();
+
+        return view('veterinarian.dashboard', compact('stats', 'myRequests'));
+    }
+}
