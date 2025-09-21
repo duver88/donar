@@ -63,12 +63,14 @@ public function approveVeterinarian($id)
     // Enviar email de aprobación
     try {
         Mail::to($user->email)->send(new VeterinarianApprovedMail($user));
+        $emailStatus = 'Email de aprobación enviado exitosamente';
     } catch (\Exception $e) {
         Log::error('Error enviando email de aprobación: ' . $e->getMessage());
+        $emailStatus = 'Veterinario aprobado pero hubo un error enviando el email';
     }
 
     return redirect()->route('admin.dashboard')
-                    ->with('success', 'Veterinario aprobado exitosamente');
+                    ->with('success', 'Veterinario aprobado exitosamente. ' . $emailStatus);
 }
 
     public function rejectVeterinarian(Request $request, $id)
@@ -125,6 +127,21 @@ public function approveVeterinarian($id)
         
         return view('admin.veterinarians.review', compact('veterinarian'));
     }
+
+
+    public function handle()
+{
+    $veterinarian = User::where('role', 'veterinarian')->first();
+    
+    if ($veterinarian) {
+        Mail::to('tu_email_de_prueba@gmail.com')
+            ->send(new VeterinarianApprovedMail($veterinarian));
+        
+        $this->info('Email de prueba enviado exitosamente');
+    } else {
+        $this->error('No hay veterinarios en la base de datos para probar');
+    }
+}
 
 // También actualiza los métodos approveVeterinarian y rejectVeterinarian
 // para que redirijan al dashboard en lugar de retornar JSON

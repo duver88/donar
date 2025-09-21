@@ -23,7 +23,7 @@ class VeterinarianApprovedMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: '✅ Tu cuenta de veterinario ha sido aprobada',
+            subject: '✅ Tu cuenta de veterinario ha sido aprobada - Banco de Sangre Canina',
         );
     }
 
