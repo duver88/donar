@@ -25,6 +25,7 @@ class VeterinarianController extends Controller
             'phone' => 'required|string',
             'document_id' => 'required|string|unique:users,document_id',
             'professional_card' => 'required|string|unique:veterinarians,professional_card',
+            'professional_card_photo' => 'required|image|mimes:jpeg,png,jpg,pdf|max:15120', // ← NUEVA VALIDACIÓN
             'specialty' => 'nullable|string',
             'clinic_name' => 'required|string',
             'clinic_address' => 'required|string',
@@ -44,10 +45,18 @@ class VeterinarianController extends Controller
             'email_verified_at' => now()
         ]);
 
+        // ← NUEVA LÓGICA PARA SUBIR FOTO
+        $photoPath = null;
+        if ($request->hasFile('professional_card_photo')) {
+            $photoPath = $request->file('professional_card_photo')
+                ->store('professional_cards', 'public');
+        }
+
         // Crear perfil de veterinario
         Veterinarian::create([
             'user_id' => $user->id,
             'professional_card' => $validated['professional_card'],
+            'professional_card_photo' => $photoPath, // ← AGREGAR ESTE CAMPO
             'specialty' => $validated['specialty'],
             'clinic_name' => $validated['clinic_name'],
             'clinic_address' => $validated['clinic_address'],

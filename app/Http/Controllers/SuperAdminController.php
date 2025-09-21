@@ -40,56 +40,61 @@ class SuperAdminController extends Controller
         return view('admin.dashboard', compact('stats', 'pendingVeterinarians', 'recentRequests'));
     }
 
-    public function approveVeterinarian($id)
-    {
-        $user = User::findOrFail($id);
-        
-        if ($user->role !== 'veterinarian') {
-            return response()->json(['error' => 'Usuario no es veterinario'], 400);
-        }
-
-        $user->update([
-            'status' => 'approved',
-            'approved_at' => now(),
-            'approved_by' => Auth::id()
-        ]);
-
-        $user->veterinarian->update([
-            'approved_at' => now(),
-            'approved_by' => Auth::id()
-        ]);
-
-        // Enviar email de aprobación
-        try {
-            Mail::to($user->email)->send(new VeterinarianApprovedMail($user));
-        } catch (\Exception $e) {
-            Log::error('Error enviando email de aprobación: ' . $e->getMessage());
-        }
-
-        return response()->json(['success' => true]);
+public function approveVeterinarian($id)
+{
+    $user = User::findOrFail($id);
+    
+    if ($user->role !== 'veterinarian') {
+        return redirect()->route('admin.dashboard')
+                        ->with('error', 'Usuario no es veterinario');
     }
+
+    $user->update([
+        'status' => 'approved',
+        'approved_at' => now(),
+        'approved_by' => Auth::id()
+    ]);
+
+    $user->veterinarian->update([
+        'approved_at' => now(),
+        'approved_by' => Auth::id()
+    ]);
+
+    // Enviar email de aprobación
+    try {
+        Mail::to($user->email)->send(new VeterinarianApprovedMail($user));
+    } catch (\Exception $e) {
+        Log::error('Error enviando email de aprobación: ' . $e->getMessage());
+    }
+
+    return redirect()->route('admin.dashboard')
+                    ->with('success', 'Veterinario aprobado exitosamente');
+}
 
     public function rejectVeterinarian(Request $request, $id)
-    {
-        $request->validate([
-            'rejection_reason' => 'required|string'
-        ]);
+ {
+    $request->validate([
+        'rejection_reason' => 'required|string'
+    ]);
 
-        $user = User::findOrFail($id);
-        
-        if ($user->role !== 'veterinarian') {
-            return back()->withErrors(['error' => 'Usuario no es veterinario']);
-        }
-
-        $user->update(['status' => 'rejected']);
-        
-        $user->veterinarian->update([
-            'rejection_reason' => $request->rejection_reason
-        ]);
-
-        return back()->with('success', 'Veterinario rechazado exitosamente');
+    $user = User::findOrFail($id);
+    
+    if ($user->role !== 'veterinarian') {
+        return redirect()->route('admin.dashboard')
+                        ->with('error', 'Usuario no es veterinario');
     }
 
+    $user->update(['status' => 'rejected']);
+    
+    $user->veterinarian->update([
+        'rejection_reason' => $request->rejection_reason
+    ]);
+
+    // Aquí podrías enviar un email de rechazo también
+    
+    return redirect()->route('admin.dashboard')
+                    ->with('success', 'Veterinario rechazado exitosamente');
+}
     // Métodos simplificados que retornan al dashboard por ahora
     public function veterinarians()
     {
@@ -105,4 +110,22 @@ class SuperAdminController extends Controller
     {
         return redirect()->route('admin.dashboard')->with('info', 'Vista de solicitudes en desarrollo');
     }
+
+    public function reviewVeterinarian($id)
+    {
+        $veterinarian = User::where('role', 'veterinarian')
+                        ->where('id', $id)
+                        ->with('veterinarian')
+                        ->firstOrFail();
+                        
+        if ($veterinarian->status !== 'pending') {
+            return redirect()->route('admin.dashboard')
+                            ->with('info', 'Este veterinario ya ha sido procesado.');
+        }
+        
+        return view('admin.veterinarians.review', compact('veterinarian'));
+    }
+
+// También actualiza los métodos approveVeterinarian y rejectVeterinarian
+// para que redirijan al dashboard en lugar de retornar JSON
 }

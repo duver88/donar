@@ -24,7 +24,8 @@
                         </div>
                     @endif
 
-                    <form action="{{ route('veterinarian.store') }}" method="POST">
+                    {{-- IMPORTANTE: Agregar enctype="multipart/form-data" --}}
+                    <form action="{{ route('veterinarian.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         
                         {{-- Datos Personales --}}
@@ -74,6 +75,26 @@
                                 <input type="text" class="form-control" name="specialty" value="{{ old('specialty') }}" 
                                        placeholder="Ej: Medicina Interna, Cirugía, etc.">
                             </div>
+                        </div>
+
+                        {{-- NUEVO CAMPO: Foto de Tarjeta Profesional --}}
+                        <div class="mb-3">
+                            <label for="professional_card_photo" class="form-label">Foto de la Tarjeta Profesional *</label>
+                            <input type="file" class="form-control" name="professional_card_photo" 
+                                   accept=".jpg,.jpeg,.png,.pdf" required>
+                            <div class="form-text">
+                                <i class="fas fa-info-circle text-info"></i>
+                                Sube una foto clara de tu tarjeta profesional veterinaria. 
+                                Formatos permitidos: JPG, PNG, PDF. Máximo 5MB.
+                            </div>
+                            <div class="mt-2">
+                                <small class="text-muted">
+                                    <strong>Importante:</strong> Esta foto será revisada por el administrador para verificar tu identidad profesional.
+                                </small>
+                            </div>
+                            
+                            {{-- Vista previa del archivo --}}
+                            <div id="photo-preview" class="mt-2" style="display: none;"></div>
                         </div>
 
                         {{-- Datos de la Clínica --}}
@@ -156,4 +177,59 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const photoInput = document.querySelector('[name="professional_card_photo"]');
+    const previewContainer = document.getElementById('photo-preview');
+    
+    photoInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            // Validar tamaño de archivo (5MB = 5 * 1024 * 1024 bytes)
+            if (file.size > 5 * 1024 * 1024) {
+                alert('El archivo es muy grande. Máximo 5MB permitido.');
+                this.value = '';
+                previewContainer.style.display = 'none';
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                if (file.type.includes('image')) {
+                    previewContainer.innerHTML = `
+                        <div class="border rounded p-3 bg-light">
+                            <small class="text-muted d-block mb-2"><i class="fas fa-eye"></i> Vista previa:</small>
+                            <img src="${e.target.result}" alt="Preview" class="img-thumbnail" style="max-height: 200px; max-width: 100%;">
+                            <div class="mt-2">
+                                <small class="text-success"><i class="fas fa-check"></i> ${file.name}</small>
+                                <br><small class="text-muted">${(file.size / 1024 / 1024).toFixed(2)} MB</small>
+                            </div>
+                        </div>
+                    `;
+                } else if (file.type.includes('pdf')) {
+                    previewContainer.innerHTML = `
+                        <div class="border rounded p-3 bg-light">
+                            <small class="text-muted d-block mb-2"><i class="fas fa-file"></i> Archivo seleccionado:</small>
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-file-pdf text-danger fa-2x me-3"></i>
+                                <div>
+                                    <strong>${file.name}</strong><br>
+                                    <small class="text-muted">${(file.size / 1024 / 1024).toFixed(2)} MB</small>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+                previewContainer.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        } else {
+            previewContainer.style.display = 'none';
+        }
+    });
+});
+</script>
 @endsection

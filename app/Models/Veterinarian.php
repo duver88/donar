@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Veterinarian extends Model
 {
@@ -12,6 +13,7 @@ class Veterinarian extends Model
     protected $fillable = [
         'user_id',
         'professional_card',
+        'professional_card_photo', // ← AGREGAR ESTE CAMPO
         'specialty',
         'clinic_name',
         'clinic_address',
@@ -49,5 +51,13 @@ class Veterinarian extends Model
     public function getFullClinicInfoAttribute()
     {
         return "{$this->clinic_name} - {$this->clinic_address}, {$this->city}";
+    }
+
+    // ← AGREGAR ESTE NUEVO ACCESSOR
+    public function getProfessionalCardPhotoUrlAttribute()
+    {
+        return $this->professional_card_photo 
+            ? Storage::url($this->professional_card_photo) 
+            : null;
     }
 }

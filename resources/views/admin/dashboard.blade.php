@@ -132,6 +132,11 @@
                                         </td>
                                         <td>
                                             <span class="badge bg-info">{{ $vet->veterinarian->professional_card }}</span>
+                                            @if($vet->veterinarian->professional_card_photo)
+                                                <br><small class="text-success"><i class="fas fa-camera"></i> Con foto</small>
+                                            @else
+                                                <br><small class="text-warning"><i class="fas fa-exclamation-triangle"></i> Sin foto</small>
+                                            @endif
                                         </td>
                                         <td>
                                             <div>
@@ -142,18 +147,12 @@
                                         <td>{{ $vet->veterinarian->city }}</td>
                                         <td>{{ $vet->created_at->format('d/m/Y') }}</td>
                                         <td>
-                                            <div class="btn-group btn-group-sm">
-                                                <button type="button" class="btn btn-success" 
-                                                        onclick="approveVeterinarian({{ $vet->id }})"
-                                                        title="Aprobar">
-                                                    <i class="fas fa-check"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-danger" 
-                                                        onclick="showRejectModal({{ $vet->id }}, '{{ $vet->name }}')"
-                                                        title="Rechazar">
-                                                    <i class="fas fa-times"></i>
-                                                </button>
-                                            </div>
+                                            {{-- CAMBIO AQUÍ: Reemplazar botones por botón Ver --}}
+                                            <a href="{{ route('admin.veterinarians.review', $vet->id) }}" 
+                                               class="btn btn-primary btn-sm" 
+                                               title="Revisar solicitud">
+                                                <i class="fas fa-eye"></i> Ver
+                                            </a>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -247,67 +246,6 @@
         </div>
     </div>
 </div>
-
-{{-- Modal para rechazar veterinario --}}
-<div class="modal fade" id="rejectModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title"><i class="fas fa-times-circle text-danger"></i> Rechazar Veterinario</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <form id="rejectForm" method="POST">
-                @csrf
-                <div class="modal-body">
-                    <p>¿Estás seguro de que deseas rechazar a <strong id="vetName"></strong>?</p>
-                    <div class="mb-3">
-                        <label for="rejection_reason" class="form-label">Motivo del rechazo *</label>
-                        <textarea class="form-control" name="rejection_reason" rows="3" 
-                                  placeholder="Explica el motivo del rechazo..." required></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-danger">
-                        <i class="fas fa-times"></i> Rechazar
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 @endsection
 
-@section('scripts')
-<script>
-function approveVeterinarian(id) {
-    if (confirm('¿Aprobar este veterinario? Podrá acceder al sistema inmediatamente.')) {
-        fetch(`/admin/veterinarios/${id}/aprobar`, {
-            method: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                location.reload();
-            } else {
-                alert('Error al aprobar veterinario');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Error al procesar la solicitud');
-        });
-    }
-}
-
-function showRejectModal(id, name) {
-    document.getElementById('vetName').textContent = name;
-    document.getElementById('rejectForm').action = `/admin/veterinarios/${id}/rechazar`;
-    new bootstrap.Modal(document.getElementById('rejectModal')).show();
-}
-</script>
-@endsection
+{{-- ELIMINAMOS LOS SCRIPTS ANTERIORES YA QUE NO LOS NECESITAMOS --}}
