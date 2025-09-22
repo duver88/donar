@@ -10,7 +10,7 @@ class PetHealthCondition extends Model
     use HasFactory;
 
     protected $fillable = [
-        'pet_id',                    // ← AGREGAR ESTE CAMPO
+        'pet_id',                    
         'has_diagnosed_disease',
         'under_medical_treatment',
         'recent_surgery',

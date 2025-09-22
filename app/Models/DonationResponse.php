@@ -12,20 +12,29 @@ class DonationResponse extends Model
     protected $fillable = [
         'blood_request_id',
         'pet_id',
-        'tutor_id',
-        'response',
-        'notes',
-        'responded_at'
+        'user_id',
+        'response_type',
+        'message',
+        'decline_reason',
+        'responded_at',
+        'contacted_at',
+        'donation_completed_at',
+        'completion_notes'
     ];
 
     protected function casts(): array
     {
         return [
             'responded_at' => 'datetime',
+            'contacted_at' => 'datetime',
+            'donation_completed_at' => 'datetime',
         ];
     }
 
+    // ========================================
     // RELACIONES
+    // ========================================
+    
     public function bloodRequest()
     {
         return $this->belongsTo(BloodRequest::class);
@@ -36,29 +45,90 @@ class DonationResponse extends Model
         return $this->belongsTo(Pet::class);
     }
 
-    public function tutor()
+    public function user()
     {
-        return $this->belongsTo(User::class, 'tutor_id');
+        return $this->belongsTo(User::class);
     }
 
+    // ========================================
+    // SCOPES
+    // ========================================
+    
+    public function scopeAccepted($query)
+    {
+        return $query->where('response_type', 'accepted');
+    }
+    
+    public function scopeDeclined($query)
+    {
+        return $query->where('response_type', 'declined');
+    }
+    
+    public function scopeForBloodRequest($query, $bloodRequestId)
+    {
+        return $query->where('blood_request_id', $bloodRequestId);
+    }
+
+    public function scopeCompleted($query)
+    {
+        return $query->whereNotNull('donation_completed_at');
+    }
+
+    public function scopePending($query)
+    {
+        return $query->where('response_type', 'accepted')
+            ->whereNull('donation_completed_at');
+    }
+
+    // ========================================
     // ACCESSORS
-    public function getResponseColorAttribute()
+    // ========================================
+    
+    public function getIsAcceptedAttribute()
     {
-        return match($this->response) {
-            'interested' => 'success',
-            'completed' => 'primary',
-            'not_available' => 'secondary',
-            default => 'secondary'
-        };
+        return $this->response_type === 'accepted';
+    }
+    
+    public function getIsDeclinedAttribute()
+    {
+        return $this->response_type === 'declined';
     }
 
-    public function getResponseDisplayAttribute()
+    public function getIsCompletedAttribute()
     {
-        return match($this->response) {
-            'interested' => 'Interesado',
-            'completed' => 'Completado',
-            'not_available' => 'No disponible',
-            default => $this->response
-        };
+        return !is_null($this->donation_completed_at);
+    }
+
+    public function getStatusTextAttribute()
+    {
+        if ($this->response_type === 'declined') {
+            return 'Rechazada';
+        }
+        
+        if ($this->is_completed) {
+            return 'Completada';
+        }
+        
+        if ($this->contacted_at) {
+            return 'Contactado';
+        }
+        
+        return 'Pendiente';
+    }
+
+    public function getStatusColorAttribute()
+    {
+        switch ($this->status_text) {
+            case 'Completada':
+                return 'success';
+            case 'Contactado':
+                return 'info';
+            case 'Pendiente':
+                return 'warning';
+            case 'Rechazada':
+                return 'secondary';
+            default:
+                return 'primary';
+        }
     }
 }
