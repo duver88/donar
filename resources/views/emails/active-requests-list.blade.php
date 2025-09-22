@@ -20,7 +20,7 @@
             <h3 style="color: #495057; margin: 0 0 10px 0;">🐕 {{ $pet->name }} está registrado como donante</h3>
             <p style="margin: 0; color: #6c757d;">
                 Tipo de sangre: <strong>{{ $pet->blood_type }}</strong> | 
-                Ciudad: <strong>{{ $pet->user->city ?? 'No especificada' }}</strong>
+                Ciudad: <strong>{{ $pet->tutor->city ?? 'No especificada' }}</strong>
             </p>
         </div>
 
@@ -43,7 +43,7 @@
                         {{-- Información del veterinario --}}
                         <div style="background: #f8f9fa; padding: 10px; border-radius: 5px; margin-bottom: 15px;">
                             <p style="margin: 0; font-size: 14px;">
-                                <strong>👨‍⚕️ Veterinario:</strong> {{ $request->veterinarian->user->name }}<br>
+                                <strong>👨‍⚕️ Veterinario:</strong> {{ $request->veterinarian->name ?? $request->veterinarian->user->name ?? 'No especificado' }}<br>
                                 <strong>🏥 Clínica:</strong> {{ $request->veterinarian->clinic_name }}<br>
                                 <strong>📍 Dirección:</strong> {{ $request->veterinarian->clinic_address }}
                             </p>
@@ -67,14 +67,16 @@
                         
                         {{-- Botones de acción --}}
                         <div style="text-align: center; margin-top: 20px;">
-                            <a href="{{ route('donation.accept', $request->id) }}" 
+                            <a href="{{ route('pets.create') }}"
                                style="background: #27ae60; color: white; padding: 12px 25px; text-decoration: none; border-radius: 25px; margin-right: 15px; font-weight: bold; display: inline-block;">
-                                ✅ Quiero ayudar
+                                ✅ Registrar mi mascota para ayudar
                             </a>
-                            <a href="{{ route('donation.decline', $request->id) }}" 
-                               style="background: #e74c3c; color: white; padding: 12px 25px; text-decoration: none; border-radius: 25px; font-weight: bold; display: inline-block;">
-                                ❌ No puedo ahora
-                            </a>
+                            <p style="margin: 10px 0 0 0; font-size: 12px; color: #6c757d;">
+                                Si ya tienes mascota registrada como donante,
+                                <a href="{{ route('pets.active-requests', $pet->id) }}" style="color: #3498db;">
+                                    haz clic aquí para responder directamente
+                                </a>
+                            </p>
                         </div>
                     </div>
                 @endforeach

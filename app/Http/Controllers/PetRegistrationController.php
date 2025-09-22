@@ -126,17 +126,24 @@ class PetRegistrationController extends Controller
             // 8) ENVIAR EMAIL DIFERENCIADO
             $this->sendDifferentiatedEmail($pet, $tutor, $isNewUser);
 
-            // 9) BUSCAR SOLICITUDES ACTIVAS COMPATIBLES (NUEVO)
-            $activeRequests = $this->getCompatibleActiveRequests($pet);
+            // 9) BUSCAR SOLICITUDES ACTIVAS COMPATIBLES Y ENVIAR EMAIL (SOLO PARA USUARIOS NUEVOS)
+            if ($isNewUser) {
+                $activeRequests = $this->getCompatibleActiveRequests($pet);
 
-            // 10) ENVIAR EMAIL DE SOLICITUDES ACTIVAS (NUEVO)
-            if ($activeRequests->count() > 0) {
-                $this->scheduleActiveRequestsEmail($pet, $activeRequests);
+                if ($activeRequests->count() > 0) {
+                    $this->scheduleActiveRequestsEmail($pet, $activeRequests);
+                }
             }
 
-            $emailMessage = $isNewUser
-                ? ' Se ha enviado un email de bienvenida con información sobre solicitudes urgentes.'
-                : ' Se ha enviado un email confirmando el registro de tu nueva mascota.';
+            $emailMessage = '';
+            if ($isNewUser) {
+                $emailMessage = ' Se ha enviado un email de bienvenida.';
+                if (isset($activeRequests) && $activeRequests->count() > 0) {
+                    $emailMessage .= ' También recibirás un segundo email con ' . $activeRequests->count() . ' solicitudes activas que ' . $pet->name . ' puede ayudar.';
+                }
+            } else {
+                $emailMessage = ' Se ha enviado un email confirmando el registro de tu nueva mascota.';
+            }
 
             return redirect()->route('home')->with('success',
                 '¡Felicidades! Tu mascota ' . $pet->name . ' ha sido aprobada como donante.' . $emailMessage);

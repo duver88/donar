@@ -11,9 +11,9 @@
         <p class="lead mb-5">Conectamos mascotas sanas con aquellas que necesitan una segunda oportunidad de vida</p>
         
         <div class="row justify-content-center">
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <div class="row g-4">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="card h-100 card-hover shadow">
                             <div class="card-body text-center text-dark">
                                 <i class="fas fa-dog fa-4x text-primary mb-4"></i>
@@ -25,8 +25,21 @@
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="col-md-6">
+
+                    <div class="col-md-4">
+                        <div class="card h-100 card-hover shadow">
+                            <div class="card-body text-center text-dark">
+                                <i class="fas fa-heart fa-4x text-danger mb-4"></i>
+                                <h4 class="card-title text-danger">Ver casos que necesitan ayuda</h4>
+                                <p class="card-text">Explora las solicitudes activas de donación y descubre cómo tu mascota puede ayudar a salvar vidas.</p>
+                                <a href="{{ route('public.active-requests') }}" class="btn btn-danger btn-lg">
+                                    <i class="fas fa-list"></i> Ver solicitudes activas
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
                         <div class="card h-100 card-hover shadow">
                             <div class="card-body text-center text-dark">
                                 <i class="fas fa-user-md fa-4x text-success mb-4"></i>

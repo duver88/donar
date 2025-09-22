@@ -60,6 +60,22 @@ Route::post('/postular-mascota', [PetRegistrationController::class, 'store'])->n
 Route::post('/check-email', [PetRegistrationController::class, 'checkEmail'])->name('check.email');
 
 // ========================================
+// RUTAS PÚBLICAS PARA SOLICITUDES ACTIVAS
+// ========================================
+
+// Página pública con todas las solicitudes activas
+Route::get('/solicitudes-activas', [App\Http\Controllers\PublicRequestsController::class, 'index'])->name('public.active-requests');
+
+// Página específica para una mascota con solicitudes compatibles
+Route::get('/mascotas/{pet}/solicitudes-activas', [App\Http\Controllers\PublicRequestsController::class, 'forPet'])->name('pets.active-requests');
+
+// Aceptar una donación (público)
+Route::post('/donacion/{bloodRequest}/aceptar', [App\Http\Controllers\PublicRequestsController::class, 'acceptDonation'])->name('public.donation.accept');
+
+// Declinar una donación (público)
+Route::post('/donacion/{bloodRequest}/declinar', [App\Http\Controllers\PublicRequestsController::class, 'declineDonation'])->name('public.donation.decline');
+
+// ========================================
 // RUTAS PROTEGIDAS POR AUTENTICACIÓN
 // ========================================
 
