@@ -91,4 +91,23 @@ class VeterinarianController extends Controller
 
         return view('veterinarian.dashboard', compact('stats', 'myRequests'));
     }
+
+    /**
+     * Muestra los detalles de una solicitud específica del veterinario
+     */
+    public function showBloodRequest($id)
+    {
+        // Verificar que el usuario esté autenticado y sea veterinario
+        if (!Auth::check() || Auth::user()->role !== 'veterinarian') {
+            return redirect()->route('home');
+        }
+
+        // Buscar la solicitud y verificar que pertenezca al veterinario autenticado
+        $request = BloodRequest::with(['donationResponses.pet.tutor'])
+                              ->where('id', $id)
+                              ->where('veterinarian_id', Auth::id())
+                              ->firstOrFail();
+
+        return view('veterinarian.blood-requests.show', compact('request'));
+    }
 }

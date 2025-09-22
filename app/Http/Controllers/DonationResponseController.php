@@ -62,7 +62,7 @@ class DonationResponseController extends Controller
             ]);
             
             // Enviar email al veterinario
-            Mail::to($bloodRequest->veterinarian->user->email)->send(
+            Mail::to($bloodRequest->veterinarian->email)->send(
                 new DonationAcceptedMail($bloodRequest, $pet, $donationResponse)
             );
             
@@ -70,11 +70,11 @@ class DonationResponseController extends Controller
                 'blood_request_id' => $bloodRequest->id,
                 'pet_id' => $pet->id,
                 'user_id' => Auth::id(),
-                'veterinarian_email' => $bloodRequest->veterinarian->user->email
+                'veterinarian_email' => $bloodRequest->veterinarian->email
             ]);
             
-            return back()->with('success', '¡Gracias! Tu respuesta ha sido enviada al veterinario. ' . 
-                $bloodRequest->veterinarian->user->name . ' se pondrá en contacto contigo pronto para coordinar la donación.');
+            return back()->with('success', '¡Gracias! Tu respuesta ha sido enviada al veterinario. ' .
+                $bloodRequest->veterinarian->name . ' se pondrá en contacto contigo pronto para coordinar la donación.');
             
         } catch (\Exception $e) {
             Log::error('Error al aceptar donación', [
@@ -158,7 +158,7 @@ class DonationResponseController extends Controller
     public function myResponses()
     {
         $responses = DonationResponse::where('user_id', Auth::id())
-            ->with(['bloodRequest.veterinarian.user', 'pet'])
+            ->with(['bloodRequest.veterinarian.veterinarian', 'pet'])
             ->orderBy('responded_at', 'desc')
             ->paginate(10);
             
@@ -172,7 +172,7 @@ class DonationResponseController extends Controller
     {
         // Verificar que el usuario es el veterinario de la solicitud
         $bloodRequest = $donationResponse->bloodRequest;
-        if ($bloodRequest->veterinarian->user_id !== Auth::id()) {
+        if ($bloodRequest->veterinarian_id !== Auth::id()) {
             abort(403, 'No tienes autorización para esta acción.');
         }
         

@@ -28,7 +28,7 @@ class ActiveRequestsController extends Controller
             ->where('blood_type', $pet->blood_type)
             ->where('city', $pet->user->city ?? '')
             ->with([
-                'veterinarian.user',
+                'veterinarian.veterinarian',
                 'donationResponses' => function($query) use ($pet) {
                     $query->where('pet_id', $pet->id);
                 }
@@ -70,7 +70,7 @@ class ActiveRequestsController extends Controller
         
         // Construir query base
         $query = BloodRequest::where('status', 'active')
-            ->with(['veterinarian.user']);
+            ->with(['veterinarian.veterinarian']);
             
         // Aplicar filtros
         if ($validated['blood_type'] ?? false) {
@@ -258,7 +258,7 @@ class ActiveRequestsController extends Controller
             $query = BloodRequest::where('status', 'active')
                 ->where('blood_type', $pet->blood_type)
                 ->where('city', $pet->user->city ?? '')
-                ->with(['veterinarian.user']);
+                ->with(['veterinarian.veterinarian']);
                 
             if ($validated['urgency'] ?? false) {
                 $query->where('urgency_level', $validated['urgency']);

@@ -4,7 +4,7 @@
 @section('title', 'Dashboard Super Admin')
 
 @section('content')
-<div class="container-fluid py-4" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); min-height: 100vh;">
+<div class="container-fluid py-4" style="background: linear-gradient(135deg, #EAECB1 0%, #D8E5B0 100%); min-height: 100vh;">
     {{-- Header con Identidad Institucional --}}
     <div class="row mb-4">
         <div class="col-12">
@@ -50,7 +50,7 @@
     {{-- Estadísticas con Colores Institucionales --}}
     <div class="row mb-4">
         <div class="col-md-3 mb-3">
-            <div class="card h-100 border-0 shadow-sm" style="background: linear-gradient(135deg, #F8DC0B 0%, #E6C700 100%); transform: translateY(0); transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+            <div class="card h-100 border-0 shadow-sm" style="background: linear-gradient(135deg, #F8DC0B 0%, #FCF2B1 100%); transform: translateY(0); transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
                 <div class="card-body text-dark">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
@@ -60,7 +60,7 @@
                             <p class="mb-0 fw-semibold">Veterinarios Pendientes</p>
                         </div>
                         <div class="bg-white bg-opacity-25 rounded-circle p-3">
-                            <i class="fas fa-user-clock" style="font-size: 2rem; color: #8B4513;"></i>
+                            <i class="fas fa-user-clock" style="font-size: 2rem; color: #285F19;"></i>
                         </div>
                     </div>
                     <div class="mt-3 pt-2 border-top border-dark border-opacity-25">
@@ -98,7 +98,7 @@
         </div>
         
         <div class="col-md-3 mb-3">
-            <div class="card h-100 border-0 shadow-sm" style="background: linear-gradient(135deg, #93C01F 0%, #81A91B 100%); transform: translateY(0); transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+            <div class="card h-100 border-0 shadow-sm" style="background: linear-gradient(135deg, #93C01F 0%, #C7D300 100%); transform: translateY(0); transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
                 <div class="card-body text-white">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
@@ -122,7 +122,7 @@
         </div>
         
         <div class="col-md-3 mb-3">
-            <div class="card h-100 border-0 shadow-sm" style="background: linear-gradient(135deg, #285F19 0%, #1F4A13 100%); transform: translateY(0); transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+            <div class="card h-100 border-0 shadow-sm" style="background: linear-gradient(135deg, #285F19 0%, #3F8827 100%); transform: translateY(0); transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
                 <div class="card-body text-white">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
@@ -161,7 +161,7 @@
                         <div class="table-responsive">
                             <table class="table table-hover">
                                 <thead>
-                                    <tr style="background-color: #f8f9fa;">
+                                    <tr style="background-color: #EAECB1;">
                                         <th class="fw-bold" style="color: #43883D; border-bottom: 2px solid #43883D;">Veterinario</th>
                                         <th class="fw-bold" style="color: #43883D; border-bottom: 2px solid #43883D;">Tarjeta Profesional</th>
                                         <th class="fw-bold" style="color: #43883D; border-bottom: 2px solid #43883D;">Clínica</th>
@@ -172,16 +172,16 @@
                                 </thead>
                                 <tbody>
                                     @foreach($pendingVeterinarians as $vet)
-                                    <tr style="transition: background-color 0.3s ease;" onmouseover="this.style.backgroundColor='#f8f9fa'" onmouseout="this.style.backgroundColor='transparent'">
+                                    <tr style="transition: background-color 0.3s ease;" onmouseover="this.style.backgroundColor='#D8E5B0'" onmouseout="this.style.backgroundColor='transparent'">
                                         <td>
                                             <div>
-                                                <strong style="color: #2c3e50;">{{ $vet->name }}</strong><br>
+                                                <strong style="color: #285F19;">{{ $vet->name }}</strong><br>
                                                 <small class="text-muted"><i class="fas fa-envelope me-1"></i>{{ $vet->email }}</small><br>
                                                 <small class="text-muted"><i class="fas fa-phone me-1"></i>{{ $vet->phone }}</small>
                                             </div>
                                         </td>
                                         <td>
-                                            <span class="badge rounded-pill" style="background-color: #93C01F; color: white;">
+                                            <span class="badge rounded-pill" style="background-color: #93C01F; color: #285F19;">
                                                 {{ $vet->veterinarian?->professional_card ?? 'N/A' }}
                                             </span>
                                             @if($vet->veterinarian?->professional_card_photo)
@@ -192,7 +192,7 @@
                                         </td>
                                         <td>
                                             <div>
-                                                <strong style="color: #2c3e50;">{{ $vet->veterinarian?->clinic_name ?? 'N/A' }}</strong><br>
+                                                <strong style="color: #285F19;">{{ $vet->veterinarian?->clinic_name ?? 'N/A' }}</strong><br>
                                                 <small class="text-muted">{{ $vet->veterinarian?->clinic_address ?? 'N/A' }}</small>
                                             </div>
                                         </td>
@@ -235,7 +235,7 @@
         {{-- Solicitudes Recientes --}}
         <div class="col-md-4">
             <div class="card border-0 shadow-sm">
-                <div class="card-header border-0" style="background: linear-gradient(135deg, #F8DC0B 0%, #E6C700 100%);">
+                <div class="card-header border-0" style="background: linear-gradient(135deg, #F8DC0B 0%, #FCF2B1 100%);">
                     <h5 class="mb-0 text-dark fw-bold" style="font-family: 'Ubuntu', sans-serif;">
                         <i class="fas fa-history me-2"></i>
                         Solicitudes Recientes
@@ -244,9 +244,9 @@
                 <div class="card-body">
                     @if($recentRequests->count() > 0)
                         @foreach($recentRequests as $request)
-                        <div class="d-flex justify-content-between align-items-start py-3" style="border-bottom: 1px solid #e9ecef;">
+                        <div class="d-flex justify-content-between align-items-start py-3" style="border-bottom: 1px solid #D8E5B0;">
                             <div class="flex-grow-1">
-                                <h6 class="mb-1 fw-bold" style="color: #2c3e50;">{{ $request->patient_name }}</h6>
+                                <h6 class="mb-1 fw-bold" style="color: #285F19;">{{ $request->patient_name }}</h6>
                                 <p class="mb-2 text-muted small">
                                     <i class="fas fa-paw me-1" style="color: #43883D;"></i>
                                     {{ $request->patient_breed }}
@@ -268,7 +268,7 @@
                         @endforeach
                     @else
                         <div class="text-center py-4">
-                            <i class="fas fa-inbox mb-3" style="font-size: 3rem; color: #93C01F;"></i>
+                            <i class="fas fa-inbox mb-3" style="font-size: 3rem; color: #43883D;"></i>
                             <p class="text-muted mb-0">No hay solicitudes recientes</p>
                         </div>
                     @endif
@@ -276,7 +276,7 @@
                 <div class="card-footer border-0 bg-transparent">
                     <a href="{{ route('admin.blood_requests') }}" 
                        class="btn w-100 rounded-pill shadow-sm" 
-                       style="background: linear-gradient(135deg, #93C01F 0%, #81A91B 100%); color: white; border: none; transition: transform 0.2s ease;"
+                       style="background: linear-gradient(135deg, #93C01F 0%, #C7D300 100%); color: #285F19; border: none; transition: transform 0.2s ease;"
                        onmouseover="this.style.transform='scale(1.02)'" 
                        onmouseout="this.style.transform='scale(1)'">
                         <i class="fas fa-eye me-2"></i> Ver Todas las Solicitudes
@@ -290,13 +290,13 @@
     <div class="row mt-4">
         <div class="col-12">
             <div class="card border-0 shadow-sm">
-                <div class="card-header border-0" style="background: linear-gradient(135deg, #285F19 0%, #1F4A13 100%);">
+                <div class="card-header border-0" style="background: linear-gradient(135deg, #285F19 0%, #3F8827 100%);">
                     <h5 class="mb-0 text-white fw-bold" style="font-family: 'Ubuntu', sans-serif;">
                         <i class="fas fa-link me-2"></i>
                         Enlaces Rápidos - Gestión Municipal
                     </h5>
                 </div>
-                <div class="card-body" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+                <div class="card-body" style="background: linear-gradient(135deg, #EAECB1 0%, #D8E5B0 100%);">
                     <div class="row g-3">
                         <div class="col-md-3">
                             <a href="{{ route('admin.veterinarians') }}" 
@@ -322,10 +322,10 @@
                             <a href="{{ route('admin.blood_requests') }}" 
                                class="btn w-100 h-100 d-flex flex-column align-items-center justify-content-center p-4 border-0 rounded-3 shadow-sm text-decoration-none"
                                style="background: white; color: #F8DC0B; transition: all 0.3s ease; min-height: 120px;"
-                               onmouseover="this.style.backgroundColor='#F8DC0B'; this.style.color='#8B4513'; this.style.transform='translateY(-3px)'" 
+                               onmouseover="this.style.backgroundColor='#F8DC0B'; this.style.color='#285F19'; this.style.transform='translateY(-3px)'"
                                onmouseout="this.style.backgroundColor='white'; this.style.color='#F8DC0B'; this.style.transform='translateY(0)'">
                                 <i class="fas fa-heartbeat mb-2" style="font-size: 2rem;"></i>
-                                <span class="fw-bold" style="color: #8B4513;">Ver Solicitudes</span>
+                                <span class="fw-bold" style="color: #285F19;">Ver Solicitudes</span>
                             </a>
                         </div>
                         <div class="col-md-3">

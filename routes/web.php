@@ -172,8 +172,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/dashboard', [VeterinarianController::class, 'dashboard'])->name('dashboard');
         Route::get('/solicitar-donacion', [BloodRequestController::class, 'create'])->name('blood_request.create');
         Route::post('/solicitar-donacion', [BloodRequestController::class, 'store'])->name('blood_request.store');
+        Route::get('/solicitud/{id}', [VeterinarianController::class, 'showBloodRequest'])->name('blood_request.show');
         Route::post('/solicitud/{id}/cancelar', [BloodRequestController::class, 'cancel'])->name('blood_request.cancel');
-        
+
         // Marcar donación como completada (NUEVA)
         Route::post('/donation-response/{donationResponse}/completed', [DonationResponseController::class, 'markCompleted'])
             ->name('donation.mark-completed');

@@ -32,7 +32,7 @@ class SuperAdminController extends Controller
                                    ->latest()
                                    ->get();
 
-        $recentRequests = BloodRequest::with(['veterinarian.user'])
+        $recentRequests = BloodRequest::with(['veterinarian.veterinarian'])
                                      ->latest()
                                      ->take(10)
                                      ->get();
@@ -394,11 +394,35 @@ public function approveVeterinarian($id)
 
     public function bloodRequests(Request $request)
     {
-        $query = BloodRequest::with(['veterinarian.user']);
+        // Marcar solicitudes expiradas automáticamente
+        $expiredCount = BloodRequest::markExpiredRequests();
+        if ($expiredCount > 0) {
+            Log::info("Marcadas {$expiredCount} solicitudes como expiradas automáticamente");
+        }
+
+        $query = BloodRequest::with(['veterinarian', 'veterinarian.veterinarian']);
 
         // Filtros
         if ($request->filled('status')) {
-            $query->where('status', $request->status);
+            switch ($request->status) {
+                case 'active':
+                    $query->active();
+                    break;
+                case 'completed':
+                    $query->completed();
+                    break;
+                case 'cancelled':
+                    $query->cancelled();
+                    break;
+                case 'expired':
+                    $query->expired();
+                    break;
+                case 'closed':
+                    $query->closed();
+                    break;
+                default:
+                    $query->where('status', $request->status);
+            }
         }
 
         if ($request->filled('urgency')) {
@@ -410,20 +434,35 @@ public function approveVeterinarian($id)
             $query->where(function($q) use ($search) {
                 $q->where('patient_name', 'like', "%{$search}%")
                   ->orWhere('blood_type', 'like', "%{$search}%")
-                  ->orWhereHas('veterinarian.user', function($q2) use ($search) {
+                  ->orWhere('blood_type_needed', 'like', "%{$search}%")
+                  ->orWhereHas('veterinarian', function($q2) use ($search) {
                       $q2->where('name', 'like', "%{$search}%");
+                  })
+                  ->orWhereHas('veterinarian.veterinarian', function($q2) use ($search) {
+                      $q2->where('clinic_name', 'like', "%{$search}%")
+                        ->orWhere('professional_card', 'like', "%{$search}%");
                   });
             });
         }
 
-        $requests = $query->orderBy('created_at', 'desc')->paginate(15);
+        // Ordenar: primero las activas y críticas, luego por fecha
+        $requests = $query->orderByRaw(
+            "CASE
+                WHEN status = 'active' AND urgency_level = 'critica' THEN 1
+                WHEN status = 'active' AND urgency_level = 'alta' THEN 2
+                WHEN status = 'active' THEN 3
+                ELSE 4
+            END"
+        )
+        ->orderBy('created_at', 'desc')
+        ->paginate(15);
 
-        return view('admin.blood-requests.index', compact('requests'));
+        return view('admin.blood-requests.index', compact('requests', 'expiredCount'));
     }
 
     public function showBloodRequest($id)
     {
-        $request = BloodRequest::with(['veterinarian.user', 'donationResponses.pet.user'])->findOrFail($id);
+        $request = BloodRequest::with(['veterinarian.veterinarian', 'donationResponses.pet.tutor'])->findOrFail($id);
 
         return view('admin.blood-requests.show', compact('request'));
     }

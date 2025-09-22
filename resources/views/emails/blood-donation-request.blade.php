@@ -19,11 +19,11 @@
             background-color: white;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
-        .header { 
-            background-color: #dc3545; 
-            color: white; 
-            padding: 20px; 
-            text-align: center; 
+        .header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #0369a1 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
         }
         .content { 
             padding: 30px; 
@@ -75,6 +75,7 @@
         <div class="header">
             <h1>🆘 Solicitud Urgente de Donación</h1>
             <p style="margin: 0; font-size: 18px;">Un perrito necesita la ayuda de {{ $pet->name }}</p>
+            <p style="margin: 5px 0 0 0; font-size: 14px; opacity: 0.9;">Banco de Sangre Canina - Alcaldía de Bucaramanga</p>
         </div>
         
         <div class="content">
@@ -106,15 +107,13 @@
                 <h4 style="color: #dc3545;">🏥 Razón Médica:</h4>
                 <p style="background-color: white; padding: 10px; border-radius: 3px;">{{ $bloodRequest->medical_reason }}</p>
                 
-                <h4 style="color: #28a745;">📞 Información de Contacto:</h4>
-                <p><strong>Clínica:</strong> {{ $bloodRequest->clinic_contact }}</p>
-                @if($bloodRequest->veterinarian)
-                    <p><strong>Veterinario:</strong> Dr. {{ $bloodRequest->veterinarian->name }}</p>
-                    <p><strong>Email:</strong> {{ $bloodRequest->veterinarian->email }}</p>
-                @else
-                    <p><strong>Veterinario:</strong> No especificado</p>
-                    <p><strong>Email:</strong> {{ $bloodRequest->clinic_contact ?? 'No disponible' }}</p>
-                @endif
+                <h4 style="color: #059669;">📞 Información de Contacto:</h4>
+                <div style="background-color: #eff6ff; padding: 15px; border-radius: 5px; border-left: 3px solid #1e3a8a;">
+                    <p><strong>🏛️ Institución:</strong> Alcaldía de Bucaramanga - Bienestar Animal</p>
+                    <p><strong>🏥 Clínica:</strong> {{ $bloodRequest->veterinarian->clinic_name ?? 'Clínica veterinaria' }}</p>
+                    <p><strong>👨‍⚕️ Veterinario:</strong> Dr. {{ $bloodRequest->veterinarian->user->name ?? 'No especificado' }}</p>
+                    <p><strong>📧 Contacto oficial:</strong> binestaranimal@bucaramanga.gov.co</p>
+                </div>
             </div>
             
             <div style="text-align: center; margin: 30px 0;">
@@ -122,21 +121,14 @@
                 
                 <p>Por favor responde a esta solicitud:</p>
                 
-                @php
-                    $contactEmail = ($bloodRequest->veterinarian && $bloodRequest->veterinarian->email)
-                        ? $bloodRequest->veterinarian->email
-                        : ($bloodRequest->clinic_contact ?? 'info@bancosangrecanina.com');
-                    $contactName = $bloodRequest->veterinarian ? $bloodRequest->veterinarian->name : 'equipo médico';
-                @endphp
-
-                <a href="mailto:{{ $contactEmail }}?subject=INTERESADO - Donación para {{ $bloodRequest->patient_name }} - {{ $pet->name }}&body=Hola Dr. {{ $contactName }},%0D%0A%0D%0AEstoy INTERESADO en que {{ $pet->name }} done sangre para {{ $bloodRequest->patient_name }}.%0D%0A%0D%0AInformación de mi mascota:%0D%0A- Nombre: {{ $pet->name }}%0D%0A- Peso: {{ $pet->weight_kg }}kg%0D%0A- Última donación: {{ $pet->has_donated_before ? 'Sí ha donado antes' : 'Primera vez' }}%0D%0A%0D%0APor favor contáctame para coordinar:%0D%0ATeléfono: {{ $pet->tutor->phone }}%0D%0AEmail: {{ $pet->tutor->email }}%0D%0A%0D%0AEstoy disponible y {{ $pet->name }} está en buen estado de salud.%0D%0A%0D%0ASaludos,%0D%0A{{ $pet->tutor->name }}"
+                <a href="mailto:binestaranimal@bucaramanga.gov.co?subject=INTERESADO - Donación para {{ $bloodRequest->patient_name }} - {{ $pet->name }}&body=Estimado equipo de Bienestar Animal,%0D%0A%0D%0AEstoy INTERESADO en que {{ $pet->name }} done sangre para el caso urgente de {{ $bloodRequest->patient_name }}.%0D%0A%0D%0A--- INFORMACIÓN DE MI MASCOTA ----%0D%0A• Nombre: {{ $pet->name }}%0D%0A• Peso: {{ $pet->weight_kg }}kg%0D%0A• Tipo de sangre: {{ $pet->blood_type ?? 'Por determinar' }}%0D%0A• Experiencia previa: {{ $pet->has_donated_before ? 'Sí ha donado antes' : 'Primera vez donando' }}%0D%0A• Estado de salud: Excelente%0D%0A%0D%0A--- MIS DATOS DE CONTACTO ----%0D%0A• Tutor: {{ $pet->tutor->name ?? $pet->user->name }}%0D%0A• Teléfono: {{ $pet->tutor->phone ?? $pet->user->phone }}%0D%0A• Email: {{ $pet->tutor->email ?? $pet->user->email }}%0D%0A%0D%0A--- DISPONIBILIDAD ----%0D%0A{{ $pet->name }} está disponible y en excelente estado de salud. Pueden contactarme en cualquier momento para coordinar la donación.%0D%0A%0D%0AQuedo atento a sus instrucciones.%0D%0A%0D%0ASaludos cordiales,%0D%0A{{ $pet->tutor->name ?? $pet->user->name }}"
                    class="button button-accept">
                     ✅ SÍ, ESTOY INTERESADO
                 </a>
 
-                <a href="mailto:{{ $contactEmail }}?subject=NO DISPONIBLE - Donación para {{ $bloodRequest->patient_name }} - {{ $pet->name }}&body=Hola Dr. {{ $contactName }},%0D%0A%0D%0ALamentablemente {{ $pet->name }} NO está disponible para donar en este momento.%0D%0A%0D%0AMotivo: [Por favor especifica: mascota enferma, vacaciones, donó recientemente, etc.]%0D%0A%0D%0AEspero poder ayudar en una próxima ocasión.%0D%0A%0D%0ASaludos,%0D%0A{{ $pet->tutor->name }}"
+                <a href="mailto:binestaranimal@bucaramanga.gov.co?subject=NO DISPONIBLE - Donación para {{ $bloodRequest->patient_name }} - {{ $pet->name }}&body=Estimado equipo de Bienestar Animal,%0D%0A%0D%0ALamentablemente {{ $pet->name }} NO está disponible para donar en este momento para el caso de {{ $bloodRequest->patient_name }}.%0D%0A%0D%0A--- MOTIVO ----%0D%0A[Por favor especifica uno:]%0D%0A□ {{ $pet->name }} está enfermo temporalmente%0D%0A□ Donó recientemente (menos de 3 meses)%0D%0A□ Estamos de vacaciones/viaje%0D%0A□ Tratamiento médico en curso%0D%0A□ Otro motivo: __________________%0D%0A%0D%0A--- MIS DATOS ----%0D%0A• Tutor: {{ $pet->tutor->name ?? $pet->user->name }}%0D%0A• Email: {{ $pet->tutor->email ?? $pet->user->email }}%0D%0A%0D%0AEspero poder ayudar en una próxima ocasión.%0D%0A%0D%0ASaludos,%0D%0A{{ $pet->tutor->name ?? $pet->user->name }}"
                    class="button button-decline">
-                    ❌ NO PUEDO AYUDAR
+                    ❌ NO PUEDO AYUDAR AHORA
                 </a>
             </div>
             
@@ -148,21 +140,28 @@
             
             <h4>ℹ️ ¿Qué debo hacer si estoy interesado?</h4>
             <ol>
-                <li>Haz clic en "SÍ, ESTOY INTERESADO" arriba</li>
-                <li>El veterinario se pondrá en contacto contigo inmediatamente</li>
-                <li>Lleva a {{ $pet->name }} a la clínica en el horario acordado</li>
-                <li>El proceso es seguro y supervisado por profesionales</li>
-                <li>Recibirás un certificado de donación</li>
+                <li><strong>Responde:</strong> Haz clic en "SÍ, ESTOY INTERESADO" arriba</li>
+                <li><strong>Coordinación:</strong> El equipo de Bienestar Animal te contactará inmediatamente para coordinar</li>
+                <li><strong>Cita:</strong> Te indicarán fecha, hora y lugar específico</li>
+                <li><strong>Donación:</strong> Lleva a {{ $pet->name }} en el horario acordado</li>
+                <li><strong>Proceso:</strong> Donación segura supervisada por veterinarios calificados</li>
+                <li><strong>Certificado:</strong> Recibirás certificación oficial de la Alcaldía</li>
             </ol>
+
+            <div style="background-color: #f0f9ff; padding: 15px; border-radius: 5px; border-left: 3px solid #0369a1; margin: 15px 0;">
+                <p style="margin: 0;"><strong>🏛️ Proceso Oficial:</strong> La Alcaldía de Bucaramanga coordina todas las donaciones a través del equipo de Bienestar Animal para garantizar la seguridad y calidad del proceso.</p>
+            </div>
             
             <p><strong>Gracias por ser parte de nuestra red de héroes de cuatro patas. 🐾❤️</strong></p>
         </div>
         
         <div class="footer">
             <p style="margin: 0; color: #6c757d;">
-                <strong>Banco de Sangre Canina - Bucaramanga</strong><br>
+                <strong>Banco de Sangre Canina</strong><br>
+                <strong style="color: #1e3a8a;">Alcaldía de Bucaramanga - Bienestar Animal</strong><br>
                 Salvando vidas peludas juntos<br>
-                <em>Este email fue enviado porque {{ $pet->name }} está registrado como donante</em>
+                <em>Este email fue enviado porque {{ $pet->name }} está registrado como donante</em><br>
+                <small>📧 Contacto oficial: binestaranimal@bucaramanga.gov.co</small>
             </p>
         </div>
     </div>

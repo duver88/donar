@@ -7,9 +7,9 @@
     <div class="row">
         <div class="col-12">
             <div class="card shadow">
-                <div class="card-header text-white d-flex justify-content-between align-items-center" style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #0369a1 100%); border-radius: 0.5rem 0.5rem 0 0;">
+                <div class="card-header text-white d-flex justify-content-between align-items-center" style="background: linear-gradient(135deg, #43883D 0%, #51AD32 50%, #93C01F 100%); border-radius: 0.5rem 0.5rem 0 0;">
                     <h4 class="mb-0 fw-bold">
-                        <i class="fas fa-tint me-2" style="color: #fbbf24;"></i> Gestión de Solicitudes de Sangre
+                        <i class="fas fa-tint me-2" style="color: #F8DC0B;"></i> Gestión de Solicitudes de Sangre
                     </h4>
                 </div>
                 <div class="card-body">
@@ -44,7 +44,7 @@
                                 </select>
                             </div>
                             <div class="col-md-2">
-                                <button type="submit" class="btn fw-semibold" style="background: #1e3a8a; border: none; color: white; border-radius: 0.5rem; transition: all 0.3s ease;" onmouseover="this.style.background='#1e40af'" onmouseout="this.style.background='#1e3a8a'">
+                                <button type="submit" class="btn fw-semibold" style="background: #43883D; border: none; color: white; border-radius: 0.5rem; transition: all 0.3s ease;" onmouseover="this.style.background='#3F8827'" onmouseout="this.style.background='#43883D'">
                                     <i class="fas fa-filter me-1"></i> Filtrar
                                 </button>
                             </div>
@@ -139,15 +139,29 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <div>
-                                            <strong>{{ $request->veterinarian->user->name ?? 'N/A' }}</strong>
-                                            <br>
-                                            <small class="text-muted">{{ $request->veterinarian->clinic_name ?? 'N/A' }}</small>
-                                        </div>
+                                        @if($request->veterinarian)
+                                            <div>
+                                                <strong>Dr. {{ $request->veterinarian->name }}</strong>
+                                                <br>
+                                                @if($request->veterinarian->veterinarian)
+                                                    <small class="text-muted">
+                                                        <i class="fas fa-hospital me-1"></i>{{ $request->veterinarian->veterinarian->clinic_name ?? 'N/A' }}
+                                                    </small>
+                                                    <br>
+                                                    <small class="text-muted">
+                                                        <i class="fas fa-id-card me-1"></i>{{ $request->veterinarian->veterinarian->professional_card ?? 'N/A' }}
+                                                    </small>
+                                                @else
+                                                    <small class="text-muted">Perfil de veterinario no encontrado</small>
+                                                @endif
+                                            </div>
+                                        @else
+                                            <span class="text-muted">No asignado</span>
+                                        @endif
                                     </td>
                                     <td>
                                         <span class="badge bg-dark">
-                                            {{ $request->blood_type }}
+                                            {{ $request->blood_type ?? $request->blood_type_needed }}
                                         </span>
                                     </td>
                                     <td>
@@ -197,8 +211,31 @@
                                                 </span>
                                                 @break
                                         @endswitch
+                                        @if($request->status === 'active' && $request->needed_by_date && $request->needed_by_date < now())
+                                            <div class="mt-1">
+                                                <small class="text-danger">
+                                                    <i class="fas fa-exclamation-triangle"></i> ¡Requiere atención!
+                                                </small>
+                                            </div>
+                                        @endif
                                     </td>
-                                    <td>{{ $request->created_at->format('d/m/Y H:i') }}</td>
+                                    <td>
+                                        @if($request->needed_by_date)
+                                            <div class="{{ $request->needed_by_date < now() && $request->status === 'active' ? 'text-danger fw-bold' : '' }}">
+                                                {{ $request->needed_by_date->format('d/m/Y H:i') }}
+                                            </div>
+                                            <small class="text-muted">
+                                                {{ $request->needed_by_date->diffForHumans() }}
+                                            </small>
+                                        @else
+                                            <span class="text-muted">No especificada</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <small class="text-muted">
+                                            {{ $request->created_at->format('d/m/Y H:i') }}
+                                        </small>
+                                    </td>
                                     <td>
                                         <div class="btn-group" role="group">
                                             <a href="{{ route('admin.blood_requests.show', $request->id) }}"

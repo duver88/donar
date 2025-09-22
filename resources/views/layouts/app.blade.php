@@ -7,21 +7,43 @@
     <title>@yield('title', 'Banco de Sangre Canina')</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Tipografías oficiales de Bucaramanga -->
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Variables de color basadas en identidad Bucaramanga */
+        /* Variables de color OFICIALES de Bucaramanga */
         :root {
-            --bucaramanga-green: #228B22;
-            --bucaramanga-green-light: #32CD32;
-            --bucaramanga-green-dark: #006400;
-            --bucaramanga-blue: #0066CC;
-            --bucaramanga-blue-light: #4A90E2;
-            --bucaramanga-gray: #6C757D;
-            --bucaramanga-gray-light: #F8F9FA;
+            /* Verde institucional principal */
+            --bucaramanga-verde-principal: #43883D;  /* Pantone 348C */
+            --bucaramanga-verde-claro: #51AD32;     /* Pantone 361C */
+            --bucaramanga-verde-palido: #B4D2AF;   /* Pantone 344C */
+            --bucaramanga-verde-suave: #C6DEAF;    /* Pantone 579C */
+
+            /* Verdes complementarios */
+            --bucaramanga-verde-lima-1: #C7D300;   /* Pantone 382C */
+            --bucaramanga-verde-lima-2: #93C01F;   /* Pantone 376C */
+            --bucaramanga-verde-oscuro-1: #3F8827; /* Pantone 363C */
+            --bucaramanga-verde-oscuro-2: #285F19; /* Pantone 364C */
+
+            /* Amarillo institucional */
+            --bucaramanga-amarillo: #F8DC0B;       /* Pantone 108C */
+            --bucaramanga-amarillo-claro: #FCF2B1; /* Pantone Yellow 0131 */
+
+            /* Rojo institucional */
+            --bucaramanga-rojo: #C20E1A;           /* Pantone 485C */
+            --bucaramanga-rosa: #F0A9AA;           /* Pantone 700C */
+
+            /* Grises institucionales */
+            --bucaramanga-gris-1: #D9D9D9;
+            --bucaramanga-gris-2: #C6C6C5;
+            --bucaramanga-gris-3: #B1B1B1;
+            --bucaramanga-gris-4: #9C9B9B;
+            --bucaramanga-negro: #000000;
         }
 
         /* Hero section con gradiente institucional */
         .hero-section {
-            background: linear-gradient(135deg, var(--bucaramanga-green) 0%, var(--bucaramanga-blue) 100%);
+            background: linear-gradient(135deg, var(--bucaramanga-verde-principal) 0%, var(--bucaramanga-verde-claro) 100%);
             color: white;
             padding: 80px 0;
             position: relative;
@@ -63,53 +85,224 @@
 
         /* Botones con colores institucionales */
         .btn-bucaramanga-primary {
-            background-color: var(--bucaramanga-green);
-            border-color: var(--bucaramanga-green);
+            background: linear-gradient(135deg, var(--bucaramanga-verde-principal) 0%, var(--bucaramanga-verde-claro) 100%);
+            border: none;
             color: white;
+            font-weight: 500;
+            border-radius: 0.75rem;
+            padding: 0.75rem 1.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(67, 136, 61, 0.3);
         }
         .btn-bucaramanga-primary:hover {
-            background-color: var(--bucaramanga-green-dark);
-            border-color: var(--bucaramanga-green-dark);
+            background: linear-gradient(135deg, var(--bucaramanga-verde-oscuro-1) 0%, var(--bucaramanga-verde-principal) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(67, 136, 61, 0.4);
             color: white;
         }
 
         .btn-bucaramanga-secondary {
-            background-color: var(--bucaramanga-blue);
-            border-color: var(--bucaramanga-blue);
-            color: white;
+            background: linear-gradient(135deg, var(--bucaramanga-amarillo) 0%, var(--bucaramanga-verde-lima-1) 100%);
+            border: none;
+            color: var(--bucaramanga-verde-oscuro-1);
+            font-weight: 600;
+            border-radius: 0.75rem;
+            padding: 0.75rem 1.5rem;
+            transition: all 0.3s ease;
         }
         .btn-bucaramanga-secondary:hover {
-            background-color: #0052A3;
-            border-color: #0052A3;
-            color: white;
+            background: linear-gradient(135deg, var(--bucaramanga-verde-lima-1) 0%, var(--bucaramanga-amarillo) 100%);
+            transform: translateY(-2px);
+            color: var(--bucaramanga-verde-oscuro-1);
         }
 
         /* Elementos de acento */
-        .text-bucaramanga-green { color: var(--bucaramanga-green) !important; }
-        .text-bucaramanga-blue { color: var(--bucaramanga-blue) !important; }
-        .bg-bucaramanga-green { background-color: var(--bucaramanga-green) !important; }
-        .bg-bucaramanga-blue { background-color: var(--bucaramanga-blue) !important; }
+        .text-bucaramanga-verde { color: var(--bucaramanga-verde-principal) !important; }
+        .text-bucaramanga-amarillo { color: var(--bucaramanga-amarillo) !important; }
+        .text-bucaramanga-rojo { color: var(--bucaramanga-rojo) !important; }
+        .bg-bucaramanga-verde { background-color: var(--bucaramanga-verde-principal) !important; }
+        .bg-bucaramanga-amarillo { background-color: var(--bucaramanga-amarillo) !important; }
+        .bg-bucaramanga-principal {
+            background: linear-gradient(135deg, var(--bucaramanga-verde-principal) 0%, var(--bucaramanga-verde-claro) 100%) !important;
+            color: white !important;
+        }
+        .bg-bucaramanga-acento {
+            background: linear-gradient(135deg, var(--bucaramanga-amarillo) 0%, var(--bucaramanga-verde-lima-1) 100%) !important;
+            color: var(--bucaramanga-verde-oscuro-1) !important;
+        }
 
         /* Navbar personalizada */
         .navbar-bucaramanga {
-            background: linear-gradient(90deg, var(--bucaramanga-green) 0%, var(--bucaramanga-blue) 100%);
+            background: linear-gradient(90deg, var(--bucaramanga-verde-principal) 0%, var(--bucaramanga-verde-claro) 100%);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-nav .nav-link {
+            color: white !important;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: var(--bucaramanga-amarillo) !important;
+            transform: translateY(-1px);
         }
 
         /* Estilo limpio y profesional para formularios */
         .form-control:focus {
-            border-color: var(--bucaramanga-green);
-            box-shadow: 0 0 0 0.2rem rgba(34, 139, 34, 0.25);
+            border-color: var(--bucaramanga-verde-principal);
+            box-shadow: 0 0 0 0.2rem rgba(67, 136, 61, 0.25);
+        }
+
+        .form-select:focus {
+            border-color: var(--bucaramanga-verde-principal);
+            box-shadow: 0 0 0 0.2rem rgba(67, 136, 61, 0.25);
         }
 
         /* Estadísticas con colores institucionales */
         .stats-card {
-            border-left: 4px solid var(--bucaramanga-green);
+            border-left: 4px solid var(--bucaramanga-verde-principal);
+            transition: all 0.3s ease;
+        }
+
+        .stats-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
         }
 
         /* Footer institucional */
         .footer-bucaramanga {
-            background-color: var(--bucaramanga-gray);
+            background: linear-gradient(135deg, var(--bucaramanga-verde-oscuro-1) 0%, var(--bucaramanga-verde-principal) 100%);
             color: white;
+        }
+
+        /* Bootstrap overrides con colores institucionales */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--bucaramanga-verde-principal) 0%, var(--bucaramanga-verde-claro) 100%);
+            border: none;
+            border-radius: 0.75rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, var(--bucaramanga-verde-oscuro-1) 0%, var(--bucaramanga-verde-principal) 100%);
+            transform: translateY(-1px);
+        }
+
+        .btn-success {
+            background-color: var(--bucaramanga-verde-claro);
+            border-color: var(--bucaramanga-verde-claro);
+        }
+
+        .btn-warning {
+            background-color: var(--bucaramanga-amarillo);
+            border-color: var(--bucaramanga-amarillo);
+            color: var(--bucaramanga-verde-oscuro-1);
+            font-weight: 600;
+        }
+
+        .btn-danger {
+            background-color: var(--bucaramanga-rojo);
+            border-color: var(--bucaramanga-rojo);
+        }
+
+        .text-primary { color: var(--bucaramanga-verde-principal) !important; }
+        .text-success { color: var(--bucaramanga-verde-claro) !important; }
+        .text-warning { color: var(--bucaramanga-amarillo) !important; }
+        .text-danger { color: var(--bucaramanga-rojo) !important; }
+
+        .bg-primary { background: linear-gradient(135deg, var(--bucaramanga-verde-principal) 0%, var(--bucaramanga-verde-claro) 100%) !important; }
+        .bg-success { background-color: var(--bucaramanga-verde-claro) !important; }
+        .bg-warning { background-color: var(--bucaramanga-amarillo) !important; }
+        .bg-danger { background-color: var(--bucaramanga-rojo) !important; }
+
+        /* Cards institucionales */
+        .card {
+            border: none;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            border-radius: 1rem 1rem 0 0 !important;
+            border-bottom: none;
+            font-weight: 600;
+        }
+
+        /* Tables */
+        .table thead th {
+            background: linear-gradient(135deg, var(--bucaramanga-verde-principal) 0%, var(--bucaramanga-verde-claro) 100%);
+            color: white;
+            border: none;
+            font-weight: 500;
+        }
+
+        .table-striped > tbody > tr:nth-of-type(odd) > td {
+            background-color: rgba(67, 136, 61, 0.05);
+        }
+
+        .table-hover > tbody > tr:hover > td {
+            background-color: rgba(67, 136, 61, 0.1);
+        }
+
+        /* Badges */
+        .badge {
+            font-weight: 500;
+            border-radius: 0.5rem;
+            padding: 0.5rem 1rem;
+        }
+
+        /* Alerts */
+        .alert-success {
+            background-color: rgba(81, 173, 50, 0.1);
+            border-color: var(--bucaramanga-verde-claro);
+            color: var(--bucaramanga-verde-oscuro-1);
+        }
+
+        .alert-warning {
+            background-color: rgba(248, 220, 11, 0.1);
+            border-color: var(--bucaramanga-amarillo);
+            color: var(--bucaramanga-verde-oscuro-1);
+        }
+
+        .alert-danger {
+            background-color: rgba(194, 14, 26, 0.1);
+            border-color: var(--bucaramanga-rojo);
+            color: var(--bucaramanga-rojo);
+        }
+
+        /* Tipografías oficiales según manual de identidad */
+        body {
+            font-family: 'Ubuntu', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif !important;
+            font-weight: 400;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6,
+        .h1, .h2, .h3, .h4, .h5, .h6 {
+            font-family: 'Oswald', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif !important;
+            font-weight: 500;
+            color: var(--bucaramanga-verde-oscuro-1);
+        }
+
+        .navbar-brand {
+            font-family: 'Oswald', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif !important;
+            font-weight: 600;
+        }
+
+        .btn {
+            font-family: 'Ubuntu', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif !important;
+        }
+
+        .card-header {
+            font-family: 'Oswald', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif !important;
         }
     </style>
 </head>

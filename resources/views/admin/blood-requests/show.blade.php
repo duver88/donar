@@ -42,7 +42,7 @@
                             </h5>
                             <div class="mb-2">
                                 <strong>Tipo de Sangre:</strong>
-                                <span class="badge bg-dark fs-6">{{ $request->blood_type }}</span>
+                                <span class="badge bg-dark fs-6">{{ $request->blood_type ?? $request->blood_type_needed }}</span>
                             </div>
                             <div class="mb-2">
                                 <strong>Cantidad Necesaria:</strong> {{ $request->quantity_needed ?? 'No especificado' }}
@@ -214,39 +214,49 @@
                     </h5>
                 </div>
                 <div class="card-body">
-                    @if($request->veterinarian && $request->veterinarian->user)
+                    @if($request->veterinarian)
                         <div class="mb-2">
                             <strong>Nombre:</strong><br>
-                            {{ $request->veterinarian->user->name }}
+                            Dr. {{ $request->veterinarian->name }}
                         </div>
                         <div class="mb-2">
                             <strong>Email:</strong><br>
-                            <a href="mailto:{{ $request->veterinarian->user->email }}">
-                                {{ $request->veterinarian->user->email }}
+                            <a href="mailto:{{ $request->veterinarian->email }}">
+                                {{ $request->veterinarian->email }}
                             </a>
                         </div>
                         <div class="mb-2">
                             <strong>Teléfono:</strong><br>
-                            @if($request->veterinarian->user->phone)
-                                <a href="tel:{{ $request->veterinarian->user->phone }}">
-                                    {{ $request->veterinarian->user->phone }}
+                            @if($request->veterinarian->phone)
+                                <a href="tel:{{ $request->veterinarian->phone }}">
+                                    {{ $request->veterinarian->phone }}
                                 </a>
                             @else
                                 <span class="text-muted">No disponible</span>
                             @endif
                         </div>
+                        @if($request->veterinarian->veterinarian)
                         <div class="mb-2">
-                            <strong>Licencia:</strong><br>
-                            {{ $request->veterinarian->license_number ?? 'No disponible' }}
+                            <strong>Tarjeta Profesional:</strong><br>
+                            {{ $request->veterinarian->veterinarian->professional_card ?? 'No disponible' }}
+                        </div>
+                        <div class="mb-2">
+                            <strong>Especialidad:</strong><br>
+                            {{ $request->veterinarian->veterinarian->specialty ?? 'No disponible' }}
                         </div>
                         <div class="mb-2">
                             <strong>Clínica:</strong><br>
-                            {{ $request->veterinarian->clinic_name ?? 'No disponible' }}
+                            {{ $request->veterinarian->veterinarian->clinic_name ?? 'No disponible' }}
                         </div>
-                        @if($request->veterinarian->clinic_address)
+                        @if($request->veterinarian->veterinarian->clinic_address)
                         <div class="mb-2">
                             <strong>Dirección:</strong><br>
-                            <small class="text-muted">{{ $request->veterinarian->clinic_address }}</small>
+                            <small class="text-muted">{{ $request->veterinarian->veterinarian->clinic_address }}</small>
+                        </div>
+                        @endif
+                        <div class="mb-2">
+                            <strong>Ciudad:</strong><br>
+                            {{ $request->veterinarian->veterinarian->city ?? 'No disponible' }}
                         </div>
                         @endif
                     @else
@@ -310,8 +320,8 @@
                             <i class="fas fa-arrow-left"></i> Volver al Listado
                         </a>
 
-                        @if($request->veterinarian && $request->veterinarian->user)
-                        <a href="mailto:{{ $request->veterinarian->user->email }}" class="btn btn-outline-primary">
+                        @if($request->veterinarian)
+                        <a href="mailto:{{ $request->veterinarian->email }}" class="btn btn-outline-primary">
                             <i class="fas fa-envelope"></i> Contactar Veterinario
                         </a>
                         @endif

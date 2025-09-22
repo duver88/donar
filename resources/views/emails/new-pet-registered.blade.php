@@ -14,7 +14,7 @@
             padding: 20px;
         }
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #0369a1 100%);
             color: white;
             padding: 30px;
             text-align: center;
@@ -30,24 +30,35 @@
             padding: 20px;
             border-radius: 8px;
             margin: 20px 0;
-            border-left: 4px solid #667eea;
+            border-left: 4px solid #1e3a8a;
         }
         .btn {
             display: inline-block;
-            background: #667eea;
+            background: linear-gradient(135deg, #059669 0%, #10b981 100%);
             color: white;
             padding: 12px 25px;
             text-decoration: none;
             border-radius: 5px;
             margin: 10px 0;
+            font-weight: bold;
         }
         .alert {
-            background: #d4edda;
-            border: 1px solid #c3e6cb;
-            color: #155724;
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            color: #1e3a8a;
             padding: 15px;
             border-radius: 5px;
             margin: 15px 0;
+            border-left: 4px solid #1e3a8a;
+        }
+        .alert-success {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            color: #059669;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 4px solid #059669;
         }
         .footer {
             text-align: center;
@@ -63,6 +74,7 @@
     <div class="header">
         <h1>🐕 Nueva Mascota Registrada</h1>
         <p>¡{{ $pet->name }} ahora puede donar sangre!</p>
+        <p style="margin: 5px 0 0 0; font-size: 14px; opacity: 0.9;">Banco de Sangre Canina - Alcaldía de Bucaramanga</p>
     </div>
 
     <div class="content">
@@ -83,16 +95,29 @@
             </ul>
         </div>
 
-        <div class="alert">
+        <div class="alert-success">
             <strong>📋 ¿Qué sigue?</strong><br>
-            Tu mascota ya está disponible para donar sangre cuando sea necesario. Te contactaremos por email cuando haya una solicitud urgente que coincida con el perfil de {{ $pet->name }}.
+            {{ $pet->name }} ya está disponible para donar sangre cuando sea necesario. Te contactaremos por email cuando haya una solicitud urgente que coincida con su perfil.
+        </div>
+
+        <div class="alert">
+            <strong>🏛️ Proceso Oficial de Donación:</strong><br>
+            • Cuando haya una solicitud urgente, recibirás un email con los detalles<br>
+            • Si estás interesado, responderás a <strong>binestaranimal@bucaramanga.gov.co</strong><br>
+            • El equipo de Bienestar Animal coordinará la fecha, hora y lugar<br>
+            • La donación se realizará bajo supervisión veterinaria profesional<br>
+            • Recibirás certificación oficial de la Alcaldía de Bucaramanga
         </div>
 
         <h3>🩸 Importancia de la donación de sangre canina:</h3>
         <p>Gracias a donantes como {{ $pet->name }}, podemos salvar vidas de mascotas en situaciones críticas. Tu compromiso con esta causa hace la diferencia.</p>
 
         <h3>📞 Información de contacto:</h3>
-        <p>Si tienes alguna pregunta o necesitas actualizar la información de {{ $pet->name }}, no dudes en contactarnos.</p>
+        <p>Si tienes alguna pregunta o necesitas actualizar la información de {{ $pet->name }}, contáctanos:</p>
+        <div style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; padding: 15px; border-radius: 5px; text-align: center; margin: 15px 0;">
+            <p style="margin: 0; font-weight: bold;">📧 binestaranimal@bucaramanga.gov.co</p>
+            <p style="margin: 5px 0 0 0; font-size: 14px; opacity: 0.9;">Equipo de Bienestar Animal - Alcaldía de Bucaramanga</p>
+        </div>
 
         <div style="text-align: center; margin: 30px 0;">
             <a href="{{ route('home') }}" class="btn">Ver Solicitudes Activas</a>
@@ -103,8 +128,10 @@
     </div>
 
     <div class="footer">
-        <p>Este correo fue enviado automáticamente por el Banco de Sangre Canina.</p>
-        <p>Si no deseas recibir más correos, puedes contactarnos para ser removido de la lista.</p>
+        <p><strong>Banco de Sangre Canina</strong></p>
+        <p><strong style="color: #1e3a8a;">Alcaldía de Bucaramanga - Bienestar Animal</strong></p>
+        <p>Este correo fue enviado automáticamente porque registraste a {{ $pet->name }} como donante.</p>
+        <p><small>📧 Contacto: binestaranimal@bucaramanga.gov.co</small></p>
     </div>
 </body>
 </html>

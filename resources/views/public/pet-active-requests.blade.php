@@ -10,19 +10,19 @@
     <style>
         /* Variables de color institucionales Alcaldía de Bucaramanga */
         :root {
-            --bucaramanga-blue-primary: #1e3a8a;
-            --bucaramanga-blue-secondary: #3b82f6;
-            --bucaramanga-blue-light: #0369a1;
-            --bucaramanga-green: #059669;
-            --bucaramanga-green-light: #10b981;
-            --bucaramanga-green-dark: #047857;
-            --bucaramanga-gold: #fbbf24;
-            --bucaramanga-gray: #6b7280;
-            --bucaramanga-gray-light: #f3f4f6;
+            --bucaramanga-verde-principal: #43883D;
+            --bucaramanga-verde-claro: #51AD32;
+            --bucaramanga-verde-oscuro: #3F8827;
+            --bucaramanga-verde-mas-claro: #93C01F;
+            --bucaramanga-verde-muy-claro: #C7D300;
+            --bucaramanga-amarillo: #F8DC0B;
+            --bucaramanga-rojo: #C20E1A;
+            --bucaramanga-gris: #868686;
+            --bucaramanga-gris-claro: #EAECB1;
         }
 
         .hero-section {
-            background: linear-gradient(135deg, var(--bucaramanga-green) 0%, var(--bucaramanga-green-light) 50%, var(--bucaramanga-blue-primary) 100%);
+            background: linear-gradient(135deg, var(--bucaramanga-verde-principal) 0%, var(--bucaramanga-verde-claro) 50%, var(--bucaramanga-verde-mas-claro) 100%);
             color: white;
             padding: 40px 0;
             position: relative;
@@ -34,7 +34,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: radial-gradient(circle at 70% 30%, rgba(251, 191, 36, 0.15) 0%, transparent 50%);
+            background: radial-gradient(circle at 70% 30%, rgba(248, 220, 11, 0.15) 0%, transparent 50%);
         }
         .pet-info {
             background: white;

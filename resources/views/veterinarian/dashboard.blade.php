@@ -9,11 +9,11 @@
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <div>
-                    <h2 class="fw-bold" style="color: #1e3a8a;"><i class="fas fa-user-md me-2" style="color: #fbbf24;"></i> Dashboard Veterinario</h2>
+                    <h2 class="fw-bold" style="color: #43883D;"><i class="fas fa-user-md me-2" style="color: #F8DC0B;"></i> Dashboard Veterinario</h2>
                     <p class="text-muted mb-0">Bienvenido, <strong>Dr. {{ Auth::user()->name }}</strong></p>
                 </div>
                 <div>
-                    <a href="{{ route('veterinarian.blood_request.create') }}" class="btn fw-bold text-white" style="background: linear-gradient(135deg, #059669 0%, #10b981 100%); border: none; border-radius: 0.75rem; padding: 0.75rem 1.5rem; transition: all 0.3s ease; box-shadow: 0 4px 6px rgba(5, 150, 105, 0.3);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 12px rgba(5, 150, 105, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 6px rgba(5, 150, 105, 0.3)'">
+                    <a href="{{ route('veterinarian.blood_request.create') }}" class="btn fw-bold text-white" style="background: linear-gradient(135deg, #43883D 0%, #51AD32 100%); border: none; border-radius: 0.75rem; padding: 0.75rem 1.5rem; transition: all 0.3s ease; box-shadow: 0 4px 6px rgba(67, 136, 61, 0.3);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 12px rgba(67, 136, 61, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 6px rgba(67, 136, 61, 0.3)'">
                         <i class="fas fa-plus me-2"></i> Nueva Solicitud de Donación
                     </a>
                 </div>
@@ -24,7 +24,7 @@
     {{-- Estadísticas --}}
     <div class="row mb-4">
         <div class="col-md-4 mb-3">
-            <div class="card text-white h-100 shadow-sm" style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); border: none; border-radius: 1rem;">
+            <div class="card text-white h-100 shadow-sm" style="background: linear-gradient(135deg, #43883D 0%, #51AD32 100%); border: none; border-radius: 1rem;">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
@@ -45,7 +45,7 @@
         </div>
         
         <div class="col-md-4 mb-3">
-            <div class="card text-white h-100 shadow-sm" style="background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%); border: none; border-radius: 1rem;">
+            <div class="card text-white h-100 shadow-sm" style="background: linear-gradient(135deg, #F8DC0B 0%, #C7D300 100%); border: none; border-radius: 1rem; color: #3F8827 !important;">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
@@ -66,7 +66,7 @@
         </div>
         
         <div class="col-md-4 mb-3">
-            <div class="card text-white h-100 shadow-sm" style="background: linear-gradient(135deg, #059669 0%, #10b981 100%); border: none; border-radius: 1rem;">
+            <div class="card text-white h-100 shadow-sm" style="background: linear-gradient(135deg, #93C01F 0%, #C7D300 100%); border: none; border-radius: 1rem;">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
@@ -91,7 +91,7 @@
         {{-- Mis Solicitudes --}}
         <div class="col-md-8">
             <div class="card shadow">
-                <div class="card-header text-white d-flex justify-content-between align-items-center" style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); border-radius: 0.5rem 0.5rem 0 0;">
+                <div class="card-header text-white d-flex justify-content-between align-items-center" style="background: linear-gradient(135deg, #43883D 0%, #51AD32 100%); border-radius: 0.5rem 0.5rem 0 0;">
                     <h5 class="mb-0 fw-bold"><i class="fas fa-list me-2" style="color: #fbbf24;"></i> Mis Solicitudes de Donación</h5>
                     <a href="{{ route('veterinarian.blood_request.create') }}" class="btn btn-sm fw-semibold" style="background: #059669; border: none; color: white; border-radius: 0.5rem; padding: 0.5rem 1rem; transition: all 0.3s ease;" onmouseover="this.style.background='#047857'" onmouseout="this.style.background='#059669'">
                         <i class="fas fa-plus me-1"></i> Nueva Solicitud
@@ -101,7 +101,7 @@
                     @if($myRequests->count() > 0)
                         <div class="table-responsive">
                             <table class="table table-striped table-hover">
-                                <thead style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white;">
+                                <thead style="background: linear-gradient(135deg, #43883D 0%, #51AD32 100%); color: white;">
                                     <tr>
                                         <th>Paciente</th>
                                         <th>Urgencia</th>
@@ -144,13 +144,13 @@
                                         </td>
                                         <td>
                                             <div class="btn-group btn-group-sm">
-                                                <button class="btn btn-outline-primary" 
-                                                        onclick="viewRequest({{ $request->id }})"
-                                                        title="Ver detalles">
+                                                <a href="{{ route('veterinarian.blood_request.show', $request->id) }}"
+                                                   class="btn btn-outline-primary"
+                                                   title="Ver detalles">
                                                     <i class="fas fa-eye"></i>
-                                                </button>
+                                                </a>
                                                 @if($request->status === 'active')
-                                                    <button class="btn btn-outline-danger" 
+                                                    <button class="btn btn-outline-danger"
                                                             onclick="cancelRequest({{ $request->id }})"
                                                             title="Cancelar solicitud">
                                                         <i class="fas fa-times"></i>
@@ -168,7 +168,7 @@
                             <i class="fas fa-file-medical fa-4x text-muted mb-3"></i>
                             <h5 class="text-muted">No has realizado ninguna solicitud aún</h5>
                             <p class="text-muted mb-3">Crea tu primera solicitud de donación de sangre</p>
-                            <a href="{{ route('veterinarian.blood_request.create') }}" class="btn fw-bold text-white" style="background: linear-gradient(135deg, #059669 0%, #10b981 100%); border: none; border-radius: 0.75rem; padding: 0.75rem 1.5rem; transition: all 0.3s ease; box-shadow: 0 4px 6px rgba(5, 150, 105, 0.3);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 12px rgba(5, 150, 105, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 6px rgba(5, 150, 105, 0.3)'">
+                            <a href="{{ route('veterinarian.blood_request.create') }}" class="btn fw-bold text-white" style="background: linear-gradient(135deg, #43883D 0%, #51AD32 100%); border: none; border-radius: 0.75rem; padding: 0.75rem 1.5rem; transition: all 0.3s ease; box-shadow: 0 4px 6px rgba(67, 136, 61, 0.3);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 12px rgba(67, 136, 61, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 6px rgba(67, 136, 61, 0.3)'">
                                 <i class="fas fa-plus me-2"></i> Crear Primera Solicitud
                             </a>
                         </div>
@@ -180,7 +180,7 @@
         <div class="col-md-4">
             {{-- Información de Contacto --}}
             <div class="card shadow mb-3">
-                <div class="card-header text-white" style="background: linear-gradient(135deg, #059669 0%, #10b981 100%);">
+                <div class="card-header text-white" style="background: linear-gradient(135deg, #43883D 0%, #51AD32 100%);">
                     <h5 class="mb-0 fw-bold"><i class="fas fa-info-circle me-2" style="color: #fbbf24;"></i> Mi Información</h5>
                 </div>
                 <div class="card-body">
@@ -222,7 +222,7 @@
 
             {{-- Consejos --}}
             <div class="card shadow">
-                <div class="card-header text-white" style="background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);">
+                <div class="card-header text-white" style="background: linear-gradient(135deg, #F8DC0B 0%, #C7D300 100%); color: #3F8827 !important;">
                     <h5 class="mb-0 fw-bold"><i class="fas fa-lightbulb me-2" style="color: #1e3a8a;"></i> Consejos y Buenas Prácticas</h5>
                 </div>
                 <div class="card-body">
@@ -254,36 +254,10 @@
     </div>
 </div>
 
-{{-- Modal para ver detalles de solicitud --}}
-<div class="modal fade" id="requestModal" tabindex="-1">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">
-                    <i class="fas fa-file-medical text-primary"></i> Detalles de la Solicitud
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <div id="requestDetails">
-                    <!-- Los detalles se cargarán aquí via JavaScript -->
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-            </div>
-        </div>
-    </div>
-</div>
 @endsection
 
 @section('scripts')
 <script>
-function viewRequest(id) {
-    // Por ahora mostramos un alert, pero podrías implementar un modal con detalles completos
-    alert('Ver detalles de solicitud #' + id + '\n\nEsta funcionalidad se puede expandir para mostrar:\n- Detalles completos del paciente\n- Lista de donantes que respondieron\n- Historial de la solicitud');
-}
-
 function cancelRequest(id) {
     if (confirm('¿Estás seguro de que deseas cancelar esta solicitud?\n\nEsta acción no se puede deshacer.')) {
         fetch(`/veterinario/solicitud/${id}/cancelar`, {

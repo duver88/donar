@@ -11,7 +11,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use App\Mail\PetApprovedWelcomeMail;
 use App\Mail\ActiveRequestsListMail;            // NUEVO
+use App\Mail\NewDonorNotificationVeterinariansMail;  // NUEVO
 use App\Models\EmailLog;
+use App\Models\Veterinarian;                   // NUEVO
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;       // <-- IMPORTANTE
@@ -313,6 +315,9 @@ class PetRegistrationController extends Controller
                 'is_new_user' => $isNewUser
             ]);
 
+            // ENVIAR NOTIFICACIÓN A VETERINARIAS APROBADAS
+            $this->notifyVeterinariansAboutNewDonor($pet);
+
         } catch (\Exception $e) {
             Log::error('Error enviando email: ' . $e->getMessage(), [
                 'pet_id' => $pet->id,
@@ -336,7 +341,7 @@ class PetRegistrationController extends Controller
         return BloodRequest::where('status', 'active')
             ->where('blood_type', $bloodType)
             ->where('created_at', '<', $pet->created_at)
-            ->with(['veterinarian.user'])
+            ->with(['veterinarian.veterinarian'])
             ->orderBy('urgency_level', 'desc')
             ->orderBy('created_at', 'asc')
             ->get();
@@ -433,6 +438,87 @@ class PetRegistrationController extends Controller
         }
         
         return $rejectionReasons;
+    }
+
+    /**
+     * Notifica a todas las veterinarias aprobadas sobre el nuevo donante
+     */
+    private function notifyVeterinariansAboutNewDonor($pet)
+    {
+        try {
+            // Cargar relaciones del pet si no están cargadas
+            $pet->load('tutor', 'user');
+
+            // Obtener todas las veterinarias aprobadas
+            $approvedVeterinarians = Veterinarian::whereHas('user', function($query) {
+                $query->where('status', 'approved');
+            })
+            ->with('user')
+            ->get();
+
+            $emailCount = 0;
+            $failedEmails = 0;
+
+            foreach ($approvedVeterinarians as $veterinarian) {
+                try {
+                    Mail::to($veterinarian->user->email)
+                        ->send(new NewDonorNotificationVeterinariansMail($pet, $veterinarian));
+
+                    // Registrar email exitoso
+                    EmailLog::create([
+                        'to_email' => $veterinarian->user->email,
+                        'to_name' => $veterinarian->user->name,
+                        'subject' => '🐕 Nuevo Donante Disponible: ' . $pet->name . ' - Banco de Sangre Canina',
+                        'mailable_class' => 'NewDonorNotificationVeterinariansMail',
+                        'data' => [
+                            'pet_id' => $pet->id,
+                            'veterinarian_id' => $veterinarian->id,
+                            'notification_type' => 'new_donor'
+                        ],
+                        'status' => 'sent',
+                        'sent_at' => now()
+                    ]);
+
+                    $emailCount++;
+
+                } catch (\Exception $e) {
+                    // Registrar error de email
+                    EmailLog::create([
+                        'to_email' => $veterinarian->user->email,
+                        'to_name' => $veterinarian->user->name,
+                        'subject' => '🐕 Nuevo Donante Disponible: ' . $pet->name . ' - Banco de Sangre Canina',
+                        'mailable_class' => 'NewDonorNotificationVeterinariansMail',
+                        'data' => [
+                            'pet_id' => $pet->id,
+                            'veterinarian_id' => $veterinarian->id,
+                            'notification_type' => 'new_donor'
+                        ],
+                        'status' => 'failed',
+                        'error_message' => $e->getMessage(),
+                        'sent_at' => now()
+                    ]);
+
+                    $failedEmails++;
+                    Log::error('Error enviando notificación de nuevo donante a veterinario: ' . $e->getMessage(), [
+                        'veterinarian_id' => $veterinarian->id,
+                        'pet_id' => $pet->id
+                    ]);
+                }
+            }
+
+            Log::info('Notificaciones de nuevo donante enviadas', [
+                'pet_id' => $pet->id,
+                'pet_name' => $pet->name,
+                'emails_sent' => $emailCount,
+                'emails_failed' => $failedEmails,
+                'total_veterinarians' => $approvedVeterinarians->count()
+            ]);
+
+        } catch (\Exception $e) {
+            Log::error('Error general enviando notificaciones de nuevo donante: ' . $e->getMessage(), [
+                'pet_id' => $pet->id
+            ]);
+        }
     }
 
     /**

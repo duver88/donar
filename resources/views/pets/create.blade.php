@@ -8,8 +8,8 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card shadow">
-                <div class="card-header text-white" style="background: linear-gradient(135deg, #059669 0%, #10b981 100%); border-radius: 0.5rem 0.5rem 0 0;">
-                    <h4 class="mb-0 fw-bold"><i class="fas fa-dog me-2" style="color: #fbbf24;"></i> Postular mi mascota como donante</h4>
+                <div class="card-header text-white" style="background: linear-gradient(135deg, #43883D 0%, #51AD32 100%); border-radius: 0.5rem 0.5rem 0 0;">
+                    <h4 class="mb-0 fw-bold"><i class="fas fa-dog me-2" style="color: #F8DC0B;"></i> Postular mi mascota como donante</h4>
                     <small class="d-block mt-1" style="opacity: 0.9;">Completa este formulario para registrar a tu mascota como donante de sangre</small>
                 </div>
                 <div class="card-body">
@@ -29,8 +29,8 @@
                         
                         {{-- Datos del Tutor --}}
                         <div class="mb-4">
-                            <h5 class="fw-bold border-bottom pb-2" style="color: #059669;">
-                                <i class="fas fa-user me-2" style="color: #fbbf24;"></i> Datos del Tutor Responsable
+                            <h5 class="fw-bold border-bottom pb-2" style="color: #43883D;">
+                                <i class="fas fa-user me-2" style="color: #F8DC0B;"></i> Datos del Tutor Responsable
                             </h5>
                         </div>
 
@@ -56,15 +56,15 @@
                             </div>
                         </div>
 
-                        <div class="alert alert-info border-left-bucaramanga-blue" id="existing_user_alert" style="display: none; border-left: 4px solid var(--bucaramanga-blue);">
-                            <i class="fas fa-info-circle text-bucaramanga-blue"></i>
+                        <div class="alert alert-info" id="existing_user_alert" style="display: none; border-left: 4px solid #285F19; background-color: #D8E5B0; color: #285F19;">
+                            <i class="fas fa-info-circle" style="color: #285F19;"></i>
                             <strong>¡Bienvenido de nuevo!</strong> Hemos encontrado tu información. Solo necesitas completar los datos de tu nueva mascota.
                         </div>
 
                         {{-- Datos del Animal --}}
                         <div class="mb-4 mt-4">
-                            <h5 class="fw-bold border-bottom pb-2" style="color: #059669;">
-                                <i class="fas fa-dog me-2" style="color: #fbbf24;"></i> Datos del Animal de Compañía
+                            <h5 class="fw-bold border-bottom pb-2" style="color: #43883D;">
+                                <i class="fas fa-dog me-2" style="color: #F8DC0B;"></i> Datos del Animal de Compañía
                             </h5>
                         </div>
 
@@ -112,8 +112,8 @@
 
                         {{-- Vacunas y Donaciones Previas --}}
                         <div class="mb-4 mt-4">
-                            <h5 class="fw-bold border-bottom pb-2" style="color: #1e3a8a;">
-                                <i class="fas fa-syringe me-2" style="color: #fbbf24;"></i> Vacunas y Donaciones Previas
+                            <h5 class="fw-bold border-bottom pb-2" style="color: #285F19;">
+                                <i class="fas fa-syringe me-2" style="color: #F8DC0B;"></i> Vacunas y Donaciones Previas
                             </h5>
                         </div>
 
@@ -148,8 +148,8 @@
 
                         {{-- Condiciones de Salud --}}
                         <div class="mb-4 mt-4">
-                            <h5 class="fw-bold border-bottom pb-2" style="color: #1e3a8a;">
-                                <i class="fas fa-hospital me-2" style="color: #fbbf24;"></i> Condiciones de Salud del Animal
+                            <h5 class="fw-bold border-bottom pb-2" style="color: #285F19;">
+                                <i class="fas fa-hospital me-2" style="color: #F8DC0B;"></i> Condiciones de Salud del Animal
                             </h5>
                         </div>
 
@@ -214,8 +214,8 @@
 
                         {{-- Foto del Animal --}}
                         <div class="mb-4 mt-4">
-                            <h5 class="fw-bold border-bottom pb-2" style="color: #059669;">
-                                <i class="fas fa-camera me-2" style="color: #fbbf24;"></i> Foto del Animal
+                            <h5 class="fw-bold border-bottom pb-2" style="color: #43883D;">
+                                <i class="fas fa-camera me-2" style="color: #F8DC0B;"></i> Foto del Animal
                             </h5>
                         </div>
 
@@ -231,7 +231,7 @@
                         </div>
 
                         <div class="d-grid gap-2 mt-4">
-                            <button type="submit" class="btn btn-lg fw-bold text-white" style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); border: none; border-radius: 0.75rem; padding: 0.75rem 2rem; transition: all 0.3s ease; box-shadow: 0 4px 6px rgba(30, 58, 138, 0.3);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 12px rgba(30, 58, 138, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 6px rgba(30, 58, 138, 0.3)'">
+                            <button type="submit" class="btn btn-lg fw-bold text-white" style="background: linear-gradient(135deg, #43883D 0%, #51AD32 100%); border: none; border-radius: 0.75rem; padding: 0.75rem 2rem; transition: all 0.3s ease; box-shadow: 0 4px 6px rgba(67, 136, 61, 0.3);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 12px rgba(67, 136, 61, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 6px rgba(67, 136, 61, 0.3)'"
                                 <i class="fas fa-paper-plane me-2"></i> Enviar Postulación
                             </button>
                             <a href="{{ route('home') }}" class="btn btn-outline-secondary">

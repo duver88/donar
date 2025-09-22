@@ -45,7 +45,22 @@ class BloodRequest extends Model
 
     public function veterinarian()
     {
-        return $this->belongsTo(Veterinarian::class, 'veterinarian_id');
+        return $this->belongsTo(User::class, 'veterinarian_id')
+                    ->where('role', 'veterinarian')
+                    ->with('veterinarian'); // Cargar el perfil de veterinario
+    }
+
+    // Relación auxiliar para obtener el perfil del veterinario
+    public function veterinarianProfile()
+    {
+        return $this->hasOneThrough(
+            Veterinarian::class,
+            User::class,
+            'id',           // Foreign key en users
+            'user_id',      // Foreign key en veterinarians
+            'veterinarian_id', // Local key en blood_requests
+            'id'            // Local key en users
+        );
     }
 
     public function donationResponses()
@@ -88,5 +103,96 @@ class BloodRequest extends Model
     public function markAsFulfilled()
     {
         $this->update(['status' => 'fulfilled']);
+    }
+
+    // ========================================
+    // SCOPES
+    // ========================================
+
+    public function scopeActive($query)
+    {
+        return $query->where('status', 'active');
+    }
+
+    public function scopeCompleted($query)
+    {
+        return $query->where('status', 'completed');
+    }
+
+    public function scopeCancelled($query)
+    {
+        return $query->where('status', 'cancelled');
+    }
+
+    public function scopeExpired($query)
+    {
+        return $query->where('status', 'expired');
+    }
+
+    public function scopeClosed($query)
+    {
+        return $query->whereIn('status', ['completed', 'cancelled', 'expired']);
+    }
+
+    public function scopeOpen($query)
+    {
+        return $query->where('status', 'active');
+    }
+
+    public function scopeCritical($query)
+    {
+        return $query->where('urgency_level', 'critica');
+    }
+
+    public function scopeExpiredByDate($query)
+    {
+        return $query->where('status', 'active')
+                    ->where('needed_by_date', '<', now());
+    }
+
+    // ========================================
+    // MÉTODOS DE ESTADO
+    // ========================================
+
+    public function isActive()
+    {
+        return $this->status === 'active';
+    }
+
+    public function isExpired()
+    {
+        return $this->status === 'expired' ||
+               ($this->status === 'active' && $this->needed_by_date < now());
+    }
+
+    public function isClosed()
+    {
+        return in_array($this->status, ['completed', 'cancelled', 'expired']);
+    }
+
+    public function getStatusDisplayAttribute()
+    {
+        return match($this->status) {
+            'active' => 'Activa',
+            'completed' => 'Completada',
+            'cancelled' => 'Cancelada',
+            'expired' => 'Expirada',
+            default => ucfirst($this->status)
+        };
+    }
+
+    /**
+     * Marca solicitudes activas como expiradas si han pasado la fecha límite
+     */
+    public static function markExpiredRequests()
+    {
+        $expiredCount = self::where('status', 'active')
+            ->where('needed_by_date', '<', now())
+            ->update([
+                'status' => 'expired',
+                'updated_at' => now()
+            ]);
+
+        return $expiredCount;
     }
 }

@@ -10,19 +10,19 @@
     <style>
         /* Variables de color institucionales Alcaldía de Bucaramanga */
         :root {
-            --bucaramanga-blue-primary: #1e3a8a;
-            --bucaramanga-blue-secondary: #3b82f6;
-            --bucaramanga-blue-light: #0369a1;
-            --bucaramanga-green: #059669;
-            --bucaramanga-green-light: #10b981;
-            --bucaramanga-green-dark: #047857;
-            --bucaramanga-gold: #fbbf24;
-            --bucaramanga-gray: #6b7280;
-            --bucaramanga-gray-light: #f3f4f6;
+            --bucaramanga-verde-principal: #43883D;
+            --bucaramanga-verde-claro: #51AD32;
+            --bucaramanga-verde-oscuro: #3F8827;
+            --bucaramanga-verde-mas-claro: #93C01F;
+            --bucaramanga-verde-muy-claro: #C7D300;
+            --bucaramanga-amarillo: #F8DC0B;
+            --bucaramanga-rojo: #C20E1A;
+            --bucaramanga-gris: #868686;
+            --bucaramanga-gris-claro: #EAECB1;
         }
 
         .hero-section {
-            background: linear-gradient(135deg, var(--bucaramanga-blue-primary) 0%, var(--bucaramanga-blue-secondary) 50%, var(--bucaramanga-blue-light) 100%);
+            background: linear-gradient(135deg, var(--bucaramanga-verde-principal) 0%, var(--bucaramanga-verde-claro) 50%, var(--bucaramanga-verde-mas-claro) 100%);
             color: white;
             padding: 60px 0;
             position: relative;
@@ -34,7 +34,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: radial-gradient(circle at 20% 50%, rgba(251, 191, 36, 0.1) 0%, transparent 50%);
+            background: radial-gradient(circle at 20% 50%, rgba(248, 220, 11, 0.1) 0%, transparent 50%);
         }
         .urgency-badge {
             font-size: 0.75rem;
@@ -43,9 +43,9 @@
             font-weight: bold;
             text-transform: uppercase;
         }
-        .urgency-alta { background-color: #e74c3c; }
-        .urgency-media { background-color: #f39c12; }
-        .urgency-baja { background-color: #27ae60; }
+        .urgency-alta { background-color: #C20E1A; }
+        .urgency-media { background-color: #F8DC0B; color: #285F19; }
+        .urgency-baja { background-color: #43883D; }
         .request-card {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             border: none;
@@ -56,55 +56,55 @@
             box-shadow: 0 4px 20px rgba(0,0,0,0.15);
         }
         .blood-type {
-            background: linear-gradient(135deg, var(--bucaramanga-blue-primary) 0%, var(--bucaramanga-blue-secondary) 100%);
+            background: linear-gradient(135deg, var(--bucaramanga-verde-principal) 0%, var(--bucaramanga-verde-claro) 100%);
             color: white;
             padding: 8px 15px;
             border-radius: 20px;
             font-weight: bold;
             display: inline-block;
             margin-bottom: 10px;
-            box-shadow: 0 2px 4px rgba(30, 58, 138, 0.3);
+            box-shadow: 0 2px 4px rgba(67, 136, 61, 0.3);
         }
 
         /* Botones con colores institucionales */
         .btn-bucaramanga-primary {
-            background: linear-gradient(135deg, var(--bucaramanga-green) 0%, var(--bucaramanga-green-light) 100%);
+            background: linear-gradient(135deg, var(--bucaramanga-verde-principal) 0%, var(--bucaramanga-verde-claro) 100%);
             border: none;
             color: white;
             font-weight: 600;
             border-radius: 0.5rem;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(5, 150, 105, 0.3);
+            box-shadow: 0 4px 6px rgba(67, 136, 61, 0.3);
         }
         .btn-bucaramanga-primary:hover {
-            background: linear-gradient(135deg, var(--bucaramanga-green-dark) 0%, var(--bucaramanga-green) 100%);
+            background: linear-gradient(135deg, var(--bucaramanga-verde-oscuro) 0%, var(--bucaramanga-verde-principal) 100%);
             transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(5, 150, 105, 0.4);
+            box-shadow: 0 6px 12px rgba(67, 136, 61, 0.4);
             color: white;
         }
 
         .btn-bucaramanga-secondary {
-            background: linear-gradient(135deg, var(--bucaramanga-blue-primary) 0%, var(--bucaramanga-blue-secondary) 100%);
+            background: linear-gradient(135deg, var(--bucaramanga-verde-mas-claro) 0%, var(--bucaramanga-verde-muy-claro) 100%);
             border: none;
-            color: white;
+            color: #285F19;
             font-weight: 600;
             border-radius: 0.5rem;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(30, 58, 138, 0.3);
+            box-shadow: 0 4px 6px rgba(147, 192, 31, 0.3);
         }
         .btn-bucaramanga-secondary:hover {
-            background: linear-gradient(135deg, var(--bucaramanga-blue-light) 0%, var(--bucaramanga-blue-primary) 100%);
+            background: linear-gradient(135deg, var(--bucaramanga-verde-muy-claro) 0%, var(--bucaramanga-verde-mas-claro) 100%);
             transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(30, 58, 138, 0.4);
-            color: white;
+            box-shadow: 0 6px 12px rgba(147, 192, 31, 0.4);
+            color: #285F19;
         }
 
         /* Elementos de acento */
-        .text-bucaramanga-green { color: var(--bucaramanga-green) !important; }
-        .text-bucaramanga-blue { color: var(--bucaramanga-blue-primary) !important; }
-        .text-bucaramanga-gold { color: var(--bucaramanga-gold) !important; }
-        .bg-bucaramanga-green { background: linear-gradient(135deg, var(--bucaramanga-green) 0%, var(--bucaramanga-green-light) 100%) !important; }
-        .bg-bucaramanga-blue { background: linear-gradient(135deg, var(--bucaramanga-blue-primary) 0%, var(--bucaramanga-blue-secondary) 100%) !important; }
+        .text-bucaramanga-green { color: var(--bucaramanga-verde-principal) !important; }
+        .text-bucaramanga-blue { color: var(--bucaramanga-verde-oscuro) !important; }
+        .text-bucaramanga-gold { color: var(--bucaramanga-amarillo) !important; }
+        .bg-bucaramanga-green { background: linear-gradient(135deg, var(--bucaramanga-verde-principal) 0%, var(--bucaramanga-verde-claro) 100%) !important; }
+        .bg-bucaramanga-blue { background: linear-gradient(135deg, var(--bucaramanga-verde-oscuro) 0%, var(--bucaramanga-verde-principal) 100%) !important; }
     </style>
 </head>
 <body>
@@ -150,7 +150,7 @@
     </div>
 
     {{-- Navegación --}}
-    <nav class="navbar navbar-expand-lg navbar-light shadow-sm" style="background: linear-gradient(90deg, var(--bucaramanga-green) 0%, var(--bucaramanga-blue-primary) 100%);">
+    <nav class="navbar navbar-expand-lg navbar-light shadow-sm" style="background: linear-gradient(90deg, var(--bucaramanga-verde-principal) 0%, var(--bucaramanga-verde-oscuro) 100%);">
         <div class="container">
             <a class="navbar-brand text-white fw-bold" href="{{ route('home') }}">
                 <i class="fas fa-home me-2 text-bucaramanga-gold"></i>Banco de Sangre Canina
