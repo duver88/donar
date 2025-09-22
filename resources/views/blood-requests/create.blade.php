@@ -8,9 +8,9 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card shadow">
-                <div class="card-header bg-danger text-white">
-                    <h4 class="mb-0"><i class="fas fa-heartbeat"></i> Solicitar Donación de Sangre</h4>
-                    <small>Solicita ayuda para tu paciente que necesita una transfusión</small>
+                <div class="card-header text-white" style="background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%); border-radius: 0.5rem 0.5rem 0 0;">
+                    <h4 class="mb-0 fw-bold"><i class="fas fa-heartbeat me-2" style="color: #fbbf24;"></i> Solicitar Donación de Sangre</h4>
+                    <small class="d-block mt-1" style="opacity: 0.9;">Solicita ayuda para tu paciente que necesita una transfusión</small>
                 </div>
                 <div class="card-body">
                     @if ($errors->any())
@@ -29,8 +29,8 @@
                         
                         {{-- Datos del Paciente --}}
                         <div class="mb-4">
-                            <h5 class="text-danger border-bottom pb-2">
-                                <i class="fas fa-paw"></i> Datos del Paciente
+                            <h5 class="fw-bold border-bottom pb-2" style="color: #dc2626;">
+                                <i class="fas fa-paw me-2" style="color: #fbbf24;"></i> Datos del Paciente
                             </h5>
                         </div>
 
@@ -63,8 +63,8 @@
 
                         {{-- Urgencia y Timing --}}
                         <div class="mb-4 mt-4">
-                            <h5 class="text-danger border-bottom pb-2">
-                                <i class="fas fa-clock"></i> Urgencia y Tiempo
+                            <h5 class="fw-bold border-bottom pb-2" style="color: #dc2626;">
+                                <i class="fas fa-clock me-2" style="color: #fbbf24;"></i> Urgencia y Tiempo
                             </h5>
                         </div>
 
@@ -96,8 +96,8 @@
 
                         {{-- Información Médica --}}
                         <div class="mb-4 mt-4">
-                            <h5 class="text-danger border-bottom pb-2">
-                                <i class="fas fa-stethoscope"></i> Información Médica
+                            <h5 class="fw-bold border-bottom pb-2" style="color: #dc2626;">
+                                <i class="fas fa-stethoscope me-2" style="color: #fbbf24;"></i> Información Médica
                             </h5>
                         </div>
 
@@ -117,9 +117,9 @@
                         </div>
 
                         {{-- Información Importante --}}
-                        <div class="alert alert-info">
-                            <i class="fas fa-info-circle"></i>
-                            <strong>¿Cómo funciona?</strong>
+                        <div class="alert" style="background: #eff6ff; border-left: 4px solid #1e3a8a; border-color: #bfdbfe;">
+                            <i class="fas fa-info-circle me-2" style="color: #1e3a8a;"></i>
+                            <strong style="color: #1e3a8a;">¿Cómo funciona?</strong>
                             <ul class="mb-0 mt-2">
                                 <li>Al enviar esta solicitud, se notificará automáticamente a todos los donantes compatibles</li>
                                 <li>Los tutores recibirán un email con los detalles del caso</li>
@@ -129,18 +129,18 @@
                         </div>
 
                         {{-- Recordatorio de Urgencia --}}
-                        <div class="alert alert-warning">
-                            <i class="fas fa-exclamation-triangle"></i>
-                            <strong>Recordatorio:</strong> Para casos críticos, también contacta directamente a las clínicas veterinarias cercanas 
+                        <div class="alert" style="background: #fef3cd; border-left: 4px solid #f59e0b; border-color: #fde68a;">
+                            <i class="fas fa-exclamation-triangle me-2" style="color: #f59e0b;"></i>
+                            <strong style="color: #f59e0b;">Recordatorio:</strong> Para casos críticos, también contacta directamente a las clínicas veterinarias cercanas 
                             que puedan tener donantes inmediatos disponibles.
                         </div>
 
                         <div class="d-grid gap-2 mt-4">
-                            <button type="submit" class="btn btn-danger btn-lg">
-                                <i class="fas fa-paper-plane"></i> Enviar Solicitud de Donación
+                            <button type="submit" class="btn btn-lg fw-bold text-white" style="background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%); border: none; border-radius: 0.75rem; padding: 0.75rem 2rem; transition: all 0.3s ease; box-shadow: 0 4px 6px rgba(220, 38, 38, 0.3);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 12px rgba(220, 38, 38, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 6px rgba(220, 38, 38, 0.3)'">
+                                <i class="fas fa-paper-plane me-2"></i> Enviar Solicitud de Donación
                             </button>
-                            <a href="{{ route('veterinarian.dashboard') }}" class="btn btn-outline-secondary">
-                                <i class="fas fa-arrow-left"></i> Volver al Dashboard
+                            <a href="{{ route('veterinarian.dashboard') }}" class="btn fw-semibold" style="color: #6b7280; border: 2px solid #6b7280; border-radius: 0.75rem; padding: 0.75rem 2rem; transition: all 0.3s ease;" onmouseover="this.style.backgroundColor='#6b7280'; this.style.color='white'" onmouseout="this.style.backgroundColor='transparent'; this.style.color='#6b7280'">
+                                <i class="fas fa-arrow-left me-2"></i> Volver al Dashboard
                             </a>
                         </div>
                     </form>

@@ -8,10 +8,33 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
+        /* Variables de color institucionales Alcaldía de Bucaramanga */
+        :root {
+            --bucaramanga-blue-primary: #1e3a8a;
+            --bucaramanga-blue-secondary: #3b82f6;
+            --bucaramanga-blue-light: #0369a1;
+            --bucaramanga-green: #059669;
+            --bucaramanga-green-light: #10b981;
+            --bucaramanga-green-dark: #047857;
+            --bucaramanga-gold: #fbbf24;
+            --bucaramanga-gray: #6b7280;
+            --bucaramanga-gray-light: #f3f4f6;
+        }
+
         .hero-section {
-            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            background: linear-gradient(135deg, var(--bucaramanga-blue-primary) 0%, var(--bucaramanga-blue-secondary) 50%, var(--bucaramanga-blue-light) 100%);
             color: white;
             padding: 60px 0;
+            position: relative;
+        }
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(251, 191, 36, 0.1) 0%, transparent 50%);
         }
         .urgency-badge {
             font-size: 0.75rem;
@@ -33,14 +56,55 @@
             box-shadow: 0 4px 20px rgba(0,0,0,0.15);
         }
         .blood-type {
-            background: #3498db;
+            background: linear-gradient(135deg, var(--bucaramanga-blue-primary) 0%, var(--bucaramanga-blue-secondary) 100%);
             color: white;
             padding: 8px 15px;
             border-radius: 20px;
             font-weight: bold;
             display: inline-block;
             margin-bottom: 10px;
+            box-shadow: 0 2px 4px rgba(30, 58, 138, 0.3);
         }
+
+        /* Botones con colores institucionales */
+        .btn-bucaramanga-primary {
+            background: linear-gradient(135deg, var(--bucaramanga-green) 0%, var(--bucaramanga-green-light) 100%);
+            border: none;
+            color: white;
+            font-weight: 600;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(5, 150, 105, 0.3);
+        }
+        .btn-bucaramanga-primary:hover {
+            background: linear-gradient(135deg, var(--bucaramanga-green-dark) 0%, var(--bucaramanga-green) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(5, 150, 105, 0.4);
+            color: white;
+        }
+
+        .btn-bucaramanga-secondary {
+            background: linear-gradient(135deg, var(--bucaramanga-blue-primary) 0%, var(--bucaramanga-blue-secondary) 100%);
+            border: none;
+            color: white;
+            font-weight: 600;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(30, 58, 138, 0.3);
+        }
+        .btn-bucaramanga-secondary:hover {
+            background: linear-gradient(135deg, var(--bucaramanga-blue-light) 0%, var(--bucaramanga-blue-primary) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(30, 58, 138, 0.4);
+            color: white;
+        }
+
+        /* Elementos de acento */
+        .text-bucaramanga-green { color: var(--bucaramanga-green) !important; }
+        .text-bucaramanga-blue { color: var(--bucaramanga-blue-primary) !important; }
+        .text-bucaramanga-gold { color: var(--bucaramanga-gold) !important; }
+        .bg-bucaramanga-green { background: linear-gradient(135deg, var(--bucaramanga-green) 0%, var(--bucaramanga-green-light) 100%) !important; }
+        .bg-bucaramanga-blue { background: linear-gradient(135deg, var(--bucaramanga-blue-primary) 0%, var(--bucaramanga-blue-secondary) 100%) !important; }
     </style>
 </head>
 <body>
@@ -86,13 +150,13 @@
     </div>
 
     {{-- Navegación --}}
-    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-light shadow-sm" style="background: linear-gradient(90deg, var(--bucaramanga-green) 0%, var(--bucaramanga-blue-primary) 100%);">
         <div class="container">
-            <a class="navbar-brand" href="{{ route('home') }}">
-                <i class="fas fa-home me-2"></i>Banco de Sangre Canina
+            <a class="navbar-brand text-white fw-bold" href="{{ route('home') }}">
+                <i class="fas fa-home me-2 text-bucaramanga-gold"></i>Banco de Sangre Canina
             </a>
             <div class="navbar-nav ms-auto">
-                <a class="nav-link" href="{{ route('pets.create') }}">
+                <a class="nav-link text-white fw-semibold" href="{{ route('pets.create') }}" style="background: rgba(255,255,255,0.2); border-radius: 0.5rem; padding: 0.5rem 1rem; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(255,255,255,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'">
                     <i class="fas fa-plus me-1"></i>Registrar Donante
                 </a>
             </div>
@@ -129,7 +193,7 @@
                             <input type="text" name="city" class="form-control" placeholder="Ej: Bucaramanga">
                         </div>
                         <div class="col-md-3 d-flex align-items-end">
-                            <button type="submit" class="btn btn-primary me-2">
+                            <button type="submit" class="btn btn-bucaramanga-primary me-2">
                                 <i class="fas fa-search"></i> Filtrar
                             </button>
                             <a href="{{ route('public.active-requests') }}" class="btn btn-outline-secondary">
@@ -203,7 +267,7 @@
                             {{-- Footer con botones --}}
                             <div class="card-footer bg-transparent border-0">
                                 <div class="d-grid gap-2">
-                                    <a href="{{ route('pets.create') }}" class="btn btn-success">
+                                    <a href="{{ route('pets.create') }}" class="btn btn-bucaramanga-secondary">
                                         <i class="fas fa-heart me-1"></i>Quiero ayudar
                                     </a>
                                     <small class="text-muted text-center">
@@ -227,7 +291,7 @@
                 <i class="fas fa-heart fa-4x text-muted mb-3"></i>
                 <h4>¡Excelente noticia!</h4>
                 <p class="text-muted">No hay solicitudes urgentes en este momento. Todos los casos han sido atendidos.</p>
-                <a href="{{ route('pets.create') }}" class="btn btn-primary">
+                <a href="{{ route('pets.create') }}" class="btn btn-bucaramanga-primary">
                     <i class="fas fa-plus me-1"></i>Registrar mi mascota como donante
                 </a>
             </div>

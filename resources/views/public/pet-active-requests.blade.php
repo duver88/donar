@@ -8,10 +8,33 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
+        /* Variables de color institucionales Alcaldía de Bucaramanga */
+        :root {
+            --bucaramanga-blue-primary: #1e3a8a;
+            --bucaramanga-blue-secondary: #3b82f6;
+            --bucaramanga-blue-light: #0369a1;
+            --bucaramanga-green: #059669;
+            --bucaramanga-green-light: #10b981;
+            --bucaramanga-green-dark: #047857;
+            --bucaramanga-gold: #fbbf24;
+            --bucaramanga-gray: #6b7280;
+            --bucaramanga-gray-light: #f3f4f6;
+        }
+
         .hero-section {
-            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            background: linear-gradient(135deg, var(--bucaramanga-green) 0%, var(--bucaramanga-green-light) 50%, var(--bucaramanga-blue-primary) 100%);
             color: white;
             padding: 40px 0;
+            position: relative;
+        }
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 70% 30%, rgba(251, 191, 36, 0.15) 0%, transparent 50%);
         }
         .pet-info {
             background: white;
@@ -36,7 +59,7 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             border: none;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            border-left: 4px solid #3498db;
+            border-left: 4px solid var(--bucaramanga-blue-primary);
         }
         .request-card:hover {
             transform: translateY(-3px);
@@ -45,6 +68,44 @@
         .request-card.urgency-alta { border-left-color: #e74c3c; }
         .request-card.urgency-media { border-left-color: #f39c12; }
         .request-card.urgency-baja { border-left-color: #27ae60; }
+
+        /* Botones con colores institucionales */
+        .btn-bucaramanga-primary {
+            background: linear-gradient(135deg, var(--bucaramanga-green) 0%, var(--bucaramanga-green-light) 100%);
+            border: none;
+            color: white;
+            font-weight: 600;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(5, 150, 105, 0.3);
+        }
+        .btn-bucaramanga-primary:hover {
+            background: linear-gradient(135deg, var(--bucaramanga-green-dark) 0%, var(--bucaramanga-green) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(5, 150, 105, 0.4);
+            color: white;
+        }
+
+        .btn-bucaramanga-secondary {
+            background: linear-gradient(135deg, var(--bucaramanga-blue-primary) 0%, var(--bucaramanga-blue-secondary) 100%);
+            border: none;
+            color: white;
+            font-weight: 600;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(30, 58, 138, 0.3);
+        }
+        .btn-bucaramanga-secondary:hover {
+            background: linear-gradient(135deg, var(--bucaramanga-blue-light) 0%, var(--bucaramanga-blue-primary) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(30, 58, 138, 0.4);
+            color: white;
+        }
+
+        /* Elementos de acento */
+        .text-bucaramanga-green { color: var(--bucaramanga-green) !important; }
+        .text-bucaramanga-blue { color: var(--bucaramanga-blue-primary) !important; }
+        .text-bucaramanga-gold { color: var(--bucaramanga-gold) !important; }
     </style>
 </head>
 <body class="bg-light">
@@ -71,8 +132,8 @@
         <div class="pet-info">
             <div class="row align-items-center">
                 <div class="col-md-8">
-                    <h3 class="text-primary mb-2">
-                        <i class="fas fa-dog me-2"></i>{{ $pet->name }}
+                    <h3 class="text-bucaramanga-green mb-2 fw-bold">
+                        <i class="fas fa-dog me-2 text-bucaramanga-gold"></i>{{ $pet->name }}
                     </h3>
                     <div class="row">
                         <div class="col-sm-6">
@@ -81,7 +142,7 @@
                         </div>
                         <div class="col-sm-6">
                             <p class="mb-1"><strong>Tipo de sangre:</strong>
-                                <span class="badge bg-primary">{{ $pet->blood_type }}</span>
+                                <span class="badge" style="background: linear-gradient(135deg, var(--bucaramanga-blue-primary) 0%, var(--bucaramanga-blue-secondary) 100%); box-shadow: 0 2px 4px rgba(30, 58, 138, 0.3);">{{ $pet->blood_type }}</span>
                             </p>
                             <p class="mb-1"><strong>Tutor:</strong> {{ $pet->tutor->name }}</p>
                         </div>
@@ -104,7 +165,7 @@
     {{-- Navegación --}}
     <div class="container mt-4 mb-4">
         <nav class="d-flex justify-content-between align-items-center">
-            <a href="{{ route('public.active-requests') }}" class="btn btn-outline-primary">
+            <a href="{{ route('public.active-requests') }}" class="btn btn-bucaramanga-primary">
                 <i class="fas fa-arrow-left me-1"></i>Ver todas las solicitudes
             </a>
             <a href="{{ route('home') }}" class="btn btn-outline-secondary">
@@ -152,7 +213,7 @@
                             <div class="card-body">
                                 {{-- Información del veterinario --}}
                                 <div class="bg-light p-3 rounded mb-3">
-                                    <h6 class="text-primary mb-2">
+                                    <h6 class="text-bucaramanga-blue mb-2">
                                         <i class="fas fa-user-md me-1"></i>Información del Veterinario
                                     </h6>
                                     <div class="small">
@@ -205,7 +266,7 @@
                             {{-- Footer con botones --}}
                             <div class="card-footer bg-transparent border-0">
                                 <div class="d-grid gap-2">
-                                    <button class="btn btn-success btn-lg" data-bs-toggle="modal" data-bs-target="#helpModal{{ $request->id }}">
+                                    <button class="btn btn-bucaramanga-secondary btn-lg" data-bs-toggle="modal" data-bs-target="#helpModal{{ $request->id }}">
                                         <i class="fas fa-heart me-1"></i>{{ $pet->name }} quiere ayudar
                                     </button>
                                     <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#declineModal{{ $request->id }}">
@@ -224,7 +285,7 @@
                     <div class="modal fade" id="helpModal{{ $request->id }}" tabindex="-1">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
-                                <div class="modal-header bg-success text-white">
+                                <div class="modal-header text-white" style="background-color: var(--bucaramanga-green);">
                                     <h5 class="modal-title">
                                         <i class="fas fa-heart me-2"></i>
                                         {{ $pet->name }} ayudará a {{ $request->patient_name }}
@@ -291,7 +352,7 @@
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                                             Cancelar
                                         </button>
-                                        <button type="submit" class="btn btn-success btn-lg">
+                                        <button type="submit" class="btn btn-bucaramanga-secondary btn-lg">
                                             <i class="fas fa-paper-plane me-1"></i>Confirmar Donación
                                         </button>
                                     </div>
@@ -333,7 +394,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                        <button type="submit" class="btn btn-outline-primary">Confirmar</button>
+                                        <button type="submit" class="btn btn-bucaramanga-primary">Confirmar</button>
                                     </div>
                                 </form>
                             </div>
@@ -352,7 +413,7 @@
                     </p>
                     <div class="row text-center">
                         <div class="col-md-6">
-                            <a href="{{ route('public.active-requests') }}" class="btn btn-primary">
+                            <a href="{{ route('public.active-requests') }}" class="btn btn-bucaramanga-primary">
                                 <i class="fas fa-list me-1"></i>Ver todas las solicitudes
                             </a>
                         </div>

@@ -7,9 +7,9 @@
     <div class="row">
         <div class="col-12">
             <div class="card shadow">
-                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-                    <h4 class="mb-0">
-                        <i class="fas fa-dog"></i> Gestión de Mascotas Donantes
+                <div class="card-header text-white d-flex justify-content-between align-items-center" style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #0369a1 100%); border-radius: 0.5rem 0.5rem 0 0;">
+                    <h4 class="mb-0 fw-bold">
+                        <i class="fas fa-dog me-2" style="color: #fbbf24;"></i> Gestión de Mascotas Donantes
                     </h4>
                 </div>
                 <div class="card-body">
@@ -41,8 +41,8 @@
                                 </select>
                             </div>
                             <div class="col-md-2">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fas fa-filter"></i> Filtrar
+                                <button type="submit" class="btn fw-semibold" style="background: #1e3a8a; border: none; color: white; border-radius: 0.5rem; transition: all 0.3s ease;" onmouseover="this.style.background='#1e40af'" onmouseout="this.style.background='#1e3a8a'">
+                                    <i class="fas fa-filter me-1"></i> Filtrar
                                 </button>
                             </div>
                             <div class="col-md-2">
@@ -56,52 +56,52 @@
                     <!-- Estadísticas rápidas -->
                     <div class="row mb-4">
                         <div class="col-md-3">
-                            <div class="card bg-warning text-white">
+                            <div class="card text-white shadow-sm" style="background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%); border: none; border-radius: 1rem;">
                                 <div class="card-body">
                                     <div class="d-flex align-items-center">
-                                        <i class="fas fa-clock fa-2x me-3"></i>
+                                        <i class="fas fa-clock fa-2x me-3" style="opacity: 0.9;"></i>
                                         <div>
-                                            <h5 class="mb-0">{{ $pets->where('donor_status', 'pending')->count() }}</h5>
-                                            <small>Pendientes</small>
+                                            <h5 class="mb-0 fw-bold">{{ $pets->where('donor_status', 'pending')->count() }}</h5>
+                                            <small style="opacity: 0.9;">Pendientes</small>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <div class="card bg-success text-white">
+                            <div class="card text-white shadow-sm" style="background: linear-gradient(135deg, #059669 0%, #10b981 100%); border: none; border-radius: 1rem;">
                                 <div class="card-body">
                                     <div class="d-flex align-items-center">
-                                        <i class="fas fa-check fa-2x me-3"></i>
+                                        <i class="fas fa-check fa-2x me-3" style="opacity: 0.9;"></i>
                                         <div>
-                                            <h5 class="mb-0">{{ $pets->where('donor_status', 'approved')->count() }}</h5>
-                                            <small>Aprobados</small>
+                                            <h5 class="mb-0 fw-bold">{{ $pets->where('donor_status', 'approved')->count() }}</h5>
+                                            <small style="opacity: 0.9;">Aprobados</small>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <div class="card bg-info text-white">
+                            <div class="card text-white shadow-sm" style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); border: none; border-radius: 1rem;">
                                 <div class="card-body">
                                     <div class="d-flex align-items-center">
-                                        <i class="fas fa-dog fa-2x me-3"></i>
+                                        <i class="fas fa-dog fa-2x me-3" style="opacity: 0.9;"></i>
                                         <div>
-                                            <h5 class="mb-0">{{ $pets->where('species', 'perro')->count() }}</h5>
-                                            <small>Perros</small>
+                                            <h5 class="mb-0 fw-bold">{{ $pets->where('species', 'perro')->count() }}</h5>
+                                            <small style="opacity: 0.9;">Perros</small>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <div class="card bg-secondary text-white">
+                            <div class="card text-white shadow-sm" style="background: linear-gradient(135deg, #6b7280 0%, #9ca3af 100%); border: none; border-radius: 1rem;">
                                 <div class="card-body">
                                     <div class="d-flex align-items-center">
-                                        <i class="fas fa-cat fa-2x me-3"></i>
+                                        <i class="fas fa-cat fa-2x me-3" style="opacity: 0.9;"></i>
                                         <div>
-                                            <h5 class="mb-0">{{ $pets->where('species', 'gato')->count() }}</h5>
-                                            <small>Gatos</small>
+                                            <h5 class="mb-0 fw-bold">{{ $pets->where('species', 'gato')->count() }}</h5>
+                                            <small style="opacity: 0.9;">Gatos</small>
                                         </div>
                                     </div>
                                 </div>
@@ -112,7 +112,7 @@
                     <!-- Tabla de mascotas -->
                     <div class="table-responsive">
                         <table class="table table-striped table-hover">
-                            <thead class="table-dark">
+                            <thead style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white;">
                                 <tr>
                                     <th>ID</th>
                                     <th>Foto</th>

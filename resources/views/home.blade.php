@@ -16,10 +16,10 @@
                     <div class="col-md-4">
                         <div class="card h-100 card-hover shadow">
                             <div class="card-body text-center text-dark">
-                                <i class="fas fa-dog fa-4x text-primary mb-4"></i>
-                                <h4 class="card-title text-primary">¿Tu mascota puede ser donante?</h4>
+                                <i class="fas fa-dog fa-4x text-bucaramanga-green mb-4"></i>
+                                <h4 class="card-title text-bucaramanga-green">¿Tu mascota puede ser donante?</h4>
                                 <p class="card-text">Registra a tu mascota como donante y ayuda a salvar vidas. Es un proceso seguro y controlado por veterinarios.</p>
-                                <a href="{{ route('pets.create') }}" class="btn btn-primary btn-lg">
+                                <a href="{{ route('pets.create') }}" class="btn btn-bucaramanga-primary btn-lg">
                                     <i class="fas fa-plus-circle"></i> Postular mi mascota
                                 </a>
                             </div>
@@ -42,21 +42,21 @@
                     <div class="col-md-4">
                         <div class="card h-100 card-hover shadow">
                             <div class="card-body text-center text-dark">
-                                <i class="fas fa-user-md fa-4x text-success mb-4"></i>
-                                <h4 class="card-title text-success">¿Eres veterinario?</h4>
+                                <i class="fas fa-user-md fa-4x text-bucaramanga-blue mb-4"></i>
+                                <h4 class="card-title text-bucaramanga-blue">¿Eres veterinario?</h4>
                                 <p class="card-text">Solicita donaciones de sangre para tus pacientes de manera rápida y eficiente.</p>
                                 @auth
                                     @if(Auth::user()->role === 'veterinarian' && Auth::user()->status === 'approved')
-                                        <a href="{{ route('veterinarian.blood_request.create') }}" class="btn btn-success btn-lg">
+                                        <a href="{{ route('veterinarian.blood_request.create') }}" class="btn btn-bucaramanga-secondary btn-lg">
                                             <i class="fas fa-heartbeat"></i> Solicitar donación
                                         </a>
                                     @else
-                                        <a href="{{ route('veterinarian.register') }}" class="btn btn-success btn-lg">
+                                        <a href="{{ route('veterinarian.register') }}" class="btn btn-bucaramanga-secondary btn-lg">
                                             <i class="fas fa-user-plus"></i> Registrarse
                                         </a>
                                     @endif
                                 @else
-                                    <a href="{{ route('veterinarian.register') }}" class="btn btn-success btn-lg">
+                                    <a href="{{ route('veterinarian.register') }}" class="btn btn-bucaramanga-secondary btn-lg">
                                         <i class="fas fa-user-plus"></i> Registrarse
                                     </a>
                                 @endauth
@@ -75,25 +75,25 @@
     <div class="container">
         <div class="row text-center">
             <div class="col-md-3 mb-4">
-                <div class="card border-0 shadow-sm">
+                <div class="card border-0 shadow-sm stats-card">
                     <div class="card-body">
-                        <i class="fas fa-dog fa-3x text-primary mb-3"></i>
-                        <h3 class="text-primary">{{ $stats['total_donors'] ?? 0 }}</h3>
+                        <i class="fas fa-dog fa-3x text-bucaramanga-green mb-3"></i>
+                        <h3 class="text-bucaramanga-green">{{ $stats['total_donors'] ?? 0 }}</h3>
                         <p class="text-muted mb-0">Donantes Registrados</p>
                     </div>
                 </div>
             </div>
             <div class="col-md-3 mb-4">
-                <div class="card border-0 shadow-sm">
+                <div class="card border-0 shadow-sm stats-card">
                     <div class="card-body">
-                        <i class="fas fa-user-md fa-3x text-success mb-3"></i>
-                        <h3 class="text-success">{{ $stats['total_veterinarians'] ?? 0 }}</h3>
+                        <i class="fas fa-user-md fa-3x text-bucaramanga-blue mb-3"></i>
+                        <h3 class="text-bucaramanga-blue">{{ $stats['total_veterinarians'] ?? 0 }}</h3>
                         <p class="text-muted mb-0">Veterinarios Activos</p>
                     </div>
                 </div>
             </div>
             <div class="col-md-3 mb-4">
-                <div class="card border-0 shadow-sm">
+                <div class="card border-0 shadow-sm stats-card">
                     <div class="card-body">
                         <i class="fas fa-heartbeat fa-3x text-danger mb-3"></i>
                         <h3 class="text-danger">{{ $stats['active_requests'] ?? 0 }}</h3>
@@ -102,10 +102,10 @@
                 </div>
             </div>
             <div class="col-md-3 mb-4">
-                <div class="card border-0 shadow-sm">
+                <div class="card border-0 shadow-sm stats-card">
                     <div class="card-body">
-                        <i class="fas fa-users fa-3x text-info mb-3"></i>
-                        <h3 class="text-info">{{ $stats['total_tutors'] ?? 0 }}</h3>
+                        <i class="fas fa-users fa-3x text-bucaramanga-gray mb-3"></i>
+                        <h3 class="text-bucaramanga-gray">{{ $stats['total_tutors'] ?? 0 }}</h3>
                         <p class="text-muted mb-0">Tutores Registrados</p>
                     </div>
                 </div>

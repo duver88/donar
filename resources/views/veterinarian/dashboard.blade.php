@@ -9,12 +9,12 @@
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <div>
-                    <h2><i class="fas fa-user-md text-success"></i> Dashboard Veterinario</h2>
-                    <p class="text-muted mb-0">Bienvenido, Dr. {{ Auth::user()->name }}</p>
+                    <h2 class="fw-bold" style="color: #1e3a8a;"><i class="fas fa-user-md me-2" style="color: #fbbf24;"></i> Dashboard Veterinario</h2>
+                    <p class="text-muted mb-0">Bienvenido, <strong>Dr. {{ Auth::user()->name }}</strong></p>
                 </div>
                 <div>
-                    <a href="{{ route('veterinarian.blood_request.create') }}" class="btn btn-success">
-                        <i class="fas fa-plus"></i> Nueva Solicitud de Donación
+                    <a href="{{ route('veterinarian.blood_request.create') }}" class="btn fw-bold text-white" style="background: linear-gradient(135deg, #059669 0%, #10b981 100%); border: none; border-radius: 0.75rem; padding: 0.75rem 1.5rem; transition: all 0.3s ease; box-shadow: 0 4px 6px rgba(5, 150, 105, 0.3);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 12px rgba(5, 150, 105, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 6px rgba(5, 150, 105, 0.3)'">
+                        <i class="fas fa-plus me-2"></i> Nueva Solicitud de Donación
                     </a>
                 </div>
             </div>
@@ -24,20 +24,20 @@
     {{-- Estadísticas --}}
     <div class="row mb-4">
         <div class="col-md-4 mb-3">
-            <div class="card bg-primary text-white h-100">
+            <div class="card text-white h-100 shadow-sm" style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); border: none; border-radius: 1rem;">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
-                            <h4 class="mb-0">{{ $stats['my_requests'] }}</h4>
-                            <p class="mb-0">Mis Solicitudes</p>
+                            <h4 class="mb-0 fw-bold">{{ $stats['my_requests'] }}</h4>
+                            <p class="mb-0" style="opacity: 0.9;">Mis Solicitudes</p>
                         </div>
                         <div>
-                            <i class="fas fa-file-medical fa-3x opacity-75"></i>
+                            <i class="fas fa-file-medical fa-3x" style="opacity: 0.7;"></i>
                         </div>
                     </div>
                     <div class="mt-2">
-                        <small class="opacity-75">
-                            <i class="fas fa-chart-line"></i> Total histórico
+                        <small style="opacity: 0.8;">
+                            <i class="fas fa-chart-line me-1"></i> Total histórico
                         </small>
                     </div>
                 </div>
@@ -45,20 +45,20 @@
         </div>
         
         <div class="col-md-4 mb-3">
-            <div class="card bg-warning text-white h-100">
+            <div class="card text-white h-100 shadow-sm" style="background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%); border: none; border-radius: 1rem;">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
-                            <h4 class="mb-0">{{ $stats['active_requests'] }}</h4>
-                            <p class="mb-0">Solicitudes Activas</p>
+                            <h4 class="mb-0 fw-bold">{{ $stats['active_requests'] }}</h4>
+                            <p class="mb-0" style="opacity: 0.9;">Solicitudes Activas</p>
                         </div>
                         <div>
-                            <i class="fas fa-clock fa-3x opacity-75"></i>
+                            <i class="fas fa-clock fa-3x" style="opacity: 0.7;"></i>
                         </div>
                     </div>
                     <div class="mt-2">
-                        <small class="opacity-75">
-                            <i class="fas fa-hourglass-half"></i> En proceso
+                        <small style="opacity: 0.8;">
+                            <i class="fas fa-hourglass-half me-1"></i> En proceso
                         </small>
                     </div>
                 </div>
@@ -66,20 +66,20 @@
         </div>
         
         <div class="col-md-4 mb-3">
-            <div class="card bg-success text-white h-100">
+            <div class="card text-white h-100 shadow-sm" style="background: linear-gradient(135deg, #059669 0%, #10b981 100%); border: none; border-radius: 1rem;">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
-                            <h4 class="mb-0">{{ $stats['available_donors'] }}</h4>
-                            <p class="mb-0">Donantes Disponibles</p>
+                            <h4 class="mb-0 fw-bold">{{ $stats['available_donors'] }}</h4>
+                            <p class="mb-0" style="opacity: 0.9;">Donantes Disponibles</p>
                         </div>
                         <div>
-                            <i class="fas fa-dog fa-3x opacity-75"></i>
+                            <i class="fas fa-dog fa-3x" style="opacity: 0.7;"></i>
                         </div>
                     </div>
                     <div class="mt-2">
-                        <small class="opacity-75">
-                            <i class="fas fa-heart"></i> En toda la red
+                        <small style="opacity: 0.8;">
+                            <i class="fas fa-heart me-1"></i> En toda la red
                         </small>
                     </div>
                 </div>
@@ -91,17 +91,17 @@
         {{-- Mis Solicitudes --}}
         <div class="col-md-8">
             <div class="card shadow">
-                <div class="card-header bg-light d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0"><i class="fas fa-list text-primary"></i> Mis Solicitudes de Donación</h5>
-                    <a href="{{ route('veterinarian.blood_request.create') }}" class="btn btn-success btn-sm">
-                        <i class="fas fa-plus"></i> Nueva Solicitud
+                <div class="card-header text-white d-flex justify-content-between align-items-center" style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); border-radius: 0.5rem 0.5rem 0 0;">
+                    <h5 class="mb-0 fw-bold"><i class="fas fa-list me-2" style="color: #fbbf24;"></i> Mis Solicitudes de Donación</h5>
+                    <a href="{{ route('veterinarian.blood_request.create') }}" class="btn btn-sm fw-semibold" style="background: #059669; border: none; color: white; border-radius: 0.5rem; padding: 0.5rem 1rem; transition: all 0.3s ease;" onmouseover="this.style.background='#047857'" onmouseout="this.style.background='#059669'">
+                        <i class="fas fa-plus me-1"></i> Nueva Solicitud
                     </a>
                 </div>
                 <div class="card-body">
                     @if($myRequests->count() > 0)
                         <div class="table-responsive">
                             <table class="table table-striped table-hover">
-                                <thead class="table-dark">
+                                <thead style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white;">
                                     <tr>
                                         <th>Paciente</th>
                                         <th>Urgencia</th>
@@ -168,8 +168,8 @@
                             <i class="fas fa-file-medical fa-4x text-muted mb-3"></i>
                             <h5 class="text-muted">No has realizado ninguna solicitud aún</h5>
                             <p class="text-muted mb-3">Crea tu primera solicitud de donación de sangre</p>
-                            <a href="{{ route('veterinarian.blood_request.create') }}" class="btn btn-success">
-                                <i class="fas fa-plus"></i> Crear Primera Solicitud
+                            <a href="{{ route('veterinarian.blood_request.create') }}" class="btn fw-bold text-white" style="background: linear-gradient(135deg, #059669 0%, #10b981 100%); border: none; border-radius: 0.75rem; padding: 0.75rem 1.5rem; transition: all 0.3s ease; box-shadow: 0 4px 6px rgba(5, 150, 105, 0.3);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 12px rgba(5, 150, 105, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 6px rgba(5, 150, 105, 0.3)'">
+                                <i class="fas fa-plus me-2"></i> Crear Primera Solicitud
                             </a>
                         </div>
                     @endif
@@ -180,8 +180,8 @@
         <div class="col-md-4">
             {{-- Información de Contacto --}}
             <div class="card shadow mb-3">
-                <div class="card-header bg-light">
-                    <h5 class="mb-0"><i class="fas fa-info-circle text-info"></i> Mi Información</h5>
+                <div class="card-header text-white" style="background: linear-gradient(135deg, #059669 0%, #10b981 100%);">
+                    <h5 class="mb-0 fw-bold"><i class="fas fa-info-circle me-2" style="color: #fbbf24;"></i> Mi Información</h5>
                 </div>
                 <div class="card-body">
                     <div class="text-center mb-3">
@@ -222,8 +222,8 @@
 
             {{-- Consejos --}}
             <div class="card shadow">
-                <div class="card-header bg-light">
-                    <h5 class="mb-0"><i class="fas fa-lightbulb text-warning"></i> Consejos y Buenas Prácticas</h5>
+                <div class="card-header text-white" style="background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);">
+                    <h5 class="mb-0 fw-bold"><i class="fas fa-lightbulb me-2" style="color: #1e3a8a;"></i> Consejos y Buenas Prácticas</h5>
                 </div>
                 <div class="card-body">
                     <ul class="list-unstyled">

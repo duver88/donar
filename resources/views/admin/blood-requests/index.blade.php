@@ -7,9 +7,9 @@
     <div class="row">
         <div class="col-12">
             <div class="card shadow">
-                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-                    <h4 class="mb-0">
-                        <i class="fas fa-tint"></i> Gestión de Solicitudes de Sangre
+                <div class="card-header text-white d-flex justify-content-between align-items-center" style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #0369a1 100%); border-radius: 0.5rem 0.5rem 0 0;">
+                    <h4 class="mb-0 fw-bold">
+                        <i class="fas fa-tint me-2" style="color: #fbbf24;"></i> Gestión de Solicitudes de Sangre
                     </h4>
                 </div>
                 <div class="card-body">
@@ -44,8 +44,8 @@
                                 </select>
                             </div>
                             <div class="col-md-2">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fas fa-filter"></i> Filtrar
+                                <button type="submit" class="btn fw-semibold" style="background: #1e3a8a; border: none; color: white; border-radius: 0.5rem; transition: all 0.3s ease;" onmouseover="this.style.background='#1e40af'" onmouseout="this.style.background='#1e3a8a'">
+                                    <i class="fas fa-filter me-1"></i> Filtrar
                                 </button>
                             </div>
                             <div class="col-md-2">
@@ -59,52 +59,52 @@
                     <!-- Estadísticas rápidas -->
                     <div class="row mb-4">
                         <div class="col-md-3">
-                            <div class="card bg-success text-white">
+                            <div class="card text-white shadow-sm" style="background: linear-gradient(135deg, #059669 0%, #10b981 100%); border: none; border-radius: 1rem;">
                                 <div class="card-body">
                                     <div class="d-flex align-items-center">
-                                        <i class="fas fa-heartbeat fa-2x me-3"></i>
+                                        <i class="fas fa-heartbeat fa-2x me-3" style="opacity: 0.9;"></i>
                                         <div>
-                                            <h5 class="mb-0">{{ $requests->where('status', 'active')->count() }}</h5>
-                                            <small>Activas</small>
+                                            <h5 class="mb-0 fw-bold">{{ $requests->where('status', 'active')->count() }}</h5>
+                                            <small style="opacity: 0.9;">Activas</small>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <div class="card bg-primary text-white">
+                            <div class="card text-white shadow-sm" style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); border: none; border-radius: 1rem;">
                                 <div class="card-body">
                                     <div class="d-flex align-items-center">
-                                        <i class="fas fa-check fa-2x me-3"></i>
+                                        <i class="fas fa-check fa-2x me-3" style="opacity: 0.9;"></i>
                                         <div>
-                                            <h5 class="mb-0">{{ $requests->where('status', 'completed')->count() }}</h5>
-                                            <small>Completadas</small>
+                                            <h5 class="mb-0 fw-bold">{{ $requests->where('status', 'completed')->count() }}</h5>
+                                            <small style="opacity: 0.9;">Completadas</small>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <div class="card bg-danger text-white">
+                            <div class="card text-white shadow-sm" style="background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%); border: none; border-radius: 1rem;">
                                 <div class="card-body">
                                     <div class="d-flex align-items-center">
-                                        <i class="fas fa-exclamation-triangle fa-2x me-3"></i>
+                                        <i class="fas fa-exclamation-triangle fa-2x me-3" style="opacity: 0.9;"></i>
                                         <div>
-                                            <h5 class="mb-0">{{ $requests->where('urgency_level', 'critica')->count() }}</h5>
-                                            <small>Críticas</small>
+                                            <h5 class="mb-0 fw-bold">{{ $requests->where('urgency_level', 'critica')->count() }}</h5>
+                                            <small style="opacity: 0.9;">Críticas</small>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <div class="card bg-info text-white">
+                            <div class="card text-white shadow-sm" style="background: linear-gradient(135deg, #0891b2 0%, #0ea5e9 100%); border: none; border-radius: 1rem;">
                                 <div class="card-body">
                                     <div class="d-flex align-items-center">
-                                        <i class="fas fa-list fa-2x me-3"></i>
+                                        <i class="fas fa-list fa-2x me-3" style="opacity: 0.9;"></i>
                                         <div>
-                                            <h5 class="mb-0">{{ $requests->total() }}</h5>
-                                            <small>Total</small>
+                                            <h5 class="mb-0 fw-bold">{{ $requests->total() }}</h5>
+                                            <small style="opacity: 0.9;">Total</small>
                                         </div>
                                     </div>
                                 </div>
@@ -115,7 +115,7 @@
                     <!-- Tabla de solicitudes -->
                     <div class="table-responsive">
                         <table class="table table-striped table-hover">
-                            <thead class="table-dark">
+                            <thead style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white;">
                                 <tr>
                                     <th>ID</th>
                                     <th>Paciente</th>

@@ -7,12 +7,12 @@
     <div class="row">
         <div class="col-12">
             <div class="card shadow">
-                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-                    <h4 class="mb-0">
-                        <i class="fas fa-user-md"></i> Gestión de Veterinarios
+                <div class="card-header text-white d-flex justify-content-between align-items-center" style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #0369a1 100%); border-radius: 0.5rem 0.5rem 0 0;">
+                    <h4 class="mb-0 fw-bold">
+                        <i class="fas fa-user-md me-2" style="color: #fbbf24;"></i> Gestión de Veterinarios
                     </h4>
-                    <a href="{{ route('admin.veterinarians.create') }}" class="btn btn-success">
-                        <i class="fas fa-plus"></i> Nuevo Veterinario
+                    <a href="{{ route('admin.veterinarians.create') }}" class="btn" style="background: #059669; border: none; color: white; font-weight: 600; padding: 0.5rem 1.5rem; border-radius: 0.5rem; transition: all 0.3s ease;" onmouseover="this.style.background='#047857'" onmouseout="this.style.background='#059669'">
+                        <i class="fas fa-plus me-1"></i> Nuevo Veterinario
                     </a>
                 </div>
                 <div class="card-body">
@@ -37,8 +37,8 @@
                                 </select>
                             </div>
                             <div class="col-md-2">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fas fa-filter"></i> Filtrar
+                                <button type="submit" class="btn fw-semibold" style="background: #1e3a8a; border: none; color: white; border-radius: 0.5rem; transition: all 0.3s ease;" onmouseover="this.style.background='#1e40af'" onmouseout="this.style.background='#1e3a8a'">
+                                    <i class="fas fa-filter me-1"></i> Filtrar
                                 </button>
                             </div>
                             <div class="col-md-3 text-end">
@@ -52,52 +52,52 @@
                     <!-- Estadísticas rápidas -->
                     <div class="row mb-4">
                         <div class="col-md-3">
-                            <div class="card bg-warning text-white">
+                            <div class="card text-white shadow-sm" style="background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%); border: none; border-radius: 1rem;">
                                 <div class="card-body">
                                     <div class="d-flex align-items-center">
-                                        <i class="fas fa-clock fa-2x me-3"></i>
+                                        <i class="fas fa-clock fa-2x me-3" style="opacity: 0.9;"></i>
                                         <div>
-                                            <h5 class="mb-0">{{ $veterinarians->where('status', 'pending')->count() }}</h5>
-                                            <small>Pendientes</small>
+                                            <h5 class="mb-0 fw-bold">{{ $veterinarians->where('status', 'pending')->count() }}</h5>
+                                            <small style="opacity: 0.9;">Pendientes</small>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <div class="card bg-success text-white">
+                            <div class="card text-white shadow-sm" style="background: linear-gradient(135deg, #059669 0%, #10b981 100%); border: none; border-radius: 1rem;">
                                 <div class="card-body">
                                     <div class="d-flex align-items-center">
-                                        <i class="fas fa-check fa-2x me-3"></i>
+                                        <i class="fas fa-check fa-2x me-3" style="opacity: 0.9;"></i>
                                         <div>
-                                            <h5 class="mb-0">{{ $veterinarians->where('status', 'approved')->count() }}</h5>
-                                            <small>Aprobados</small>
+                                            <h5 class="mb-0 fw-bold">{{ $veterinarians->where('status', 'approved')->count() }}</h5>
+                                            <small style="opacity: 0.9;">Aprobados</small>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <div class="card bg-danger text-white">
+                            <div class="card text-white shadow-sm" style="background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%); border: none; border-radius: 1rem;">
                                 <div class="card-body">
                                     <div class="d-flex align-items-center">
-                                        <i class="fas fa-times fa-2x me-3"></i>
+                                        <i class="fas fa-times fa-2x me-3" style="opacity: 0.9;"></i>
                                         <div>
-                                            <h5 class="mb-0">{{ $veterinarians->where('status', 'rejected')->count() }}</h5>
-                                            <small>Rechazados</small>
+                                            <h5 class="mb-0 fw-bold">{{ $veterinarians->where('status', 'rejected')->count() }}</h5>
+                                            <small style="opacity: 0.9;">Rechazados</small>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <div class="card bg-info text-white">
+                            <div class="card text-white shadow-sm" style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); border: none; border-radius: 1rem;">
                                 <div class="card-body">
                                     <div class="d-flex align-items-center">
-                                        <i class="fas fa-users fa-2x me-3"></i>
+                                        <i class="fas fa-users fa-2x me-3" style="opacity: 0.9;"></i>
                                         <div>
-                                            <h5 class="mb-0">{{ $veterinarians->total() }}</h5>
-                                            <small>Total</small>
+                                            <h5 class="mb-0 fw-bold">{{ $veterinarians->total() }}</h5>
+                                            <small style="opacity: 0.9;">Total</small>
                                         </div>
                                     </div>
                                 </div>
@@ -108,7 +108,7 @@
                     <!-- Tabla de veterinarios -->
                     <div class="table-responsive">
                         <table class="table table-striped table-hover">
-                            <thead class="table-dark">
+                            <thead style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white;">
                                 <tr>
                                     <th>ID</th>
                                     <th>Nombre</th>

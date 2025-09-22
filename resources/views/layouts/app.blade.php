@@ -8,27 +8,113 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
+        /* Variables de color basadas en identidad Bucaramanga */
+        :root {
+            --bucaramanga-green: #228B22;
+            --bucaramanga-green-light: #32CD32;
+            --bucaramanga-green-dark: #006400;
+            --bucaramanga-blue: #0066CC;
+            --bucaramanga-blue-light: #4A90E2;
+            --bucaramanga-gray: #6C757D;
+            --bucaramanga-gray-light: #F8F9FA;
+        }
+
+        /* Hero section con gradiente institucional */
         .hero-section {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--bucaramanga-green) 0%, var(--bucaramanga-blue) 100%);
             color: white;
             padding: 80px 0;
+            position: relative;
         }
+
+        /* Overlay sutil para mejor legibilidad */
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.1);
+            z-index: 1;
+        }
+
+        .hero-section .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Cards con estilo institucional */
         .card-hover {
-            transition: transform 0.3s ease;
+            transition: all 0.3s ease;
+            border: none;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
         .card-hover:hover {
             transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
         }
+
+        /* Navbar con colores institucionales */
         .navbar-brand {
             font-weight: bold;
+            font-size: 1.5rem;
         }
-        .bg-gradient-custom {
-            background: linear-gradient(45deg, #667eea, #764ba2);
+
+        /* Botones con colores institucionales */
+        .btn-bucaramanga-primary {
+            background-color: var(--bucaramanga-green);
+            border-color: var(--bucaramanga-green);
+            color: white;
+        }
+        .btn-bucaramanga-primary:hover {
+            background-color: var(--bucaramanga-green-dark);
+            border-color: var(--bucaramanga-green-dark);
+            color: white;
+        }
+
+        .btn-bucaramanga-secondary {
+            background-color: var(--bucaramanga-blue);
+            border-color: var(--bucaramanga-blue);
+            color: white;
+        }
+        .btn-bucaramanga-secondary:hover {
+            background-color: #0052A3;
+            border-color: #0052A3;
+            color: white;
+        }
+
+        /* Elementos de acento */
+        .text-bucaramanga-green { color: var(--bucaramanga-green) !important; }
+        .text-bucaramanga-blue { color: var(--bucaramanga-blue) !important; }
+        .bg-bucaramanga-green { background-color: var(--bucaramanga-green) !important; }
+        .bg-bucaramanga-blue { background-color: var(--bucaramanga-blue) !important; }
+
+        /* Navbar personalizada */
+        .navbar-bucaramanga {
+            background: linear-gradient(90deg, var(--bucaramanga-green) 0%, var(--bucaramanga-blue) 100%);
+        }
+
+        /* Estilo limpio y profesional para formularios */
+        .form-control:focus {
+            border-color: var(--bucaramanga-green);
+            box-shadow: 0 0 0 0.2rem rgba(34, 139, 34, 0.25);
+        }
+
+        /* Estadísticas con colores institucionales */
+        .stats-card {
+            border-left: 4px solid var(--bucaramanga-green);
+        }
+
+        /* Footer institucional */
+        .footer-bucaramanga {
+            background-color: var(--bucaramanga-gray);
+            color: white;
         }
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-bucaramanga">
         <div class="container">
             <a class="navbar-brand" href="{{ route('home') }}">
                 <i class="fas fa-heart text-danger"></i> Banco de Sangre Canina
