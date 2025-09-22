@@ -179,7 +179,7 @@
                 <h5 class="modal-title"><i class="fas fa-times-circle text-danger"></i> Rechazar Solicitud</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form action="{{ route('admin.veterinarians.reject', $veterinarian->id) }}" method="POST">
+            <form action="{{ route('admin.reject_veterinarian', $veterinarian->id) }}" method="POST">
                 @csrf
                 <div class="modal-body">
                     <p>¿Estás seguro de que deseas rechazar la solicitud de <strong>{{ $veterinarian->name }}</strong>?</p>
@@ -208,7 +208,7 @@ function approveVeterinarian() {
         // Crear form para enviar POST
         const form = document.createElement('form');
         form.method = 'POST';
-        form.action = '{{ route("admin.veterinarians.approve", $veterinarian->id) }}';
+        form.action = '{{ route("admin.approve_veterinarian", $veterinarian->id) }}';
         
         const csrfToken = document.createElement('input');
         csrfToken.type = 'hidden';

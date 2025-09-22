@@ -17,6 +17,7 @@ class Pet extends Model
         'species',
         'age_years',
         'weight_kg',
+        'blood_type',
         'health_status',
         'vaccines_up_to_date',
         'has_donated_before',
@@ -39,15 +40,21 @@ class Pet extends Model
     // ========================================
     // RELACIONES
     // ========================================
-    
+
     public function tutor()
+    {
+        return $this->belongsTo(User::class, 'tutor_id');
+    }
+
+    // Alias para compatibilidad
+    public function user()
     {
         return $this->belongsTo(User::class, 'tutor_id');
     }
 
     public function healthConditions()
     {
-        return $this->hasOne(PetHealthCondition::class);
+        return $this->hasMany(PetHealthCondition::class);
     }
 
     public function donationResponses()

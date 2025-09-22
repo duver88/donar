@@ -52,12 +52,12 @@ class User extends Authenticatable
 
     public function bloodRequests()
     {
-        return $this->hasMany(BloodRequest::class, 'veterinarian_id');
+        return $this->hasManyThrough(BloodRequest::class, Veterinarian::class, 'user_id', 'veterinarian_id');
     }
 
     public function donationResponses()
     {
-        return $this->hasMany(DonationResponse::class, 'tutor_id');
+        return $this->hasMany(DonationResponse::class, 'user_id');
     }
 
     // ========================================

@@ -24,4 +24,14 @@ class EmailLog extends Model
         'data' => 'array',
         'sent_at' => 'datetime'
     ];
+
+    // ========================================
+    // RELACIONES
+    // ========================================
+
+    // Podríamos agregar relaciones si necesitamos trackear quién envió el email
+    // public function sentBy()
+    // {
+    //     return $this->belongsTo(User::class, 'sent_by');
+    // }
 }

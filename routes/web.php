@@ -118,25 +118,34 @@ Route::middleware(['auth'])->group(function () {
     
     Route::middleware(['admin'])->prefix('admin')->name('admin.')->group(function () {
         Route::get('/dashboard', [SuperAdminController::class, 'dashboard'])->name('dashboard');
+
+        // Gestión de Veterinarios
+        Route::get('/veterinarios', [SuperAdminController::class, 'veterinarians'])->name('veterinarians');
+        Route::get('/veterinarios/crear', [SuperAdminController::class, 'createVeterinarian'])->name('veterinarians.create');
+        Route::post('/veterinarios', [SuperAdminController::class, 'storeVeterinarian'])->name('veterinarians.store');
+        Route::get('/veterinarios/{id}/revisar', [SuperAdminController::class, 'reviewVeterinarian'])->name('veterinarians.review');
+        Route::get('/veterinarios/{id}', [SuperAdminController::class, 'showVeterinarian'])->name('veterinarians.show');
+        Route::get('/veterinarios/{id}/editar', [SuperAdminController::class, 'editVeterinarian'])->name('veterinarians.edit');
+        Route::put('/veterinarios/{id}', [SuperAdminController::class, 'updateVeterinarian'])->name('veterinarians.update');
+        Route::delete('/veterinarios/{id}', [SuperAdminController::class, 'destroyVeterinarian'])->name('veterinarians.destroy');
+        Route::post('/veterinarios/{id}/aprobar', [SuperAdminController::class, 'approveVeterinarian'])->name('veterinarians.approve');
+        Route::post('/veterinarios/{id}/rechazar', [SuperAdminController::class, 'rejectVeterinarian'])->name('veterinarians.reject');
+
+        // Gestión de Mascotas
+        Route::get('/mascotas', [SuperAdminController::class, 'pets'])->name('pets');
+        Route::get('/mascotas/{id}', [SuperAdminController::class, 'showPet'])->name('pets.show');
+        Route::get('/mascotas/{id}/editar', [SuperAdminController::class, 'editPet'])->name('pets.edit');
+        Route::put('/mascotas/{id}', [SuperAdminController::class, 'updatePet'])->name('pets.update');
+        Route::delete('/mascotas/{id}', [SuperAdminController::class, 'destroyPet'])->name('pets.destroy');
+
+        // Gestión de Solicitudes
+        Route::get('/solicitudes', [SuperAdminController::class, 'bloodRequests'])->name('blood_requests');
+        Route::get('/solicitudes/{id}', [SuperAdminController::class, 'showBloodRequest'])->name('blood_requests.show');
+        Route::put('/solicitudes/{id}/estado', [SuperAdminController::class, 'updateBloodRequestStatus'])->name('blood_requests.update_status');
+
+        // Rutas legacy para compatibilidad
         Route::post('/veterinarios/{id}/aprobar', [SuperAdminController::class, 'approveVeterinarian'])->name('approve_veterinarian');
         Route::post('/veterinarios/{id}/rechazar', [SuperAdminController::class, 'rejectVeterinarian'])->name('reject_veterinarian');
-        Route::get('/veterinarios', [SuperAdminController::class, 'veterinarians'])->name('veterinarians');
-        Route::get('/mascotas', [SuperAdminController::class, 'pets'])->name('pets');
-        Route::get('/solicitudes', [SuperAdminController::class, 'bloodRequests'])->name('blood_requests');
-        Route::get('/dashboard', [SuperAdminController::class, 'dashboard'])->name('dashboard');
-        Route::get('/veterinarios/{id}/revisar', [SuperAdminController::class, 'reviewVeterinarian'])->name('veterinarians.review');
-        Route::post('/veterinarios/{id}/aprobar', [SuperAdminController::class, 'approveVeterinarian'])->name('veterinarians.approve');
-        Route::post('/veterinarios/{id}/rechazar', [SuperAdminController::class, 'rejectVeterinarian'])->name('veterinarians.reject');
-    
-        // Rutas para aprobar veterinarios por el admin.
-        Route::get('/veterinarios/{id}/revisar', [SuperAdminController::class, 'reviewVeterinarian'])->name('veterinarians.review');
-        Route::post('/veterinarios/{id}/aprobar', [SuperAdminController::class, 'approveVeterinarian'])->name('veterinarians.approve');
-        Route::post('/veterinarios/{id}/rechazar', [SuperAdminController::class, 'rejectVeterinarian'])->name('veterinarians.reject');
-        
-        // Rutas existentes...
-        Route::get('/veterinarios', [SuperAdminController::class, 'veterinarians'])->name('veterinarians');
-        Route::get('/mascotas', [SuperAdminController::class, 'pets'])->name('pets');
-        Route::get('/solicitudes', [SuperAdminController::class, 'bloodRequests'])->name('blood_requests');
     });
 
     // ========================================

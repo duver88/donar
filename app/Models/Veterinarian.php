@@ -12,12 +12,14 @@ class Veterinarian extends Model
 
     protected $fillable = [
         'user_id',
+        'license_number',
         'professional_card',
-        'professional_card_photo', // ← AGREGAR ESTE CAMPO
+        'professional_card_photo',
         'specialty',
         'clinic_name',
         'clinic_address',
         'city',
+        'years_experience',
         'rejection_reason',
         'approved_at',
         'approved_by'
@@ -42,6 +44,11 @@ class Veterinarian extends Model
     public function approvedBy()
     {
         return $this->belongsTo(User::class, 'approved_by');
+    }
+
+    public function bloodRequests()
+    {
+        return $this->hasMany(BloodRequest::class);
     }
 
     // ========================================

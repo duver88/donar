@@ -93,22 +93,17 @@ class PetRegistrationController extends Controller
             // 6) Crear mascota
             $pet = Pet::create([
                 'tutor_id' => $tutor->id,
-                'user_id' => $tutor->id,                                // AGREGADO para compatibilidad
                 'name' => $validated['pet_name'],
                 'breed' => $validated['pet_breed'],
                 'species' => $validated['pet_species'],
                 'age_years' => $validated['pet_age'],
-                'age' => $validated['pet_age'],                         // AGREGADO para compatibilidad
                 'weight_kg' => $validated['pet_weight'],
-                'weight' => $validated['pet_weight'],                   // AGREGADO para compatibilidad
-                'blood_type' => $validated['pet_blood_type'] ?? 'No determinado', // NUEVO
+                'blood_type' => $validated['pet_blood_type'] ?? 'No determinado',
                 'health_status' => $validated['pet_health_status'],
                 'vaccines_up_to_date' => $validated['vaccines_up_to_date'],
-                'vaccination_status' => $validated['vaccines_up_to_date'], // AGREGADO para compatibilidad
                 'has_donated_before' => $validated['has_donated_before'],
                 'photo_path' => $photoPath,
                 'donor_status' => 'approved',
-                'status' => 'approved',                                 // AGREGADO para compatibilidad
                 'approved_at' => now()
             ]);
 
@@ -364,15 +359,15 @@ class PetRegistrationController extends Controller
     private function sendActiveRequestsEmail($pet, $activeRequests)
     {
         try {
-            Mail::to($pet->user->email)->send(
+            Mail::to($pet->tutor->email)->send(
                 new ActiveRequestsListMail($pet, $activeRequests)
             );
             
             // Registrar email enviado
             if (class_exists('\App\Models\EmailLog')) {
                 EmailLog::create([
-                    'to_email' => $pet->user->email,
-                    'to_name' => $pet->user->name,
+                    'to_email' => $pet->tutor->email,
+                    'to_name' => $pet->tutor->name,
                     'subject' => "🩸 {$activeRequests->count()} casos activos necesitan donación de sangre tipo {$pet->blood_type}",
                     'mailable_class' => 'ActiveRequestsListMail',
                     'data' => [
@@ -386,7 +381,7 @@ class PetRegistrationController extends Controller
             
             Log::info('Email de solicitudes activas enviado', [
                 'pet_id' => $pet->id,
-                'email' => $pet->user->email,
+                'email' => $pet->tutor->email,
                 'requests_count' => $activeRequests->count()
             ]);
             

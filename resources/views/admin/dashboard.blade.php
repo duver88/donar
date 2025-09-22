@@ -131,8 +131,8 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <span class="badge bg-info">{{ $vet->veterinarian->professional_card }}</span>
-                                            @if($vet->veterinarian->professional_card_photo)
+                                            <span class="badge bg-info">{{ $vet->veterinarian?->professional_card ?? 'N/A' }}</span>
+                                            @if($vet->veterinarian?->professional_card_photo)
                                                 <br><small class="text-success"><i class="fas fa-camera"></i> Con foto</small>
                                             @else
                                                 <br><small class="text-warning"><i class="fas fa-exclamation-triangle"></i> Sin foto</small>
@@ -140,11 +140,11 @@
                                         </td>
                                         <td>
                                             <div>
-                                                <strong>{{ $vet->veterinarian->clinic_name }}</strong><br>
-                                                <small class="text-muted">{{ $vet->veterinarian->clinic_address }}</small>
+                                                <strong>{{ $vet->veterinarian?->clinic_name ?? 'N/A' }}</strong><br>
+                                                <small class="text-muted">{{ $vet->veterinarian?->clinic_address ?? 'N/A' }}</small>
                                             </div>
                                         </td>
-                                        <td>{{ $vet->veterinarian->city }}</td>
+                                        <td>{{ $vet->veterinarian?->city ?? 'N/A' }}</td>
                                         <td>{{ $vet->created_at->format('d/m/Y') }}</td>
                                         <td>
                                             {{-- CAMBIO AQUÍ: Reemplazar botones por botón Ver --}}
@@ -187,7 +187,9 @@
                                     <span class="badge bg-{{ $request->urgency_color }}">
                                         {{ ucfirst($request->urgency_level) }}
                                     </span>
-                                    <small class="text-muted">{{ $request->veterinarian->name }}</small>
+                                    <small class="text-muted">
+                                        {{ $request->veterinarian?->user?->name ?? 'Veterinario no disponible' }}
+                                    </small>
                                 </div>
                             </div>
                             <div class="text-end">

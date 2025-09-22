@@ -108,8 +108,13 @@
                 
                 <h4 style="color: #28a745;">📞 Información de Contacto:</h4>
                 <p><strong>Clínica:</strong> {{ $bloodRequest->clinic_contact }}</p>
-                <p><strong>Veterinario:</strong> Dr. {{ $bloodRequest->veterinarian->name }}</p>
-                <p><strong>Email:</strong> {{ $bloodRequest->veterinarian->email }}</p>
+                @if($bloodRequest->veterinarian)
+                    <p><strong>Veterinario:</strong> Dr. {{ $bloodRequest->veterinarian->name }}</p>
+                    <p><strong>Email:</strong> {{ $bloodRequest->veterinarian->email }}</p>
+                @else
+                    <p><strong>Veterinario:</strong> No especificado</p>
+                    <p><strong>Email:</strong> {{ $bloodRequest->clinic_contact ?? 'No disponible' }}</p>
+                @endif
             </div>
             
             <div style="text-align: center; margin: 30px 0;">
@@ -117,12 +122,19 @@
                 
                 <p>Por favor responde a esta solicitud:</p>
                 
-                <a href="mailto:{{ $bloodRequest->veterinarian->email }}?subject=INTERESADO - Donación para {{ $bloodRequest->patient_name }} - {{ $pet->name }}&body=Hola Dr. {{ $bloodRequest->veterinarian->name }},%0D%0A%0D%0AEstoy INTERESADO en que {{ $pet->name }} done sangre para {{ $bloodRequest->patient_name }}.%0D%0A%0D%0AInformación de mi mascota:%0D%0A- Nombre: {{ $pet->name }}%0D%0A- Peso: {{ $pet->weight_kg }}kg%0D%0A- Última donación: {{ $pet->has_donated_before ? 'Sí ha donado antes' : 'Primera vez' }}%0D%0A%0D%0APor favor contáctame para coordinar:%0D%0ATeléfono: {{ $pet->tutor->phone }}%0D%0AEmail: {{ $pet->tutor->email }}%0D%0A%0D%0AEstoy disponible y {{ $pet->name }} está en buen estado de salud.%0D%0A%0D%0ASaludos,%0D%0A{{ $pet->tutor->name }}" 
+                @php
+                    $contactEmail = ($bloodRequest->veterinarian && $bloodRequest->veterinarian->email)
+                        ? $bloodRequest->veterinarian->email
+                        : ($bloodRequest->clinic_contact ?? 'info@bancosangrecanina.com');
+                    $contactName = $bloodRequest->veterinarian ? $bloodRequest->veterinarian->name : 'equipo médico';
+                @endphp
+
+                <a href="mailto:{{ $contactEmail }}?subject=INTERESADO - Donación para {{ $bloodRequest->patient_name }} - {{ $pet->name }}&body=Hola Dr. {{ $contactName }},%0D%0A%0D%0AEstoy INTERESADO en que {{ $pet->name }} done sangre para {{ $bloodRequest->patient_name }}.%0D%0A%0D%0AInformación de mi mascota:%0D%0A- Nombre: {{ $pet->name }}%0D%0A- Peso: {{ $pet->weight_kg }}kg%0D%0A- Última donación: {{ $pet->has_donated_before ? 'Sí ha donado antes' : 'Primera vez' }}%0D%0A%0D%0APor favor contáctame para coordinar:%0D%0ATeléfono: {{ $pet->tutor->phone }}%0D%0AEmail: {{ $pet->tutor->email }}%0D%0A%0D%0AEstoy disponible y {{ $pet->name }} está en buen estado de salud.%0D%0A%0D%0ASaludos,%0D%0A{{ $pet->tutor->name }}"
                    class="button button-accept">
                     ✅ SÍ, ESTOY INTERESADO
                 </a>
-                
-                <a href="mailto:{{ $bloodRequest->veterinarian->email }}?subject=NO DISPONIBLE - Donación para {{ $bloodRequest->patient_name }} - {{ $pet->name }}&body=Hola Dr. {{ $bloodRequest->veterinarian->name }},%0D%0A%0D%0ALamentablemente {{ $pet->name }} NO está disponible para donar en este momento.%0D%0A%0D%0AMotivo: [Por favor especifica: mascota enferma, vacaciones, donó recientemente, etc.]%0D%0A%0D%0AEspero poder ayudar en una próxima ocasión.%0D%0A%0D%0ASaludos,%0D%0A{{ $pet->tutor->name }}" 
+
+                <a href="mailto:{{ $contactEmail }}?subject=NO DISPONIBLE - Donación para {{ $bloodRequest->patient_name }} - {{ $pet->name }}&body=Hola Dr. {{ $contactName }},%0D%0A%0D%0ALamentablemente {{ $pet->name }} NO está disponible para donar en este momento.%0D%0A%0D%0AMotivo: [Por favor especifica: mascota enferma, vacaciones, donó recientemente, etc.]%0D%0A%0D%0AEspero poder ayudar en una próxima ocasión.%0D%0A%0D%0ASaludos,%0D%0A{{ $pet->tutor->name }}"
                    class="button button-decline">
                     ❌ NO PUEDO AYUDAR
                 </a>
