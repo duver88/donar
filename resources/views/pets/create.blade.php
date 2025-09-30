@@ -4,35 +4,56 @@
 @section('title', 'Postular Mascota como Donante')
 
 @section('content')
-<div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow">
-                <div class="card-header text-white" style="background: linear-gradient(135deg, #43883D 0%, #51AD32 100%); border-radius: 0.5rem 0.5rem 0 0;">
-                    <h4 class="mb-0 fw-bold"><i class="fas fa-dog me-2" style="color: #F8DC0B;"></i> Postular mi mascota como donante</h4>
-                    <small class="d-block mt-1" style="opacity: 0.9;">Completa este formulario para registrar a tu mascota como donante de sangre</small>
+<div class="min-vh-100" style="background: #fafafa;">
+    {{-- Header --}}
+    <div class="py-4">
+        <div class="container">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <h1 class="mb-2 fw-light" style="font-family: 'Ubuntu', sans-serif; font-size: 2.2rem; color: #43883D;">
+                        <i class="fas fa-heart me-2"></i>
+                        Postular mi mascota como donante
+                    </h1>
+                    <p class="text-muted mb-0" style="font-size: 1rem;">
+                        Completa este formulario para registrar a tu mascota como donante de sangre
+                    </p>
                 </div>
-                <div class="card-body">
-                    @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <h6><i class="fas fa-exclamation-triangle"></i> Por favor corrige los siguientes errores:</h6>
-                            <ul class="mb-0">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
+                <div>
+                    <a href="{{ route('home') }}"
+                       class="btn"
+                       style="background: transparent; color: #43883D; border: 1px solid #43883D; border-radius: 8px; font-size: 0.9rem; padding: 12px 20px; font-weight: 500;">
+                        <i class="fas fa-arrow-left me-2"></i> Volver al Inicio
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                    <form action="{{ route('pets.store') }}" method="POST" enctype="multipart/form-data" id="petForm">
-                        @csrf
-                        
-                        {{-- Datos del Tutor --}}
-                        <div class="mb-4">
-                            <h5 class="fw-bold border-bottom pb-2" style="color: #43883D;">
-                                <i class="fas fa-user me-2" style="color: #F8DC0B;"></i> Datos del Tutor Responsable
-                            </h5>
-                        </div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card border-0" style="background: white; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                    <div class="card-body p-4">
+                        @if ($errors->any())
+                            <div class="alert alert-danger" style="border-radius: 8px; border: none; background: rgba(194, 14, 26, 0.1);">
+                                <h6 style="color: #C20E1A;"><i class="fas fa-exclamation-triangle"></i> Por favor corrige los siguientes errores:</h6>
+                                <ul class="mb-0">
+                                    @foreach ($errors->all() as $error)
+                                        <li style="color: #C20E1A;">{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
+                        <form action="{{ route('pets.store') }}" method="POST" enctype="multipart/form-data" id="petForm">
+                            @csrf
+
+                            {{-- Datos del Tutor --}}
+                            <div class="mb-4">
+                                <h5 class="fw-medium border-bottom pb-2 mb-3" style="color: #43883D; border-color: #e9ecef !important;">
+                                    <i class="fas fa-user me-2"></i> Datos del Tutor Responsable
+                                </h5>
+                            </div>
 
                         <div class="row">
                             <div class="col-md-6 mb-3" id="tutor_name_field">
@@ -56,21 +77,21 @@
                             </div>
                         </div>
 
-                        <div class="alert alert-info" id="existing_user_alert" style="display: none; border-left: 4px solid #285F19; background-color: #D8E5B0; color: #285F19;">
-                            <i class="fas fa-info-circle" style="color: #285F19;"></i>
-                            <strong>¡Bienvenido de nuevo!</strong> Hemos encontrado tu información. Solo necesitas completar los datos de tu nueva mascota.
-                        </div>
+                            <div class="alert alert-info" id="existing_user_alert" style="display: none; border-radius: 8px; border: none; background: rgba(67, 136, 61, 0.1);">
+                                <i class="fas fa-info-circle" style="color: #43883D;"></i>
+                                <strong style="color: #43883D;">¡Bienvenido de nuevo!</strong> <span style="color: #43883D;">Hemos encontrado tu información. Solo necesitas completar los datos de tu nueva mascota.</span>
+                            </div>
 
-                        {{-- Datos del Animal --}}
-                        <div class="mb-4 mt-4">
-                            <h5 class="fw-bold border-bottom pb-2" style="color: #43883D;">
-                                <i class="fas fa-dog me-2" style="color: #F8DC0B;"></i> Datos del Animal de Compañía
-                            </h5>
-                        </div>
+                            {{-- Datos del Animal --}}
+                            <div class="mb-4 mt-4">
+                                <h5 class="fw-medium border-bottom pb-2 mb-3" style="color: #43883D; border-color: #e9ecef !important;">
+                                    <i class="fas fa-paw me-2"></i> Datos de tu mascota de Compañía
+                                </h5>
+                            </div>
 
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label for="pet_name" class="form-label">Nombre del Animal *</label>
+                                <label for="pet_name" class="form-label">Nombre de la mascota *</label>
                                 <input type="text" class="form-control" name="pet_name" value="{{ old('pet_name') }}" required>
                             </div>
                             <div class="col-md-6 mb-3">
@@ -89,18 +110,18 @@
                                 </select>
                             </div>
                             <div class="col-md-4 mb-3">
-                                <label for="pet_age" class="form-label">Edad del Animal (en años) *</label>
+                                <label for="pet_age" class="form-label">Edad de tu mascota (en años) *</label>
                                 <input type="number" class="form-control" name="pet_age" min="1" max="20" value="{{ old('pet_age') }}" required>
                             </div>
                             <div class="col-md-4 mb-3">
-                                <label for="pet_weight" class="form-label">Peso del Animal (kg) *</label>
+                                <label for="pet_weight" class="form-label">Peso de tu mascota (kg) *</label>
                                 <input type="number" class="form-control" name="pet_weight" step="0.1" min="1" value="{{ old('pet_weight') }}" required>
                                 <div class="form-text">Mínimo 25kg para donación</div>
                             </div>
                         </div>
 
                         <div class="mb-3">
-                            <label for="pet_health_status" class="form-label">Estado de Salud Actual del Animal *</label>
+                            <label for="pet_health_status" class="form-label">Estado de Salud Actual de tu mascota *</label>
                             <select class="form-select" name="pet_health_status" required>
                                 <option value="">-Seleccione-</option>
                                 <option value="excelente" {{ old('pet_health_status') == 'excelente' ? 'selected' : '' }}>Excelente</option>
@@ -110,16 +131,16 @@
                             </select>
                         </div>
 
-                        {{-- Vacunas y Donaciones Previas --}}
-                        <div class="mb-4 mt-4">
-                            <h5 class="fw-bold border-bottom pb-2" style="color: #285F19;">
-                                <i class="fas fa-syringe me-2" style="color: #F8DC0B;"></i> Vacunas y Donaciones Previas
-                            </h5>
-                        </div>
+                            {{-- Vacunas y Donaciones Previas --}}
+                            <div class="mb-4 mt-4">
+                                <h5 class="fw-medium border-bottom pb-2 mb-3" style="color: #43883D; border-color: #e9ecef !important;">
+                                    <i class="fas fa-syringe me-2"></i> Vacunas y Donaciones Previas
+                                </h5>
+                            </div>
 
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">¿Está al día con las vacunas del animal? *</label>
+                                <label class="form-label">¿Está al día con las vacunas de tu mascota ? *</label>
                                 <div>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="vaccines_up_to_date" value="1" {{ old('vaccines_up_to_date') == '1' ? 'checked' : '' }} required>
@@ -132,7 +153,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">¿El animal ha donado sangre anteriormente? *</label>
+                                <label class="form-label">¿Tu mascota ha donado sangre anteriormente? *</label>
                                 <div>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="has_donated_before" value="0" {{ old('has_donated_before') == '0' ? 'checked' : '' }} required>
@@ -146,15 +167,15 @@
                             </div>
                         </div>
 
-                        {{-- Condiciones de Salud --}}
-                        <div class="mb-4 mt-4">
-                            <h5 class="fw-bold border-bottom pb-2" style="color: #285F19;">
-                                <i class="fas fa-hospital me-2" style="color: #F8DC0B;"></i> Condiciones de Salud del Animal
-                            </h5>
-                        </div>
+                            {{-- Condiciones de Salud --}}
+                            <div class="mb-4 mt-4">
+                                <h5 class="fw-medium border-bottom pb-2 mb-3" style="color: #43883D; border-color: #e9ecef !important;">
+                                    <i class="fas fa-stethoscope me-2"></i> Condiciones de Salud de tu mascota
+                                </h5>
+                            </div>
 
                         <div class="mb-3">
-                            <label class="form-label">¿Tu animal tiene alguna enfermedad diagnosticada por un veterinario? *</label>
+                            <label class="form-label">¿Tu mascota tiene alguna enfermedad diagnosticada por un veterinario? *</label>
                             <div>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="has_diagnosed_disease" value="1" {{ old('has_diagnosed_disease') == '1' ? 'checked' : '' }} required>
@@ -168,7 +189,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">¿Tu animal está bajo tratamiento médico actualmente? *</label>
+                            <label class="form-label">¿Tu mascota está bajo tratamiento médico actualmente? *</label>
                             <div>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="under_medical_treatment" value="1" {{ old('under_medical_treatment') == '1' ? 'checked' : '' }} required>
@@ -182,7 +203,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">¿Tu animal ha tenido alguna cirugía reciente? *</label>
+                            <label class="form-label">¿Tu mascota ha tenido alguna cirugía reciente? *</label>
                             <div>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="recent_surgery" value="1" {{ old('recent_surgery') == '1' ? 'checked' : '' }} required>
@@ -196,7 +217,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">¿Tu animal ha sido diagnosticado con alguna de las siguientes enfermedades? (marca todas las que apliquen)</label>
+                            <label class="form-label">¿Tu mascota ha sido diagnosticado con alguna de las siguientes enfermedades? (marca todas las que apliquen)</label>
                             <div class="row">
                                 @php
                                 $diseases = ['Leishmaniasis', 'Ehrlichiosis', 'Parvovirus', 'Anemia', 'Hepatitis', 'Cáncer', 'Otros'];
@@ -212,38 +233,84 @@
                             </div>
                         </div>
 
-                        {{-- Foto del Animal --}}
-                        <div class="mb-4 mt-4">
-                            <h5 class="fw-bold border-bottom pb-2" style="color: #43883D;">
-                                <i class="fas fa-camera me-2" style="color: #F8DC0B;"></i> Foto del Animal
-                            </h5>
-                        </div>
+                            {{-- Foto del Animal --}}
+                            <div class="mb-4 mt-4">
+                                <h5 class="fw-medium border-bottom pb-2 mb-3" style="color: #43883D; border-color: #e9ecef !important;">
+                                    <i class="fas fa-camera me-2"></i> Foto de tu mascota
+                                </h5>
+                            </div>
 
                         <div class="mb-3">
-                            <label for="pet_photo" class="form-label">Subir foto reciente del animal *</label>
+                            <label for="pet_photo" class="form-label">Subir foto reciente de tu mascota *</label>
                             <input type="file" class="form-control" name="pet_photo" accept=".jpg,.jpeg,.png" required>
                             <div class="form-text">PNG, JPG hasta 2MB</div>
                         </div>
 
-                        <div class="alert alert-warning" id="eligibilityWarning" style="display: none;">
-                            <i class="fas fa-exclamation-triangle"></i>
-                            <strong>Advertencia:</strong> <span id="warningMessage"></span>
-                        </div>
+                            <div class="alert alert-warning" id="eligibilityWarning" style="display: none; border-radius: 8px; border: none; background: rgba(248, 220, 11, 0.1);">
+                                <i class="fas fa-exclamation-triangle" style="color: #F8DC0B;"></i>
+                                <strong style="color: #43883D;">Advertencia:</strong> <span id="warningMessage" style="color: #43883D;"></span>
+                            </div>
 
-                        <div class="d-grid gap-2 mt-4">
-                            <button type="submit" class="btn btn-lg fw-bold text-white" style="background: linear-gradient(135deg, #43883D 0%, #51AD32 100%); border: none; border-radius: 0.75rem; padding: 0.75rem 2rem; transition: all 0.3s ease; box-shadow: 0 4px 6px rgba(67, 136, 61, 0.3);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 12px rgba(67, 136, 61, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 6px rgba(67, 136, 61, 0.3)'"
-                                <i class="fas fa-paper-plane me-2"></i> Enviar Postulación
-                            </button>
-                            <a href="{{ route('home') }}" class="btn btn-outline-secondary">
-                                <i class="fas fa-arrow-left"></i> Volver al Inicio
-                            </a>
-                        </div>
-                    </form>
+                            <div class="d-grid gap-3 mt-4">
+                                <button type="submit" class="btn btn-lg"
+                                        style="background: #43883D; color: white; border: none; border-radius: 8px; font-weight: 500; padding: 12px 24px;">
+                                    <i class="fas fa-paper-plane me-2"></i> Enviar Postulación
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+
+{{-- Estilos consistentes --}}
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap');
+
+* {
+    font-family: 'Ubuntu', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.form-control, .form-select {
+    border-radius: 8px;
+    border: 1px solid #e3e6f0;
+    padding: 12px 16px;
+    font-size: 0.9rem;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #43883D;
+    box-shadow: 0 0 0 0.2rem rgba(67, 136, 61, 0.25);
+}
+
+.form-label {
+    font-weight: 500;
+    color: #43883D;
+    margin-bottom: 8px;
+}
+
+.form-check-input:checked {
+    background-color: #43883D;
+    border-color: #43883D;
+}
+
+.form-check-input:focus {
+    border-color: #43883D;
+    box-shadow: 0 0 0 0.25rem rgba(67, 136, 61, 0.25);
+}
+
+.card {
+    border-radius: 12px !important;
+    border: none;
+}
+
+.btn {
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+</style>
+
 @endsection
 
 @section('scripts')

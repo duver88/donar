@@ -3,16 +3,35 @@
 @section('title', 'Crear Veterinario')
 
 @section('content')
-<div class="container py-4">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow">
-                <div class="card-header text-white" style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #0369a1 100%); border-radius: 0.5rem 0.5rem 0 0;">
-                    <h4 class="mb-0 fw-bold">
-                        <i class="fas fa-user-md me-2" style="color: #fbbf24;"></i> Crear Nuevo Veterinario
-                    </h4>
+<div class="min-vh-100" style="background: #fafafa;">
+    {{-- Header --}}
+    <div class="py-4">
+        <div class="container-fluid px-4">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <h1 class="mb-2 fw-light" style="font-family: 'Ubuntu', sans-serif; font-size: 2.2rem; color: #43883D;">
+                        Crear Nuevo Veterinario
+                    </h1>
+                    <p class="text-muted mb-0" style="font-size: 1rem;">
+                        Registrar un nuevo veterinario en el sistema
+                    </p>
                 </div>
-                <div class="card-body">
+                <div>
+                    <a href="{{ route('admin.veterinarians') }}"
+                       class="btn"
+                       style="background: transparent; color: #43883D; border: 1px solid #43883D; border-radius: 8px; font-size: 0.9rem; padding: 12px 20px; font-weight: 500;">
+                        <i class="fas fa-arrow-left me-2"></i> Volver al Listado
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid px-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card border-0" style="background: white; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                    <div class="card-body p-4">
                     @if ($errors->any())
                         <div class="alert alert-danger">
                             <h6><i class="fas fa-exclamation-triangle"></i> Por favor corrige los siguientes errores:</h6>
@@ -29,8 +48,8 @@
 
                         {{-- Datos Personales --}}
                         <div class="mb-4">
-                            <h5 class="fw-bold border-bottom pb-2" style="color: #1e3a8a;">
-                                <i class="fas fa-user me-2" style="color: #fbbf24;"></i> Información Personal
+                            <h5 class="fw-medium border-bottom pb-2" style="color: #43883D; border-color: #e9ecef !important;">
+                                <i class="fas fa-user me-2"></i> Información Personal
                             </h5>
                         </div>
 
@@ -66,8 +85,8 @@
 
                         {{-- Datos Profesionales --}}
                         <div class="mb-4 mt-4">
-                            <h5 class="fw-bold border-bottom pb-2" style="color: #1e3a8a;">
-                                <i class="fas fa-stethoscope me-2" style="color: #fbbf24;"></i> Información Profesional
+                            <h5 class="fw-medium border-bottom pb-2" style="color: #43883D; border-color: #e9ecef !important;">
+                                <i class="fas fa-stethoscope me-2"></i> Información Profesional
                             </h5>
                         </div>
 
@@ -116,12 +135,16 @@
                             </div>
                         </div>
 
-                        <div class="d-grid gap-2 mt-4">
-                            <button type="submit" class="btn btn-lg fw-bold text-white" style="background: linear-gradient(135deg, #059669 0%, #10b981 100%); border: none; border-radius: 0.75rem; padding: 0.75rem 2rem; transition: all 0.3s ease; box-shadow: 0 4px 6px rgba(5, 150, 105, 0.3);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 12px rgba(5, 150, 105, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 6px rgba(5, 150, 105, 0.3)'">
+                        <div class="d-flex gap-3 mt-4">
+                            <button type="submit" class="btn flex-fill"
+                                    style="background: #43883D; color: white; border: none; border-radius: 8px; font-size: 0.9rem; padding: 12px 20px; font-weight: 500; transition: all 0.2s ease;"
+                                    onmouseover="this.style.background='#285F19'"
+                                    onmouseout="this.style.background='#43883D'">
                                 <i class="fas fa-save me-2"></i> Crear Veterinario
                             </button>
-                            <a href="{{ route('admin.veterinarians') }}" class="btn fw-semibold" style="color: #6b7280; border: 2px solid #6b7280; border-radius: 0.75rem; padding: 0.75rem 2rem; transition: all 0.3s ease;" onmouseover="this.style.backgroundColor='#6b7280'; this.style.color='white'" onmouseout="this.style.backgroundColor='transparent'; this.style.color='#6b7280'">
-                                <i class="fas fa-arrow-left me-2"></i> Volver al Listado
+                            <a href="{{ route('admin.veterinarians') }}" class="btn"
+                               style="background: transparent; color: #43883D; border: 1px solid #43883D; border-radius: 8px; font-size: 0.9rem; padding: 12px 20px; font-weight: 500;">
+                                <i class="fas fa-times me-2"></i> Cancelar
                             </a>
                         </div>
                     </form>
@@ -130,4 +153,41 @@
         </div>
     </div>
 </div>
+
+{{-- Estilos consistentes --}}
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap');
+
+* {
+    font-family: 'Ubuntu', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.form-control, .form-select {
+    border-radius: 8px;
+    border: 1px solid #e3e6f0;
+    padding: 12px 16px;
+    font-size: 0.9rem;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #43883D;
+    box-shadow: 0 0 0 0.2rem rgba(67, 136, 61, 0.25);
+}
+
+.form-label {
+    font-weight: 500;
+    color: #43883D;
+    margin-bottom: 8px;
+}
+
+.card {
+    border-radius: 12px !important;
+    border: none;
+}
+
+.btn {
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+</style>
 @endsection

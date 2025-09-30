@@ -3,128 +3,145 @@
 @section('title', 'Gestión de Mascotas')
 
 @section('content')
-<div class="container-fluid py-4">
-    <div class="row">
-        <div class="col-12">
-            <div class="card shadow">
-                <div class="card-header text-white d-flex justify-content-between align-items-center" style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #0369a1 100%); border-radius: 0.5rem 0.5rem 0 0;">
-                    <h4 class="mb-0 fw-bold">
-                        <i class="fas fa-dog me-2" style="color: #fbbf24;"></i> Gestión de Mascotas Donantes
-                    </h4>
+<div class="min-vh-100" style="background: #fafafa;">
+    {{-- Header --}}
+    <div class="py-4">
+        <div class="container-fluid px-4">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <h1 class="mb-2 fw-light" style="font-family: 'Ubuntu', sans-serif; font-size: 2.2rem; color: #43883D;">
+                        Gestión de Mascotas
+                    </h1>
+                    <p class="text-muted mb-0" style="font-size: 1rem;">
+                        Administrar donantes caninos y felinos
+                    </p>
                 </div>
-                <div class="card-body">
+            </div>
+        </div>
+    </div>
 
-                    <!-- Filtros -->
-                    <form method="GET" class="mb-4">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="fas fa-search"></i></span>
-                                    <input type="text" class="form-control" name="search"
-                                           placeholder="Buscar por nombre de mascota o tutor..."
-                                           value="{{ request('search') }}">
-                                </div>
+    <div class="container-fluid px-4">
+        <div class="card border-0" style="background: white; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+            <div class="card-body p-4">
+
+                {{-- Filtros --}}
+                <form method="GET" class="mb-4">
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0" style="color: #43883D;">
+                                    <i class="fas fa-search"></i>
+                                </span>
+                                <input type="text" class="form-control border-start-0" name="search"
+                                       placeholder="Buscar por nombre de mascota o tutor..."
+                                       value="{{ request('search') }}"
+                                       style="border-radius: 0 8px 8px 0;">
                             </div>
-                            <div class="col-md-2">
-                                <select name="status" class="form-select">
-                                    <option value="">Todos los estados</option>
-                                    <option value="pending" {{ request('status') === 'pending' ? 'selected' : '' }}>Pendiente</option>
-                                    <option value="approved" {{ request('status') === 'approved' ? 'selected' : '' }}>Aprobado</option>
-                                    <option value="rejected" {{ request('status') === 'rejected' ? 'selected' : '' }}>Rechazado</option>
-                                </select>
-                            </div>
-                            <div class="col-md-2">
-                                <select name="species" class="form-select">
-                                    <option value="">Todas las especies</option>
-                                    <option value="perro" {{ request('species') === 'perro' ? 'selected' : '' }}>Perro</option>
-                                    <option value="gato" {{ request('species') === 'gato' ? 'selected' : '' }}>Gato</option>
-                                </select>
-                            </div>
-                            <div class="col-md-2">
-                                <button type="submit" class="btn fw-semibold" style="background: #1e3a8a; border: none; color: white; border-radius: 0.5rem; transition: all 0.3s ease;" onmouseover="this.style.background='#1e40af'" onmouseout="this.style.background='#1e3a8a'">
-                                    <i class="fas fa-filter me-1"></i> Filtrar
-                                </button>
-                            </div>
-                            <div class="col-md-2">
-                                <a href="{{ route('admin.pets') }}" class="btn btn-outline-secondary">
-                                    <i class="fas fa-refresh"></i> Limpiar
+                        </div>
+                        <div class="col-md-2">
+                            <select name="status" class="form-select" style="border-radius: 8px;">
+                                <option value="">Todos los estados</option>
+                                <option value="pending" {{ request('status') === 'pending' ? 'selected' : '' }}>Pendiente</option>
+                                <option value="approved" {{ request('status') === 'approved' ? 'selected' : '' }}>Aprobado</option>
+                                <option value="rejected" {{ request('status') === 'rejected' ? 'selected' : '' }}>Rechazado</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <select name="species" class="form-select" style="border-radius: 8px;">
+                                <option value="">Todas las especies</option>
+                                <option value="perro" {{ request('species') === 'perro' ? 'selected' : '' }}>Perro</option>
+                                <option value="gato" {{ request('species') === 'gato' ? 'selected' : '' }}>Gato</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn w-100"
+                                    style="background: #43883D; color: white; border: none; border-radius: 8px; font-weight: 500;">
+                                <i class="fas fa-filter me-1"></i> Filtrar
+                            </button>
+                        </div>
+                        <div class="col-md-2">
+                            <a href="{{ route('admin.pets') }}" class="btn w-100"
+                               style="background: transparent; color: #43883D; border: 1px solid #43883D; border-radius: 8px; font-weight: 500;">
+                                <i class="fas fa-refresh me-1"></i> Limpiar
                                 </a>
                             </div>
                         </div>
                     </form>
 
-                    <!-- Estadísticas rápidas -->
-                    <div class="row mb-4">
-                        <div class="col-md-3">
-                            <div class="card text-white shadow-sm" style="background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%); border: none; border-radius: 1rem;">
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center">
-                                        <i class="fas fa-clock fa-2x me-3" style="opacity: 0.9;"></i>
-                                        <div>
-                                            <h5 class="mb-0 fw-bold">{{ $pets->where('donor_status', 'pending')->count() }}</h5>
-                                            <small style="opacity: 0.9;">Pendientes</small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card text-white shadow-sm" style="background: linear-gradient(135deg, #059669 0%, #10b981 100%); border: none; border-radius: 1rem;">
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center">
-                                        <i class="fas fa-check fa-2x me-3" style="opacity: 0.9;"></i>
-                                        <div>
-                                            <h5 class="mb-0 fw-bold">{{ $pets->where('donor_status', 'approved')->count() }}</h5>
-                                            <small style="opacity: 0.9;">Aprobados</small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card text-white shadow-sm" style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); border: none; border-radius: 1rem;">
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center">
-                                        <i class="fas fa-dog fa-2x me-3" style="opacity: 0.9;"></i>
-                                        <div>
-                                            <h5 class="mb-0 fw-bold">{{ $pets->where('species', 'perro')->count() }}</h5>
-                                            <small style="opacity: 0.9;">Perros</small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card text-white shadow-sm" style="background: linear-gradient(135deg, #6b7280 0%, #9ca3af 100%); border: none; border-radius: 1rem;">
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center">
-                                        <i class="fas fa-cat fa-2x me-3" style="opacity: 0.9;"></i>
-                                        <div>
-                                            <h5 class="mb-0 fw-bold">{{ $pets->where('species', 'gato')->count() }}</h5>
-                                            <small style="opacity: 0.9;">Gatos</small>
-                                        </div>
-                                    </div>
-                                </div>
+                {{-- Estadísticas --}}
+                <div class="row g-3 mb-4">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card border-0 h-100" style="background: white; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                            <div class="card-body p-4 text-center">
+                                <h2 class="mb-1 fw-light" style="font-family: 'Ubuntu', sans-serif; font-size: 2.5rem; color: #F8DC0B;">
+                                    {{ $pets->where('donor_status', 'pending')->count() }}
+                                </h2>
+                                <p class="text-muted mb-2" style="font-size: 0.9rem;">Pendientes</p>
+                                @if($pets->where('donor_status', 'pending')->count() > 0)
+                                    <span class="badge" style="background: rgba(248, 220, 11, 0.1); color: #F8DC0B; font-size: 0.75rem;">
+                                        Requieren revisión
+                                    </span>
+                                @endif
                             </div>
                         </div>
                     </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card border-0 h-100" style="background: white; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                            <div class="card-body p-4 text-center">
+                                <h2 class="mb-1 fw-light" style="font-family: 'Ubuntu', sans-serif; font-size: 2.5rem; color: #43883D;">
+                                    {{ $pets->where('donor_status', 'approved')->count() }}
+                                </h2>
+                                <p class="text-muted mb-2" style="font-size: 0.9rem;">Aprobados</p>
+                                <span class="badge" style="background: rgba(67, 136, 61, 0.1); color: #43883D; font-size: 0.75rem;">
+                                    Donantes activos
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card border-0 h-100" style="background: white; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                            <div class="card-body p-4 text-center">
+                                <h2 class="mb-1 fw-light" style="font-family: 'Ubuntu', sans-serif; font-size: 2.5rem; color: #93C01F;">
+                                    {{ $pets->where('species', 'perro')->count() }}
+                                </h2>
+                                <p class="text-muted mb-2" style="font-size: 0.9rem;">Perros</p>
+                                <span class="badge" style="background: rgba(147, 192, 31, 0.1); color: #93C01F; font-size: 0.75rem;">
+                                    Caninos
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card border-0 h-100" style="background: white; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                            <div class="card-body p-4 text-center">
+                                <h2 class="mb-1 fw-light" style="font-family: 'Ubuntu', sans-serif; font-size: 2.5rem; color: #C20E1A;">
+                                    {{ $pets->where('species', 'gato')->count() }}
+                                </h2>
+                                <p class="text-muted mb-2" style="font-size: 0.9rem;">Gatos</p>
+                                <span class="badge" style="background: rgba(194, 14, 26, 0.1); color: #C20E1A; font-size: 0.75rem;">
+                                    Felinos
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                    <!-- Tabla de mascotas -->
-                    <div class="table-responsive">
-                        <table class="table table-striped table-hover">
-                            <thead style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white;">
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Foto</th>
-                                    <th>Mascota</th>
-                                    <th>Tutor</th>
-                                    <th>Especie</th>
-                                    <th>Edad/Peso</th>
-                                    <th>Tipo Sangre</th>
-                                    <th>Estado</th>
-                                    <th>Fecha Registro</th>
-                                    <th>Acciones</th>
-                                </tr>
+                {{-- Tabla de mascotas --}}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead style="background: #f8f9fa; border-bottom: 2px solid #43883D;">
+                            <tr>
+                                <th style="color: #; font-weight: 600; font-size: 0.9rem; padding: 1rem;">ID</th>
+                                <th style="color: #; font-weight: 600; font-size: 0.9rem; padding: 1rem;">Foto</th>
+                                <th style="color: #; font-weight: 600; font-size: 0.9rem; padding: 1rem;">Mascota</th>
+                                <th style="color: #; font-weight: 600; font-size: 0.9rem; padding: 1rem;">Tutor</th>
+                                <th style="color: #; font-weight: 600; font-size: 0.9rem; padding: 1rem;">Especie</th>
+                                <th style="color: #; font-weight: 600; font-size: 0.9rem; padding: 1rem;">Edad/Peso</th>
+                                <th style="color: #; font-weight: 600; font-size: 0.9rem; padding: 1rem;">Tipo Sangre</th>
+                                <th style="color: #; font-weight: 600; font-size: 0.9rem; padding: 1rem;">Estado</th>
+                                <th style="color: #; font-weight: 600; font-size: 0.9rem; padding: 1rem;">Fecha Registro</th>
+                                <th style="color: #; font-weight: 600; font-size: 0.9rem; padding: 1rem;">Acciones</th>
+                            </tr>
                             </thead>
                             <tbody>
                                 @forelse($pets as $pet)
@@ -195,15 +212,19 @@
                                         @endswitch
                                     </td>
                                     <td>{{ $pet->created_at->format('d/m/Y') }}</td>
-                                    <td>
-                                        <div class="btn-group" role="group">
+                                    <td style="padding: 1rem;">
+                                        <div class="d-flex gap-2">
                                             <a href="{{ route('admin.pets.show', $pet->id) }}"
-                                               class="btn btn-sm btn-info" title="Ver detalles">
+                                               class="btn btn-sm"
+                                               style="background: #43883D; color: white; border: none; border-radius: 6px; padding: 6px 12px;"
+                                               title="Ver detalles">
                                                 <i class="fas fa-eye"></i>
                                             </a>
 
                                             <a href="{{ route('admin.pets.edit', $pet->id) }}"
-                                               class="btn btn-sm btn-warning" title="Editar">
+                                               class="btn btn-sm"
+                                               style="background: #F8DC0B; color: #43883D; border: none; border-radius: 6px; padding: 6px 12px;"
+                                               title="Editar">
                                                 <i class="fas fa-edit"></i>
                                             </a>
 
@@ -213,7 +234,9 @@
                                                   onsubmit="return confirm('¿Estás seguro de eliminar esta mascota?')">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger" title="Eliminar">
+                                                <button type="submit" class="btn btn-sm"
+                                                        style="background: #C20E1A; color: white; border: none; border-radius: 6px; padding: 6px 12px;"
+                                                        title="Eliminar">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
                                             </form>

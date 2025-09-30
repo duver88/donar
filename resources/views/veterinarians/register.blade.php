@@ -4,174 +4,172 @@
 @section('title', 'Registro de Veterinario')
 
 @section('content')
-<div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow">
-                <div class="card-header bg-success text-white">
-                    <h4 class="mb-0"><i class="fas fa-user-md"></i> Registro de Veterinario</h4>
-                    <small>Únete a nuestra red de veterinarios colaboradores</small>
-                </div>
-                <div class="card-body">
-                    @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <h6><i class="fas fa-exclamation-triangle"></i> Por favor corrige los siguientes errores:</h6>
-                            <ul class="mb-0">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
+<div class="min-vh-100" style="background: #fafafa;">
+    <div class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 col-xl-7">
+                    {{-- Header --}}
+                    <div class="text-center mb-5">
+                        <h1 class="h3 fw-light mb-2" style="color: #43883D;">Registro de Veterinario</h1>
+                        <p class="text-muted">Únete a nuestra red de profesionales colaboradores</p>
+                    </div>
 
-                    {{-- IMPORTANTE: Agregar enctype="multipart/form-data" --}}
-                    <form action="{{ route('veterinarian.store') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        
-                        {{-- Datos Personales --}}
-                        <div class="mb-4">
-                            <h5 class="text-success border-bottom pb-2">
-                                <i class="fas fa-user"></i> Datos Personales
-                            </h5>
-                        </div>
+                    {{-- Formulario --}}
+                    <div class="card border-0" style="border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                        <div class="card-body p-4">
+                            @if ($errors->any())
+                                <div class="alert alert-danger border-0" style="background: rgba(220, 53, 69, 0.1); color: #dc3545;">
+                                    <h6 class="fw-medium mb-2">Errores encontrados:</h6>
+                                    <ul class="mb-0 small">
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
 
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="name" class="form-label">Nombre Completo *</label>
-                                <input type="text" class="form-control" name="name" value="{{ old('name') }}" required>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="email" class="form-label">Correo Electrónico *</label>
-                                <input type="email" class="form-control" name="email" value="{{ old('email') }}" required>
-                            </div>
-                        </div>
+                            <form action="{{ route('veterinarian.store') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
 
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="phone" class="form-label">Teléfono *</label>
-                                <input type="tel" class="form-control" name="phone" value="{{ old('phone') }}" required>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="document_id" class="form-label">Número de Documento *</label>
-                                <input type="text" class="form-control" name="document_id" value="{{ old('document_id') }}" required>
-                            </div>
-                        </div>
+                                {{-- Datos Personales --}}
+                                <div class="mb-4">
+                                    <h6 class="fw-medium mb-3" style="color: #43883D;">Datos Personales</h6>
+                                </div>
 
-                        {{-- Datos Profesionales --}}
-                        <div class="mb-4 mt-4">
-                            <h5 class="text-success border-bottom pb-2">
-                                <i class="fas fa-id-card"></i> Datos Profesionales
-                            </h5>
-                        </div>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label small text-muted">Nombre Completo *</label>
+                                        <input type="text" class="form-control" name="name" value="{{ old('name') }}"
+                                               style="border-radius: 6px; border: 1px solid #ddd;" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label small text-muted">Correo Electrónico *</label>
+                                        <input type="email" class="form-control" name="email" value="{{ old('email') }}"
+                                               style="border-radius: 6px; border: 1px solid #ddd;" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label small text-muted">Teléfono *</label>
+                                        <input type="tel" class="form-control" name="phone" value="{{ old('phone') }}"
+                                               style="border-radius: 6px; border: 1px solid #ddd;" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label small text-muted">Número de Documento *</label>
+                                        <input type="text" class="form-control" name="document_id" value="{{ old('document_id') }}"
+                                               style="border-radius: 6px; border: 1px solid #ddd;" required>
+                                    </div>
+                                </div>
 
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="professional_card" class="form-label">Tarjeta Profesional *</label>
-                                <input type="text" class="form-control" name="professional_card" value="{{ old('professional_card') }}" 
-                                       placeholder="Ej: VET-001-2024" required>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="specialty" class="form-label">Especialidad</label>
-                                <input type="text" class="form-control" name="specialty" value="{{ old('specialty') }}" 
-                                       placeholder="Ej: Medicina Interna, Cirugía, etc.">
-                            </div>
-                        </div>
+                                {{-- Datos Profesionales --}}
+                                <div class="mb-4 mt-5">
+                                    <h6 class="fw-medium mb-3" style="color: #43883D;">Datos Profesionales</h6>
+                                </div>
 
-                        {{-- NUEVO CAMPO: Foto de Tarjeta Profesional --}}
-                        <div class="mb-3">
-                            <label for="professional_card_photo" class="form-label">Foto de la Tarjeta Profesional *</label>
-                            <input type="file" class="form-control" name="professional_card_photo" 
-                                   accept=".jpg,.jpeg,.png,.pdf" required>
-                            <div class="form-text">
-                                <i class="fas fa-info-circle text-info"></i>
-                                Sube una foto clara de tu tarjeta profesional veterinaria. 
-                                Formatos permitidos: JPG, PNG, PDF. Máximo 5MB.
-                            </div>
-                            <div class="mt-2">
-                                <small class="text-muted">
-                                    <strong>Importante:</strong> Esta foto será revisada por el administrador para verificar tu identidad profesional.
-                                </small>
-                            </div>
-                            
-                            {{-- Vista previa del archivo --}}
-                            <div id="photo-preview" class="mt-2" style="display: none;"></div>
-                        </div>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label small text-muted">Tarjeta Profesional *</label>
+                                        <input type="text" class="form-control" name="professional_card" value="{{ old('professional_card') }}"
+                                               placeholder="Ej: VET-001-2024" style="border-radius: 6px; border: 1px solid #ddd;" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label small text-muted">Especialidad</label>
+                                        <input type="text" class="form-control" name="specialty" value="{{ old('specialty') }}"
+                                               placeholder="Ej: Medicina Interna" style="border-radius: 6px; border: 1px solid #ddd;">
+                                    </div>
+                                </div>
 
-                        {{-- Datos de la Clínica --}}
-                        <div class="mb-4 mt-4">
-                            <h5 class="text-success border-bottom pb-2">
-                                <i class="fas fa-hospital"></i> Datos de la Clínica
-                            </h5>
-                        </div>
+                                {{-- Foto de Tarjeta --}}
+                                <div class="mb-4">
+                                    <label class="form-label small text-muted">Foto de la Tarjeta Profesional *</label>
+                                    <input type="file" class="form-control" name="professional_card_photo"
+                                           accept=".jpg,.jpeg,.png,.pdf" style="border-radius: 6px; border: 1px solid #ddd;" required>
+                                    <div class="mt-2">
+                                        <small class="text-muted">Formatos: JPG, PNG, PDF. Máximo 5MB.</small>
+                                    </div>
+                                    <div id="photo-preview" class="mt-2" style="display: none;"></div>
+                                </div>
 
-                        <div class="mb-3">
-                            <label for="clinic_name" class="form-label">Nombre de la Clínica *</label>
-                            <input type="text" class="form-control" name="clinic_name" value="{{ old('clinic_name') }}" required>
-                        </div>
+                                {{-- Datos de la Clínica --}}
+                                <div class="mb-4 mt-5">
+                                    <h6 class="fw-medium mb-3" style="color: #43883D;">Datos de la Clínica</h6>
+                                </div>
 
-                        <div class="row">
-                            <div class="col-md-8 mb-3">
-                                <label for="clinic_address" class="form-label">Dirección de la Clínica *</label>
-                                <input type="text" class="form-control" name="clinic_address" value="{{ old('clinic_address') }}" required>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <label for="city" class="form-label">Ciudad *</label>
-                                <select class="form-select" name="city" required>
-                                    <option value="">-Seleccione-</option>
-                                    <option value="Bogotá" {{ old('city') == 'Bogotá' ? 'selected' : '' }}>Bogotá</option>
-                                    <option value="Medellín" {{ old('city') == 'Medellín' ? 'selected' : '' }}>Medellín</option>
-                                    <option value="Cali" {{ old('city') == 'Cali' ? 'selected' : '' }}>Cali</option>
-                                    <option value="Barranquilla" {{ old('city') == 'Barranquilla' ? 'selected' : '' }}>Barranquilla</option>
-                                    <option value="Cartagena" {{ old('city') == 'Cartagena' ? 'selected' : '' }}>Cartagena</option>
-                                    <option value="Bucaramanga" {{ old('city') == 'Bucaramanga' ? 'selected' : '' }}>Bucaramanga</option>
-                                    <option value="Pereira" {{ old('city') == 'Pereira' ? 'selected' : '' }}>Pereira</option>
-                                    <option value="Manizales" {{ old('city') == 'Manizales' ? 'selected' : '' }}>Manizales</option>
-                                    <option value="Otra" {{ old('city') == 'Otra' ? 'selected' : '' }}>Otra</option>
-                                </select>
-                            </div>
-                        </div>
+                                <div class="mb-4">
+                                    <label class="form-label small text-muted">Nombre de la Clínica *</label>
+                                    <input type="text" class="form-control" name="clinic_name" value="{{ old('clinic_name') }}"
+                                           style="border-radius: 6px; border: 1px solid #ddd;" required>
+                                </div>
 
-                        {{-- Contraseña --}}
-                        <div class="mb-4 mt-4">
-                            <h5 class="text-success border-bottom pb-2">
-                                <i class="fas fa-lock"></i> Contraseña de Acceso
-                            </h5>
-                        </div>
+                                <div class="row g-3">
+                                    <div class="col-md-8">
+                                        <label class="form-label small text-muted">Dirección de la Clínica *</label>
+                                        <input type="text" class="form-control" name="clinic_address" value="{{ old('clinic_address') }}"
+                                               style="border-radius: 6px; border: 1px solid #ddd;" required>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label small text-muted">Ciudad *</label>
+                                        <select class="form-select" name="city" style="border-radius: 6px; border: 1px solid #ddd;" required>
+                                            <option value="">Seleccione</option>
+                                            <option value="Bogotá" {{ old('city') == 'Bogotá' ? 'selected' : '' }}>Bogotá</option>
+                                            <option value="Medellín" {{ old('city') == 'Medellín' ? 'selected' : '' }}>Medellín</option>
+                                            <option value="Cali" {{ old('city') == 'Cali' ? 'selected' : '' }}>Cali</option>
+                                            <option value="Barranquilla" {{ old('city') == 'Barranquilla' ? 'selected' : '' }}>Barranquilla</option>
+                                            <option value="Bucaramanga" {{ old('city') == 'Bucaramanga' ? 'selected' : '' }}>Bucaramanga</option>
+                                            <option value="Pereira" {{ old('city') == 'Pereira' ? 'selected' : '' }}>Pereira</option>
+                                            <option value="Otra" {{ old('city') == 'Otra' ? 'selected' : '' }}>Otra</option>
+                                        </select>
+                                    </div>
+                                </div>
 
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="password" class="form-label">Contraseña *</label>
-                                <input type="password" class="form-control" name="password" required>
-                                <div class="form-text">Mínimo 8 caracteres</div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="password_confirmation" class="form-label">Confirmar Contraseña *</label>
-                                <input type="password" class="form-control" name="password_confirmation" required>
-                            </div>
-                        </div>
+                                {{-- Contraseña --}}
+                                <div class="mb-4 mt-5">
+                                    <h6 class="fw-medium mb-3" style="color: #43883D;">Contraseña de Acceso</h6>
+                                </div>
 
-                        <div class="alert alert-info">
-                            <i class="fas fa-info-circle"></i>
-                            <strong>Proceso de Aprobación:</strong> Tu solicitud será revisada por nuestro equipo administrativo. 
-                            Recibirás un email de confirmación una vez que tu cuenta sea aprobada. Este proceso puede tomar entre 24-48 horas.
-                        </div>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label small text-muted">Contraseña *</label>
+                                        <input type="password" class="form-control" name="password"
+                                               style="border-radius: 6px; border: 1px solid #ddd;" required>
+                                        <small class="text-muted">Mínimo 8 caracteres</small>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label small text-muted">Confirmar Contraseña *</label>
+                                        <input type="password" class="form-control" name="password_confirmation"
+                                               style="border-radius: 6px; border: 1px solid #ddd;" required>
+                                    </div>
+                                </div>
 
-                        <div class="d-grid gap-2 mt-4">
-                            <button type="submit" class="btn btn-success btn-lg">
-                                <i class="fas fa-user-plus"></i> Registrarme como Veterinario
-                            </button>
-                            <a href="{{ route('home') }}" class="btn btn-outline-secondary">
-                                <i class="fas fa-arrow-left"></i> Volver al Inicio
+                                <div class="mt-4 p-3 rounded" style="background: rgba(67, 136, 61, 0.05); border-left: 4px solid #43883D;">
+                                    <h6 class="fw-medium mb-2" style="color: #43883D;">Proceso de Aprobación</h6>
+                                    <p class="small text-muted mb-0">
+                                        Tu solicitud será revisada en 24-48 horas. Recibirás un email de confirmación una vez aprobada.
+                                    </p>
+                                </div>
+
+                                <div class="mt-4">
+                                    <button type="submit" class="btn w-100 mb-3" style="background: #43883D; color: white; border: none; border-radius: 6px; padding: 12px;">
+                                        Registrarme como Veterinario
+                                    </button>
+                                    <div class="text-center">
+                                        <a href="{{ route('home') }}" class="btn btn-outline-secondary" style="border-radius: 6px;">
+                                            Volver al Inicio
+                                        </a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    {{-- Footer --}}
+                    <div class="text-center mt-4">
+                        <p class="text-muted">
+                            ¿Ya tienes cuenta?
+                            <a href="{{ route('login') }}" class="text-decoration-none" style="color: #43883D;">
+                                Inicia sesión aquí
                             </a>
-                        </div>
-                    </form>
-                </div>
-                <div class="card-footer text-center">
-                    <p class="mb-0">¿Ya tienes cuenta? 
-                        <a href="{{ route('login') }}" class="text-decoration-none">
-                            Inicia sesión aquí
-                        </a>
-                    </p>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>

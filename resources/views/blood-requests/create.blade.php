@@ -4,35 +4,56 @@
 @section('title', 'Solicitar Donación de Sangre')
 
 @section('content')
-<div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow">
-                <div class="card-header text-white" style="background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%); border-radius: 0.5rem 0.5rem 0 0;">
-                    <h4 class="mb-0 fw-bold"><i class="fas fa-heartbeat me-2" style="color: #fbbf24;"></i> Solicitar Donación de Sangre</h4>
-                    <small class="d-block mt-1" style="opacity: 0.9;">Solicita ayuda para tu paciente que necesita una transfusión</small>
+<div class="min-vh-100" style="background: #fafafa;">
+    {{-- Header --}}
+    <div class="py-4">
+        <div class="container">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <h1 class="mb-2 fw-light" style="font-family: 'Ubuntu', sans-serif; font-size: 2.2rem; color: #43883D;">
+                        <i class="fas fa-heartbeat me-2"></i>
+                        Solicitar Donación de Sangre
+                    </h1>
+                    <p class="text-muted mb-0" style="font-size: 1rem;">
+                        Solicita ayuda para tu paciente que necesita una transfusión
+                    </p>
                 </div>
-                <div class="card-body">
-                    @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <h6><i class="fas fa-exclamation-triangle"></i> Por favor corrige los siguientes errores:</h6>
-                            <ul class="mb-0">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
+                <div>
+                    <a href="{{ route('veterinarian.dashboard') }}"
+                       class="btn"
+                       style="background: transparent; color: #43883D; border: 1px solid #43883D; border-radius: 8px; font-size: 0.9rem; padding: 12px 20px; font-weight: 500;">
+                        <i class="fas fa-arrow-left me-2"></i> Volver al Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                    <form action="{{ route('veterinarian.blood_request.store') }}" method="POST">
-                        @csrf
-                        
-                        {{-- Datos del Paciente --}}
-                        <div class="mb-4">
-                            <h5 class="fw-bold border-bottom pb-2" style="color: #dc2626;">
-                                <i class="fas fa-paw me-2" style="color: #fbbf24;"></i> Datos del Paciente
-                            </h5>
-                        </div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card border-0" style="background: white; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                    <div class="card-body p-4">
+                        @if ($errors->any())
+                            <div class="alert alert-danger" style="border-radius: 8px; border: none; background: rgba(194, 14, 26, 0.1);">
+                                <h6 style="color: #C20E1A;"><i class="fas fa-exclamation-triangle"></i> Por favor corrige los siguientes errores:</h6>
+                                <ul class="mb-0">
+                                    @foreach ($errors->all() as $error)
+                                        <li style="color: #C20E1A;">{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
+                        <form action="{{ route('veterinarian.blood_request.store') }}" method="POST">
+                            @csrf
+
+                            {{-- Datos del Paciente --}}
+                            <div class="mb-4">
+                                <h5 class="fw-medium border-bottom pb-2 mb-3" style="color: #43883D; border-color: #e9ecef !important;">
+                                    <i class="fas fa-paw me-2"></i> Datos del Paciente
+                                </h5>
+                            </div>
 
                         <div class="row">
                             <div class="col-md-6 mb-3">
@@ -61,12 +82,12 @@
                             </div>
                         </div>
 
-                        {{-- Urgencia y Timing --}}
-                        <div class="mb-4 mt-4">
-                            <h5 class="fw-bold border-bottom pb-2" style="color: #dc2626;">
-                                <i class="fas fa-clock me-2" style="color: #fbbf24;"></i> Urgencia y Tiempo
-                            </h5>
-                        </div>
+                            {{-- Urgencia y Timing --}}
+                            <div class="mb-4 mt-4">
+                                <h5 class="fw-medium border-bottom pb-2 mb-3" style="color: #43883D; border-color: #e9ecef !important;">
+                                    <i class="fas fa-clock me-2"></i> Urgencia y Tiempo
+                                </h5>
+                            </div>
 
                         <div class="row">
                             <div class="col-md-6 mb-3">
@@ -94,12 +115,12 @@
                             </div>
                         </div>
 
-                        {{-- Información Médica --}}
-                        <div class="mb-4 mt-4">
-                            <h5 class="fw-bold border-bottom pb-2" style="color: #dc2626;">
-                                <i class="fas fa-stethoscope me-2" style="color: #fbbf24;"></i> Información Médica
-                            </h5>
-                        </div>
+                            {{-- Información Médica --}}
+                            <div class="mb-4 mt-4">
+                                <h5 class="fw-medium border-bottom pb-2 mb-3" style="color: #43883D; border-color: #e9ecef !important;">
+                                    <i class="fas fa-stethoscope me-2"></i> Información Médica
+                                </h5>
+                            </div>
 
                         <div class="mb-3">
                             <label for="medical_reason" class="form-label">Razón Médica para la Transfusión *</label>
@@ -116,39 +137,74 @@
                             <div class="form-text">Los tutores necesitarán esta información para coordinar la donación</div>
                         </div>
 
-                        {{-- Información Importante --}}
-                        <div class="alert" style="background: #eff6ff; border-left: 4px solid #1e3a8a; border-color: #bfdbfe;">
-                            <i class="fas fa-info-circle me-2" style="color: #1e3a8a;"></i>
-                            <strong style="color: #1e3a8a;">¿Cómo funciona?</strong>
-                            <ul class="mb-0 mt-2">
-                                <li>Al enviar esta solicitud, se notificará automáticamente a todos los donantes compatibles</li>
-                                <li>Los tutores recibirán un email con los detalles del caso</li>
-                                <li>Podrán responder si están interesados en ayudar</li>
-                                <li>Recibirás las respuestas directamente en tu email registrado</li>
-                            </ul>
-                        </div>
+                            {{-- Información Importante --}}
+                            <div class="alert" style="border-radius: 8px; border: none; background: rgba(67, 136, 61, 0.1);">
+                                <i class="fas fa-info-circle me-2" style="color: #43883D;"></i>
+                                <strong style="color: #43883D;">¿Cómo funciona?</strong>
+                                <ul class="mb-0 mt-2" style="color: #43883D;">
+                                    <li>Al enviar esta solicitud, se notificará automáticamente a todos los donantes compatibles</li>
+                                    <li>Los tutores recibirán un email con los detalles del caso</li>
+                                    <li>Podrán responder si están interesados en ayudar</li>
+                                    <li>Recibirás las respuestas directamente en tu email registrado</li>
+                                </ul>
+                            </div>
 
-                        {{-- Recordatorio de Urgencia --}}
-                        <div class="alert" style="background: #fef3cd; border-left: 4px solid #f59e0b; border-color: #fde68a;">
-                            <i class="fas fa-exclamation-triangle me-2" style="color: #f59e0b;"></i>
-                            <strong style="color: #f59e0b;">Recordatorio:</strong> Para casos críticos, también contacta directamente a las clínicas veterinarias cercanas 
-                            que puedan tener donantes inmediatos disponibles.
-                        </div>
+                            {{-- Recordatorio de Urgencia --}}
+                            <div class="alert" style="border-radius: 8px; border: none; background: rgba(248, 220, 11, 0.1);">
+                                <i class="fas fa-exclamation-triangle me-2" style="color: #F8DC0B;"></i>
+                                <strong style="color: #43883D;">Recordatorio:</strong> <span style="color: #43883D;">Para casos críticos, también contacta directamente a las clínicas veterinarias cercanas que puedan tener donantes inmediatos disponibles.</span>
+                            </div>
 
-                        <div class="d-grid gap-2 mt-4">
-                            <button type="submit" class="btn btn-lg fw-bold text-white" style="background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%); border: none; border-radius: 0.75rem; padding: 0.75rem 2rem; transition: all 0.3s ease; box-shadow: 0 4px 6px rgba(220, 38, 38, 0.3);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 12px rgba(220, 38, 38, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 6px rgba(220, 38, 38, 0.3)'">
-                                <i class="fas fa-paper-plane me-2"></i> Enviar Solicitud de Donación
-                            </button>
-                            <a href="{{ route('veterinarian.dashboard') }}" class="btn fw-semibold" style="color: #6b7280; border: 2px solid #6b7280; border-radius: 0.75rem; padding: 0.75rem 2rem; transition: all 0.3s ease;" onmouseover="this.style.backgroundColor='#6b7280'; this.style.color='white'" onmouseout="this.style.backgroundColor='transparent'; this.style.color='#6b7280'">
-                                <i class="fas fa-arrow-left me-2"></i> Volver al Dashboard
-                            </a>
-                        </div>
-                    </form>
+                            <div class="d-grid gap-3 mt-4">
+                                <button type="submit" class="btn btn-lg"
+                                        style="background: #43883D; color: white; border: none; border-radius: 8px; font-weight: 500; padding: 12px 24px;">
+                                    <i class="fas fa-paper-plane me-2"></i> Enviar Solicitud de Donación
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+
+{{-- Estilos consistentes --}}
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap');
+
+* {
+    font-family: 'Ubuntu', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.form-control, .form-select {
+    border-radius: 8px;
+    border: 1px solid #e3e6f0;
+    padding: 12px 16px;
+    font-size: 0.9rem;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #43883D;
+    box-shadow: 0 0 0 0.2rem rgba(67, 136, 61, 0.25);
+}
+
+.form-label {
+    font-weight: 500;
+    color: #43883D;
+    margin-bottom: 8px;
+}
+
+.card {
+    border-radius: 12px !important;
+    border: none;
+}
+
+.btn {
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+</style>
+
 @endsection
 
 @section('scripts')

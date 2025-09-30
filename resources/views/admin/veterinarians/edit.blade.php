@@ -3,17 +3,35 @@
 @section('title', 'Editar Veterinario')
 
 @section('content')
-<div class="container py-4">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow">
-                <div class="card-header bg-warning text-dark">
-                    <h4 class="mb-0">
-                        <i class="fas fa-edit"></i> Editar Veterinario: {{ $veterinarian->name }}
-                    </h4>
-                    <small>Modificar los datos del veterinario registrado</small>
+<div class="min-vh-100" style="background: #fafafa;">
+    {{-- Header --}}
+    <div class="py-4">
+        <div class="container-fluid px-4">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <h1 class="mb-2 fw-light" style="font-family: 'Ubuntu', sans-serif; font-size: 2.2rem; color: #43883D;">
+                        Editar Veterinario
+                    </h1>
+                    <p class="text-muted mb-0" style="font-size: 1rem;">
+                        Modificar datos de: <strong>{{ $veterinarian->name }}</strong>
+                    </p>
                 </div>
-                <div class="card-body">
+                <div>
+                    <a href="{{ route('admin.veterinarians') }}"
+                       class="btn"
+                       style="background: transparent; color: #43883D; border: 1px solid #43883D; border-radius: 8px; font-size: 0.9rem; padding: 12px 20px; font-weight: 500;">
+                        <i class="fas fa-arrow-left me-2"></i> Volver al Listado
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid px-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card border-0" style="background: white; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                    <div class="card-body p-4">
                     @if ($errors->any())
                         <div class="alert alert-danger">
                             <h6><i class="fas fa-exclamation-triangle"></i> Por favor corrige los siguientes errores:</h6>
@@ -31,8 +49,8 @@
 
                         {{-- Datos Personales --}}
                         <div class="mb-4">
-                            <h5 class="text-success border-bottom pb-2">
-                                <i class="fas fa-user"></i> Datos Personales
+                            <h5 class="fw-medium border-bottom pb-2" style="color: #43883D; border-color: #e9ecef !important;">
+                                <i class="fas fa-user me-2"></i> Información Personal
                             </h5>
                         </div>
 
@@ -113,8 +131,8 @@
 
                         {{-- Datos de la Clínica --}}
                         <div class="mb-4 mt-4">
-                            <h5 class="text-success border-bottom pb-2">
-                                <i class="fas fa-hospital"></i> Datos de la Clínica
+                            <h5 class="fw-medium border-bottom pb-2" style="color: #43883D; border-color: #e9ecef !important;">
+                                <i class="fas fa-hospital me-2"></i> Información de la Clínica
                             </h5>
                         </div>
 
@@ -147,8 +165,8 @@
 
                         {{-- Estado del Veterinario --}}
                         <div class="mb-4 mt-4">
-                            <h5 class="text-primary border-bottom pb-2">
-                                <i class="fas fa-check-circle"></i> Estado del Veterinario
+                            <h5 class="fw-medium border-bottom pb-2" style="color: #43883D; border-color: #e9ecef !important;">
+                                <i class="fas fa-check-circle me-2"></i> Estado del Veterinario
                             </h5>
                         </div>
 
@@ -170,15 +188,20 @@
                         </div>
                         @endif
 
-                        <div class="d-grid gap-2 mt-4">
-                            <button type="submit" class="btn btn-warning btn-lg">
-                                <i class="fas fa-save"></i> Actualizar Información del Veterinario
+                        <div class="d-flex gap-3 mt-4">
+                            <button type="submit" class="btn flex-fill"
+                                    style="background: #43883D; color: white; border: none; border-radius: 8px; font-size: 0.9rem; padding: 12px 20px; font-weight: 500; transition: all 0.2s ease;"
+                                    onmouseover="this.style.background='#285F19'"
+                                    onmouseout="this.style.background='#43883D'">
+                                <i class="fas fa-save me-2"></i> Actualizar Veterinario
                             </button>
-                            <a href="{{ route('admin.veterinarians.show', $veterinarian->id) }}" class="btn btn-outline-info">
-                                <i class="fas fa-eye"></i> Ver Detalles Completos
+                            <a href="{{ route('admin.veterinarians.show', $veterinarian->id) }}" class="btn"
+                               style="background: transparent; color: #93C01F; border: 1px solid #93C01F; border-radius: 8px; font-size: 0.9rem; padding: 12px 20px; font-weight: 500;">
+                                <i class="fas fa-eye me-2"></i> Ver Detalles
                             </a>
-                            <a href="{{ route('admin.veterinarians') }}" class="btn btn-outline-secondary">
-                                <i class="fas fa-arrow-left"></i> Volver al Listado de Veterinarios
+                            <a href="{{ route('admin.veterinarians') }}" class="btn"
+                               style="background: transparent; color: #43883D; border: 1px solid #43883D; border-radius: 8px; font-size: 0.9rem; padding: 12px 20px; font-weight: 500;">
+                                <i class="fas fa-times me-2"></i> Cancelar
                             </a>
                         </div>
                     </form>
@@ -187,6 +210,48 @@
         </div>
     </div>
 </div>
+
+{{-- Estilos consistentes --}}
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap');
+
+* {
+    font-family: 'Ubuntu', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.form-control, .form-select {
+    border-radius: 8px;
+    border: 1px solid #e3e6f0;
+    padding: 12px 16px;
+    font-size: 0.9rem;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #43883D;
+    box-shadow: 0 0 0 0.2rem rgba(67, 136, 61, 0.25);
+}
+
+.form-label {
+    font-weight: 500;
+    color: #43883D;
+    margin-bottom: 8px;
+}
+
+.card {
+    border-radius: 12px !important;
+    border: none;
+}
+
+.btn {
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.alert {
+    border-radius: 8px;
+    border: none;
+}
+</style>
 
 @if($veterinarian->veterinarian?->professional_card_photo)
 <!-- Modal para mostrar la foto de la tarjeta profesional en grande -->
