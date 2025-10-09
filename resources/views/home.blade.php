@@ -5,13 +5,13 @@
 @section('content')
 <div class="hero-section">
     <div class="container text-center">
-        <div class="d-flex justify-content-center align-items-center mb-4">
+        <div class="d-flex justify-content-center align-items-center mb-4 gap-4">
             <img src="https://www.bucaramanga.gov.co/wp-content/uploads/2025/06/escudo-alcaldia.png"
                  alt="Escudo Alcaldía de Bucaramanga"
-                 style="height: 80px; margin-right: 20px;">
-            <h1 class="display-4 fw-bold mb-0" style="color: white;">
-                <i class="fas fa-heart" style="color: #C20E1A;"></i> Banco de Sangre Canina
-            </h1>
+                 style="height: 100px;">
+            <img src="https://www.bucaramanga.gov.co/wp-content/uploads/2025/10/Dognar-Logo-04.png"
+                 alt="Dognar Logo"
+                 style="height: 150px; background: white; border-radius: 15px; padding: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
         </div>
         <p class="lead mb-5">Conectamos mascotas sanas con aquellas que necesitan una segunda oportunidad de vida</p>
         
@@ -158,7 +158,7 @@
             </div>
             <div class="col-md-6">
                 <div class="text-center">
-                    <img src="https://via.placeholder.com/500x400/667eea/ffffff?text=Perros+Donantes" 
+                    <img src="https://www.bucaramanga.gov.co/wp-content/uploads/2025/10/Dognar-salva-imagen.png"
                          class="img-fluid rounded shadow" alt="Perros donantes">
                 </div>
             </div>

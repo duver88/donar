@@ -310,7 +310,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark navbar-bucaramanga">
         <div class="container">
             <a class="navbar-brand" href="{{ route('home') }}">
-                <i class="fas fa-heart text-danger"></i> Banco de Sangre Canina
+                <img src="https://www.bucaramanga.gov.co/wp-content/uploads/2025/10/Dognar-Logo-04.png" alt="Dognar Logo" style="height: 50px; background: white; border-radius: 10px; padding: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
             </a>
             
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -385,7 +385,7 @@
         <div class="container text-center">
             <div class="row">
                 <div class="col-md-6">
-                    <h5><i class="fas fa-heart text-danger"></i> Banco de Sangre Canina</h5>
+                    <img src="https://www.bucaramanga.gov.co/wp-content/uploads/2025/10/Dognar-Logo-03.png" alt="Dognar Logo" style="height: 60px; margin-bottom: 10px;">
                     <p class="mb-0">Salvando vidas peludas juntos</p>
                 </div>
                 <div class="col-md-6">

@@ -252,62 +252,14 @@
                                                 <i class="fas fa-eye"></i>
                                             </a>
 
-                                            @if($request->status === 'active')
-                                                <button type="button" class="btn btn-sm"
-                                                        style="background: #F8DC0B; color: #43883D; border: none; border-radius: 6px; padding: 6px 12px;"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#updateStatusModal{{ $request->id }}"
-                                                        title="Cambiar estado">
-                                                    <i class="fas fa-exchange-alt"></i>
-                                                </button>
-                                            @endif
+                                            <button type="button" class="btn btn-sm"
+                                                    style="background: #F8DC0B; color: #43883D; border: none; border-radius: 6px; padding: 6px 12px;"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#updateStatusModal{{ $request->id }}"
+                                                    title="Cambiar estado">
+                                                <i class="fas fa-exchange-alt"></i>
+                                            </button>
                                         </div>
-
-                                        {{-- Modal para cambio de estado --}}
-                                        @if($request->status === 'active')
-                                        <div class="modal fade" id="updateStatusModal{{ $request->id }}" tabindex="-1">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content" style="border-radius: 12px; border: none;">
-                                                    <div class="modal-header" style="border-bottom: 1px solid #e9ecef;">
-                                                        <h5 class="modal-title" style="color: #43883D; font-weight: 500;">
-                                                            <i class="fas fa-edit me-2"></i> Cambiar Estado - {{ $request->patient_name }}
-                                                        </h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                                    </div>
-                                                    <form method="POST" action="{{ route('admin.blood_requests.update_status', $request->id) }}">
-                                                        @csrf
-                                                        @method('PUT')
-                                                        <div class="modal-body p-4">
-                                                            <div class="mb-3">
-                                                                <label for="status{{ $request->id }}" class="form-label" style="color: #43883D; font-weight: 500;">Nuevo Estado *</label>
-                                                                <select class="form-select" name="status" id="status{{ $request->id }}" required
-                                                                        style="border-radius: 8px; border: 1px solid #e3e6f0; padding: 12px 16px;">
-                                                                    <option value="completed">Completada</option>
-                                                                    <option value="cancelled">Cancelada</option>
-                                                                    <option value="expired">Expirada</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label for="admin_notes{{ $request->id }}" class="form-label" style="color: #43883D; font-weight: 500;">Notas del Administrador</label>
-                                                                <textarea class="form-control" name="admin_notes" id="admin_notes{{ $request->id }}" rows="3"
-                                                                          placeholder="Motivo del cambio de estado..."
-                                                                          style="border-radius: 8px; border: 1px solid #e3e6f0; padding: 12px 16px;"></textarea>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer" style="border-top: 1px solid #e9ecef;">
-                                                            <button type="button" class="btn"
-                                                                    style="background: transparent; color: #6c757d; border: 1px solid #6c757d; border-radius: 8px; font-weight: 500;"
-                                                                    data-bs-dismiss="modal">Cancelar</button>
-                                                            <button type="submit" class="btn"
-                                                                    style="background: #43883D; color: white; border: none; border-radius: 8px; font-weight: 500;">
-                                                                <i class="fas fa-save me-2"></i> Actualizar Estado
-                                                            </button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        @endif
                                     </td>
                                 </tr>
                                 @empty
@@ -330,6 +282,80 @@
         </div>
     </div>
 </div>
+
+{{-- Modales para cambio de estado --}}
+@foreach($requests as $request)
+<div class="modal fade" id="updateStatusModal{{ $request->id }}" tabindex="-1" aria-labelledby="updateStatusModalLabel{{ $request->id }}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="border-radius: 12px; border: none; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+            <div class="modal-header" style="background: #43883D; color: white; border-radius: 12px 12px 0 0; border: none;">
+                <h5 class="modal-title" id="updateStatusModalLabel{{ $request->id }}">
+                    <i class="fas fa-exchange-alt me-2"></i> Cambiar Estado - {{ $request->patient_name }}
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <form method="POST" action="{{ route('admin.blood_requests.update_status', $request->id) }}">
+                @csrf
+                @method('PUT')
+                <div class="modal-body p-4">
+                    <div class="alert" style="border-radius: 8px; border: none; background: rgba(67, 136, 61, 0.1);">
+                        <div class="d-flex align-items-center">
+                            <div style="color: #43883D;">
+                                <i class="fas fa-info-circle me-2"></i>
+                                <strong>Estado actual:</strong>
+                                @switch($request->status)
+                                    @case('active')
+                                        <span class="badge ms-2" style="background: rgba(67, 136, 61, 0.2); color: #43883D;">Activa</span>
+                                        @break
+                                    @case('completed')
+                                        <span class="badge ms-2" style="background: rgba(147, 192, 31, 0.2); color: #93C01F;">Completada</span>
+                                        @break
+                                    @case('cancelled')
+                                        <span class="badge ms-2" style="background: rgba(108, 117, 125, 0.2); color: #6c757d;">Cancelada</span>
+                                        @break
+                                    @case('expired')
+                                        <span class="badge ms-2" style="background: rgba(194, 14, 26, 0.2); color: #C20E1A;">Expirada</span>
+                                        @break
+                                @endswitch
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="status{{ $request->id }}" class="form-label" style="color: #43883D; font-weight: 500;">Nuevo Estado *</label>
+                        <select class="form-select" name="status" id="status{{ $request->id }}" required
+                                style="border-radius: 8px; border: 1px solid #e3e6f0; padding: 12px 16px;">
+                            <option value="">-Seleccione nuevo estado-</option>
+                            <option value="active" {{ $request->status === 'active' ? 'selected' : '' }}>Activa</option>
+                            <option value="completed" {{ $request->status === 'completed' ? 'selected' : '' }}>Completada</option>
+                            <option value="cancelled" {{ $request->status === 'cancelled' ? 'selected' : '' }}>Cancelada</option>
+                            <option value="expired" {{ $request->status === 'expired' ? 'selected' : '' }}>Expirada</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="admin_notes{{ $request->id }}" class="form-label" style="color: #43883D; font-weight: 500;">Notas del Administrador</label>
+                        <textarea class="form-control" name="admin_notes" id="admin_notes{{ $request->id }}" rows="4"
+                                  placeholder="Motivo del cambio de estado, observaciones adicionales..."
+                                  style="border-radius: 8px; border: 1px solid #e3e6f0; padding: 12px 16px;">{{ $request->admin_notes ?? '' }}</textarea>
+                        <small class="text-muted">Esta información se guardará en el historial de la solicitud.</small>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border: none; background: #fafafa; border-radius: 0 0 12px 12px;">
+                    <button type="button" class="btn" data-bs-dismiss="modal"
+                            style="background: transparent; color: #6c757d; border: 1px solid #6c757d; border-radius: 8px; font-weight: 500;">
+                        <i class="fas fa-times me-1"></i> Cancelar
+                    </button>
+                    <button type="submit" class="btn"
+                            style="background: #43883D; color: white; border: none; border-radius: 8px; font-weight: 500;">
+                        <i class="fas fa-save me-2"></i> Actualizar Estado
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@endforeach
 
 {{-- Estilos consistentes --}}
 <style>

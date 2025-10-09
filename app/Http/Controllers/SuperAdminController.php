@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class SuperAdminController extends Controller
 {
@@ -223,7 +225,7 @@ public function approveVeterinarian($id)
         if ($request->hasFile('professional_card_photo')) {
             // Eliminar foto anterior si existe
             if ($veterinarian->veterinarian->professional_card_photo) {
-                \Storage::disk('public')->delete($veterinarian->veterinarian->professional_card_photo);
+                Storage::disk('public')->delete($veterinarian->veterinarian->professional_card_photo);
             }
 
             $path = $request->file('professional_card_photo')->store('veterinarian_cards', 'public');
@@ -262,7 +264,7 @@ public function approveVeterinarian($id)
 
         // Eliminar foto de tarjeta profesional si existe
         if ($veterinarian->veterinarian && $veterinarian->veterinarian->professional_card_photo) {
-            \Storage::disk('public')->delete($veterinarian->veterinarian->professional_card_photo);
+            Storage::disk('public')->delete($veterinarian->veterinarian->professional_card_photo);
         }
 
         // Eliminar registro del veterinario primero (si existe)
@@ -377,8 +379,8 @@ public function approveVeterinarian($id)
         $pet = Pet::findOrFail($id);
 
         // Eliminar foto si existe
-        if ($pet->photo_path && \Storage::disk('public')->exists($pet->photo_path)) {
-            \Storage::disk('public')->delete($pet->photo_path);
+        if ($pet->photo_path && Storage::disk('public')->exists($pet->photo_path)) {
+            Storage::disk('public')->delete($pet->photo_path);
         }
 
         $pet->healthConditions()->delete();
@@ -477,28 +479,57 @@ public function approveVeterinarian($id)
         $bloodRequest = BloodRequest::findOrFail($id);
         $oldStatus = $bloodRequest->status;
 
-        $bloodRequest->update([
+        // Datos a actualizar
+        $updateData = [
             'status' => $validated['status'],
             'admin_notes' => $validated['admin_notes'],
             'completed_at' => $validated['status'] === 'completed' ? now() : null,
             'updated_by_admin' => Auth::id()
-        ]);
+        ];
+
+        // Si se está cambiando a activo y la fecha límite ya pasó, extenderla
+        if ($validated['status'] === 'active' && $bloodRequest->needed_by_date && $bloodRequest->needed_by_date < now()) {
+            // Extender la fecha según el nivel de urgencia
+            $extension = match($bloodRequest->urgency_level) {
+                'critica' => 6, // 6 horas
+                'alta' => 24,   // 24 horas
+                'media' => 72,  // 3 días
+                'baja' => 168,  // 7 días (1 semana)
+                default => 24   // por defecto 24 horas
+            };
+
+            $updateData['needed_by_date'] = now()->addHours($extension);
+        }
+
+        $bloodRequest->update($updateData);
 
         // Crear registro en historial si el estado cambió
         if ($oldStatus !== $validated['status']) {
-            \DB::table('blood_request_history')->insert([
+            $changeReason = $validated['admin_notes'] ?? 'Cambio desde panel administrativo';
+
+            // Si se extendió la fecha, agregarlo al motivo
+            if (isset($updateData['needed_by_date'])) {
+                $changeReason .= ' - Fecha límite extendida automáticamente';
+            }
+
+            DB::table('blood_request_history')->insert([
                 'blood_request_id' => $bloodRequest->id,
                 'previous_status' => $oldStatus,
                 'new_status' => $validated['status'],
                 'changed_by' => Auth::id(),
-                'change_reason' => $validated['admin_notes'] ?? 'Cambio desde panel administrativo',
+                'change_reason' => $changeReason,
                 'created_at' => now(),
                 'updated_at' => now()
             ]);
         }
 
+        $message = 'Estado de solicitud actualizado exitosamente';
+        if (isset($updateData['needed_by_date'])) {
+            $message .= '. La fecha límite fue extendida automáticamente';
+        }
+
         return redirect()->route('admin.blood_requests')
-                        ->with('success', 'Estado de solicitud actualizado exitosamente');
+                        ->with('success', $message);
     }
 
     public function reviewVeterinarian($id)
@@ -516,21 +547,4 @@ public function approveVeterinarian($id)
         return view('admin.veterinarians.review', compact('veterinarian'));
     }
 
-
-    public function handle()
-{
-    $veterinarian = User::where('role', 'veterinarian')->first();
-    
-    if ($veterinarian) {
-        Mail::to('tu_email_de_prueba@gmail.com')
-            ->send(new VeterinarianApprovedMail($veterinarian));
-        
-        $this->info('Email de prueba enviado exitosamente');
-    } else {
-        $this->error('No hay veterinarios en la base de datos para probar');
-    }
-}
-
-// También actualiza los métodos approveVeterinarian y rejectVeterinarian
-// para que redirijan al dashboard en lugar de retornar JSON
 }
