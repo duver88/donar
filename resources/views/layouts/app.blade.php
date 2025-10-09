@@ -381,16 +381,46 @@
         @yield('content')
     </main>
 
-    <footer class="bg-dark text-white py-4 mt-5">
-        <div class="container text-center">
-            <div class="row">
-                <div class="col-md-6">
-                    <img src="https://www.bucaramanga.gov.co/wp-content/uploads/2025/10/Dognar-Logo-03.png" alt="Dognar Logo" style="height: 60px; margin-bottom: 10px;">
-                    <p class="mb-0">Salvando vidas peludas juntos</p>
+    <footer class="footer-bucaramanga py-5 mt-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-4 text-center text-md-start mb-4 mb-md-0">
+                    <img src="https://www.bucaramanga.gov.co/wp-content/uploads/2025/10/Dognar-Logo-03.png" alt="Dognar Logo" style="height: 80px; margin-bottom: 15px;" class="d-block mx-auto mx-md-0">
+                    <p class="mb-2 fw-light">Salvando vidas peludas juntos</p>
+                    <div class="d-flex justify-content-center justify-content-md-start gap-3 mt-3">
+                        <a href="#" class="text-white" style="font-size: 1.5rem; transition: color 0.3s;" onmouseover="this.style.color='#F8DC0B'" onmouseout="this.style.color='white'">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="#" class="text-white" style="font-size: 1.5rem; transition: color 0.3s;" onmouseover="this.style.color='#F8DC0B'" onmouseout="this.style.color='white'">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-white" style="font-size: 1.5rem; transition: color 0.3s;" onmouseover="this.style.color='#F8DC0B'" onmouseout="this.style.color='white'">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <p class="mb-0">&copy; 2024 Todos los derechos reservados</p>
-                    <small class="text-muted">Desarrollado con ❤️ para nuestros amigos de cuatro patas</small>
+                <div class="col-md-4 text-center mb-4 mb-md-0">
+                    <h5 class="text-white mb-3" style="font-family: 'Oswald', sans-serif;">Enlaces Rápidos</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="{{ route('home') }}" class="text-white text-decoration-none" style="transition: color 0.3s;" onmouseover="this.style.color='#F8DC0B'" onmouseout="this.style.color='white'"><i class="fas fa-angle-right me-2"></i>Inicio</a></li>
+                        <li class="mb-2"><a href="{{ route('public.active-requests') }}" class="text-white text-decoration-none" style="transition: color 0.3s;" onmouseover="this.style.color='#F8DC0B'" onmouseout="this.style.color='white'"><i class="fas fa-angle-right me-2"></i>Solicitudes Activas</a></li>
+                        <li class="mb-2"><a href="{{ route('pets.create') }}" class="text-white text-decoration-none" style="transition: color 0.3s;" onmouseover="this.style.color='#F8DC0B'" onmouseout="this.style.color='white'"><i class="fas fa-angle-right me-2"></i>Registrar Mascota</a></li>
+                        <li class="mb-2"><a href="{{ route('veterinarian.register') }}" class="text-white text-decoration-none" style="transition: color 0.3s;" onmouseover="this.style.color='#F8DC0B'" onmouseout="this.style.color='white'"><i class="fas fa-angle-right me-2"></i>Registro Veterinario</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 text-center text-md-end">
+                    <h5 class="text-white mb-3" style="font-family: 'Oswald', sans-serif;">Contacto</h5>
+                    <p class="mb-2"><i class="fas fa-map-marker-alt me-2"></i>Bucaramanga, Santander</p>
+                    <p class="mb-2"><i class="fas fa-envelope me-2"></i>info@dognar.gov.co</p>
+                    <p class="mb-0"><i class="fas fa-phone me-2"></i>+57 (7) 123 4567</p>
+                    <img src="https://www.bucaramanga.gov.co/wp-content/uploads/2025/06/escudo-alcaldia.png" alt="Escudo Bucaramanga" style="height: 60px; margin-top: 20px;">
+                </div>
+            </div>
+            <hr class="my-4" style="border-color: rgba(255,255,255,0.2);">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <p class="mb-1">&copy; 2024-2025 Dognar - Alcaldía de Bucaramanga. Todos los derechos reservados.</p>
+                    <small style="opacity: 0.8;">Desarrollado con <i class="fas fa-heart" style="color: #C20E1A;"></i> para nuestros amigos de cuatro patas</small>
                 </div>
             </div>
         </div>

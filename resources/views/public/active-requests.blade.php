@@ -1,38 +1,43 @@
 {{-- resources/views/public/active-requests.blade.php --}}
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solicitudes Activas - Banco de Sangre Canina</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --verde-principal: #43883D;
-            --verde-claro: #93C01F;
-            --amarillo: #F8DC0B;
-            --rojo: #C20E1A;
-        }
+@extends('layouts.app')
 
-        body {
-            font-family: 'Ubuntu', sans-serif;
-            background: #fafafa;
-            line-height: 1.6;
-        }
+@section('title', 'Solicitudes Activas - Banco de Sangre Canina')
 
-        .header-minimal {
-            background: white;
-            border-bottom: 1px solid #e9ecef;
-            padding: 1rem 0;
-        }
+@section('content')
+<style>
+    :root {
+        --verde-principal: #43883D;
+        --verde-claro: #93C01F;
+        --amarillo: #F8DC0B;
+        --rojo: #C20E1A;
+    }
 
-        .hero-minimal {
-            background: var(--verde-principal);
-            color: white;
-            padding: 3rem 0;
-        }
+    body {
+        background: #fafafa;
+    }
+
+    .hero-minimal {
+        background: linear-gradient(135deg, var(--verde-principal) 0%, #51AD32 100%);
+        color: white;
+        padding: 4rem 0;
+        position: relative;
+    }
+
+    .hero-minimal::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.1);
+        z-index: 1;
+    }
+
+    .hero-minimal .container {
+        position: relative;
+        z-index: 2;
+    }
 
         .card-minimal {
             background: white;
@@ -92,35 +97,25 @@
             border-color: var(--verde-principal);
             box-shadow: 0 0 0 0.2rem rgba(67, 136, 61, 0.1);
         }
-    </style>
-</head>
-<body>
-    {{-- Header Minimalista --}}
-    <div class="header-minimal">
-        <div class="container">
-            <div class="d-flex align-items-center justify-content-between">
-                <a href="{{ route('home') }}" class="text-decoration-none" style="color: var(--verde-principal);">
-                    <h1 class="h4 mb-0 fw-medium">
-                        <i class="fas fa-heart me-2"></i>
-                        Banco de Sangre Canina
-                    </h1>
-                </a>
-                <a href="{{ route('pets.create') }}" class="btn btn-primary-minimal">
-                    <i class="fas fa-plus me-1"></i>Registrar Donante
-                </a>
-            </div>
-        </div>
-    </div>
+</style>
 
-    {{-- Hero Simplificado --}}
-    <div class="hero-minimal">
-        <div class="container text-center">
-            <h2 class="mb-3 fw-light">Casos que necesitan tu ayuda</h2>
-            <p class="mb-0 opacity-90">
-                <strong>{{ $activeRequests->total() }}</strong> solicitudes activas • Tu mascota puede salvar una vida
-            </p>
+{{-- Hero con diseño mejorado --}}
+<div class="hero-minimal">
+    <div class="container text-center">
+        <div class="d-flex justify-content-center align-items-center mb-4 gap-4">
+            <img src="https://www.bucaramanga.gov.co/wp-content/uploads/2025/06/escudo-alcaldia.png"
+                 alt="Escudo Alcaldía de Bucaramanga"
+                 style="height: 80px;">
+            <img src="https://www.bucaramanga.gov.co/wp-content/uploads/2025/10/Dognar-Logo-04.png"
+                 alt="Dognar Logo"
+                 style="height: 120px; background: white; border-radius: 15px; padding: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
         </div>
+        <h2 class="mb-3 fw-light" style="color: white;">Casos que necesitan tu ayuda</h2>
+        <p class="mb-0 opacity-90" style="font-size: 1.1rem; color: white;">
+            <strong>{{ $activeRequests->total() }}</strong> solicitudes activas • Tu mascota puede salvar una vida
+        </p>
     </div>
+</div>
 
     {{-- Filtros Minimalistas --}}
     <div class="container py-4">
@@ -233,15 +228,4 @@
         @endif
     </div>
 
-    {{-- Footer Minimalista --}}
-    <footer class="border-top py-4 mt-5" style="background: white;">
-        <div class="container text-center">
-            <p class="text-muted small mb-0">
-                <strong style="color: var(--verde-principal);">Banco de Sangre Canina</strong> • Salvando vidas juntos
-            </p>
-        </div>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+@endsection
