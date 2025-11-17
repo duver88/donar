@@ -147,6 +147,23 @@ public function approveVeterinarian($id)
             'clinic_address' => 'required|string|max:500',
             'city' => 'required|string|max:100',
             'status' => 'required|in:pending,approved,rejected'
+        ], [
+            'name.required' => 'El nombre completo es obligatorio.',
+            'email.required' => 'El email es obligatorio.',
+            'email.email' => 'El email debe ser una dirección válida.',
+            'email.unique' => 'Este email ya está registrado en el sistema.',
+            'phone.required' => 'El teléfono es obligatorio.',
+            'document_id.required' => 'El número de documento es obligatorio.',
+            'document_id.unique' => 'Este número de documento ya está registrado.',
+            'professional_card.required' => 'El número de tarjeta profesional es obligatorio.',
+            'professional_card.unique' => 'Este número de tarjeta profesional ya está registrado.',
+            'professional_card_photo.mimes' => 'La foto debe ser un archivo JPG, PNG o PDF.',
+            'professional_card_photo.max' => 'La foto no debe superar 5MB.',
+            'clinic_name.required' => 'El nombre de la clínica es obligatorio.',
+            'clinic_address.required' => 'La dirección de la clínica es obligatoria.',
+            'city.required' => 'La ciudad es obligatoria.',
+            'status.required' => 'El estado es obligatorio.',
+            'status.in' => 'El estado seleccionado no es válido.',
         ]);
 
         // Manejar foto de tarjeta profesional
