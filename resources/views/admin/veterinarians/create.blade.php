@@ -73,6 +73,14 @@
                                        value="{{ old('phone') }}" required>
                             </div>
                             <div class="col-md-6 mb-3">
+                                <label for="document_id" class="form-label">Número de Documento *</label>
+                                <input type="text" class="form-control" name="document_id" id="document_id"
+                                       value="{{ old('document_id') }}" required>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
                                 <label for="status" class="form-label">Estado *</label>
                                 <select class="form-select" name="status" id="status" required>
                                     <option value="">-Seleccione-</option>
@@ -94,27 +102,20 @@
                             <div class="col-md-6 mb-3">
                                 <label for="professional_card" class="form-label">Número de Tarjeta Profesional *</label>
                                 <input type="text" class="form-control" name="professional_card" id="professional_card"
-                                       value="{{ old('professional_card') }}" required placeholder="Ej: 12345">
+                                       value="{{ old('professional_card') }}" required placeholder="Ej: VET-001-2024">
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="specialty" class="form-label">Especialidad</label>
                                 <input type="text" class="form-control" name="specialty" id="specialty"
-                                       value="{{ old('specialty') }}" placeholder="Ej: Cirugía, Cardiología, etc.">
+                                       value="{{ old('specialty') }}" placeholder="Ej: Medicina Interna">
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="years_experience" class="form-label">Años de Experiencia *</label>
-                                <input type="number" class="form-control" name="years_experience" id="years_experience"
-                                       value="{{ old('years_experience') }}" min="0" max="50" required>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="professional_card_photo" class="form-label">Foto de Tarjeta Profesional</label>
-                                <input type="file" class="form-control" name="professional_card_photo" id="professional_card_photo"
-                                       accept=".jpg,.jpeg,.png,.pdf">
-                                <div class="form-text">Formato: JPG, PNG o PDF. Máximo 2MB</div>
-                            </div>
+                        <div class="mb-3">
+                            <label for="professional_card_photo" class="form-label">Foto de Tarjeta Profesional</label>
+                            <input type="file" class="form-control" name="professional_card_photo" id="professional_card_photo"
+                                   accept=".jpg,.jpeg,.png,.pdf">
+                            <div class="form-text">Formato: JPG, PNG o PDF. Máximo 5MB</div>
                         </div>
 
                         <div class="mb-3">
@@ -126,12 +127,21 @@
                         <div class="row">
                             <div class="col-md-8 mb-3">
                                 <label for="clinic_address" class="form-label">Dirección de la Clínica *</label>
-                                <textarea class="form-control" name="clinic_address" id="clinic_address" rows="3" required>{{ old('clinic_address') }}</textarea>
+                                <input type="text" class="form-control" name="clinic_address" id="clinic_address"
+                                       value="{{ old('clinic_address') }}" required>
                             </div>
                             <div class="col-md-4 mb-3">
                                 <label for="city" class="form-label">Ciudad *</label>
-                                <input type="text" class="form-control" name="city" id="city"
-                                       value="{{ old('city', 'Bucaramanga') }}" required>
+                                <select class="form-select" name="city" id="city" required>
+                                    <option value="">Seleccione</option>
+                                    <option value="Bogotá" {{ old('city') == 'Bogotá' ? 'selected' : '' }}>Bogotá</option>
+                                    <option value="Medellín" {{ old('city') == 'Medellín' ? 'selected' : '' }}>Medellín</option>
+                                    <option value="Cali" {{ old('city') == 'Cali' ? 'selected' : '' }}>Cali</option>
+                                    <option value="Barranquilla" {{ old('city') == 'Barranquilla' ? 'selected' : '' }}>Barranquilla</option>
+                                    <option value="Bucaramanga" {{ old('city', 'Bucaramanga') == 'Bucaramanga' ? 'selected' : '' }}>Bucaramanga</option>
+                                    <option value="Pereira" {{ old('city') == 'Pereira' ? 'selected' : '' }}>Pereira</option>
+                                    <option value="Otra" {{ old('city') == 'Otra' ? 'selected' : '' }}>Otra</option>
+                                </select>
                             </div>
                         </div>
 

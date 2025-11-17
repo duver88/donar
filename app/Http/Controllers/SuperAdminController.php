@@ -6,12 +6,15 @@ use App\Models\User;
 use App\Models\Pet;
 use App\Models\BloodRequest;
 use App\Mail\VeterinarianApprovedMail;
+use App\Mail\VeterinarianPasswordSetupMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Str;
 
 class SuperAdminController extends Controller
 {
@@ -136,38 +139,60 @@ public function approveVeterinarian($id)
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'phone' => 'required|string|max:20',
-            'license_number' => 'required|string|max:50',
+            'document_id' => 'required|string|max:50|unique:users,document_id',
+            'professional_card' => 'required|string|max:50|unique:veterinarians,professional_card',
+            'professional_card_photo' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:5120',
             'specialty' => 'nullable|string|max:100',
             'clinic_name' => 'required|string|max:255',
             'clinic_address' => 'required|string|max:500',
-            'years_experience' => 'required|integer|min:0|max:50',
+            'city' => 'required|string|max:100',
             'status' => 'required|in:pending,approved,rejected'
         ]);
+
+        // Manejar foto de tarjeta profesional
+        $photoPath = null;
+        if ($request->hasFile('professional_card_photo')) {
+            $photoPath = $request->file('professional_card_photo')->store('professional_cards', 'public');
+        }
 
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'phone' => $validated['phone'],
+            'document_id' => $validated['document_id'],
             'role' => 'veterinarian',
             'status' => $validated['status'],
-            'password' => bcrypt('temp_password_' . random_int(1000, 9999)),
+            'password' => bcrypt('temp_password_' . random_int(100000, 999999)),
             'email_verified_at' => now(),
             'approved_at' => $validated['status'] === 'approved' ? now() : null,
             'approved_by' => $validated['status'] === 'approved' ? Auth::id() : null,
         ]);
 
         $user->veterinarian()->create([
-            'license_number' => $validated['license_number'],
+            'professional_card' => $validated['professional_card'],
+            'professional_card_photo' => $photoPath,
             'specialty' => $validated['specialty'],
             'clinic_name' => $validated['clinic_name'],
             'clinic_address' => $validated['clinic_address'],
-            'years_experience' => $validated['years_experience'],
+            'city' => $validated['city'],
             'approved_at' => $validated['status'] === 'approved' ? now() : null,
             'approved_by' => $validated['status'] === 'approved' ? Auth::id() : null,
         ]);
 
+        // Generar token de reset de contraseña y enviar email
+        try {
+            $token = Password::createToken($user);
+
+            Mail::to($user->email)->send(new VeterinarianPasswordSetupMail($user, $token));
+
+            $message = 'Veterinario creado exitosamente. Se ha enviado un email para configurar la contraseña.';
+        } catch (\Exception $e) {
+            Log::error('Error enviando email de configuración de contraseña: ' . $e->getMessage());
+            $message = 'Veterinario creado exitosamente, pero hubo un error enviando el email de configuración.';
+        }
+
         return redirect()->route('admin.veterinarians')
-                        ->with('success', 'Veterinario creado exitosamente');
+                        ->with('success', $message);
     }
 
     public function editVeterinarian($id)
