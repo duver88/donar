@@ -200,11 +200,28 @@ public function approveVeterinarian($id)
         try {
             $token = Password::createToken($user);
 
-            Mail::to($user->email)->send(new VeterinarianPasswordSetupMail($user, $token));
+            Log::info('Generando token de reset para veterinario', [
+                'user_id' => $user->id,
+                'email' => $user->email,
+                'token_generated' => true
+            ]);
+
+            // Enviar email en cola para mejor rendimiento
+            Mail::to($user->email)->queue(new VeterinarianPasswordSetupMail($user, $token));
+
+            Log::info('Email de configuración de contraseña enviado a cola', [
+                'user_id' => $user->id,
+                'email' => $user->email
+            ]);
 
             $message = 'Veterinario creado exitosamente. Se ha enviado un email para configurar la contraseña.';
         } catch (\Exception $e) {
-            Log::error('Error enviando email de configuración de contraseña: ' . $e->getMessage());
+            Log::error('Error enviando email de configuración de contraseña', [
+                'user_id' => $user->id,
+                'email' => $user->email,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
             $message = 'Veterinario creado exitosamente, pero hubo un error enviando el email de configuración.';
         }
 
