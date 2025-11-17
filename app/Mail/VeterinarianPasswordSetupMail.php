@@ -10,7 +10,7 @@ use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use App\Models\User;
 
-class VeterinarianPasswordSetupMail extends Mailable implements ShouldQueue
+class VeterinarianPasswordSetupMail extends Mailable
 {
     use Queueable, SerializesModels;
 

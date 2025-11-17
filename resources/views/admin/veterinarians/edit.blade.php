@@ -32,6 +32,20 @@
             <div class="col-lg-8">
                 <div class="card border-0" style="background: white; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
                     <div class="card-body p-4">
+                    @if(session('success'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <i class="fas fa-check-circle me-2"></i>{{ session('success') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    @endif
+
+                    @if(session('error'))
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <i class="fas fa-exclamation-circle me-2"></i>{{ session('error') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    @endif
+
                     @if ($errors->any())
                         <div class="alert alert-danger">
                             <h6><i class="fas fa-exclamation-triangle"></i> Por favor corrige los siguientes errores:</h6>
@@ -42,6 +56,25 @@
                             </ul>
                         </div>
                     @endif
+
+                    {{-- Botón para reenviar email de contraseña --}}
+                    <div class="mb-4">
+                        <div class="alert alert-info d-flex align-items-center justify-content-between" style="background: #e7f3ff; border: 1px solid #b3d9ff; border-radius: 8px;">
+                            <div>
+                                <i class="fas fa-envelope me-2" style="color: #0066cc;"></i>
+                                <strong>Email de configuración:</strong> {{ $veterinarian->email }}
+                            </div>
+                            <form action="{{ route('admin.veterinarians.resend-email', $veterinarian->id) }}" method="POST" class="d-inline">
+                                @csrf
+                                <button type="submit"
+                                        class="btn btn-sm"
+                                        style="background: #0066cc; color: white; border: none; border-radius: 6px; font-weight: 500;"
+                                        onclick="return confirm('¿Enviar email de restablecimiento de contraseña a {{ $veterinarian->email }}?')">
+                                    <i class="fas fa-paper-plane me-1"></i> Enviar Email para Restablecer Contraseña
+                                </button>
+                            </form>
+                        </div>
+                    </div>
 
                     <form action="{{ route('admin.veterinarians.update', $veterinarian->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf

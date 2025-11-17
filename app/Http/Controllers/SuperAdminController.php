@@ -206,10 +206,10 @@ public function approveVeterinarian($id)
                 'token_generated' => true
             ]);
 
-            // Enviar email en cola para mejor rendimiento
-            Mail::to($user->email)->queue(new VeterinarianPasswordSetupMail($user, $token));
+            // Enviar email inmediatamente
+            Mail::to($user->email)->send(new VeterinarianPasswordSetupMail($user, $token));
 
-            Log::info('Email de configuración de contraseña enviado a cola', [
+            Log::info('Email de configuración de contraseña enviado exitosamente', [
                 'user_id' => $user->id,
                 'email' => $user->email
             ]);
@@ -345,6 +345,43 @@ public function approveVeterinarian($id)
                            ->findOrFail($id);
 
         return view('admin.veterinarians.show', compact('veterinarian'));
+    }
+
+    public function resendPasswordSetupEmail($id)
+    {
+        $veterinarian = User::where('role', 'veterinarian')->findOrFail($id);
+
+        try {
+            // Generar nuevo token de reset de contraseña
+            $token = Password::createToken($veterinarian);
+
+            Log::info('Reenviando email de configuración de contraseña', [
+                'user_id' => $veterinarian->id,
+                'email' => $veterinarian->email,
+                'requested_by' => Auth::id()
+            ]);
+
+            // Enviar email
+            Mail::to($veterinarian->email)->send(new VeterinarianPasswordSetupMail($veterinarian, $token));
+
+            Log::info('Email de configuración reenviado exitosamente', [
+                'user_id' => $veterinarian->id,
+                'email' => $veterinarian->email
+            ]);
+
+            return redirect()->back()
+                            ->with('success', 'Email de restablecimiento de contraseña enviado exitosamente a ' . $veterinarian->email);
+        } catch (\Exception $e) {
+            Log::error('Error reenviando email de configuración de contraseña', [
+                'user_id' => $veterinarian->id,
+                'email' => $veterinarian->email,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            return redirect()->back()
+                            ->with('error', 'Hubo un error enviando el email. Por favor, intente nuevamente.');
+        }
     }
 
     // ========================================

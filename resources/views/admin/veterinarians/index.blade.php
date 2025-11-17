@@ -204,6 +204,18 @@
                                         </a>
 
                                         <form method="POST"
+                                              action="{{ route('admin.veterinarians.resend-email', $veterinarian->id) }}"
+                                              style="display: inline;"
+                                              onsubmit="return confirm('¿Enviar email de restablecimiento de contraseña a {{ $veterinarian->email }}?')">
+                                            @csrf
+                                            <button type="submit" class="btn btn-sm"
+                                                    style="background: #0066cc; color: white; border: none; border-radius: 6px; padding: 6px 12px;"
+                                                    title="Reenviar Email de Contraseña">
+                                                <i class="fas fa-envelope"></i>
+                                            </button>
+                                        </form>
+
+                                        <form method="POST"
                                               action="{{ route('admin.veterinarians.destroy', $veterinarian->id) }}"
                                               style="display: inline;"
                                               onsubmit="return confirm('¿Estás seguro de eliminar este veterinario?')">

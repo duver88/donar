@@ -146,6 +146,7 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/veterinarios/{id}', [SuperAdminController::class, 'destroyVeterinarian'])->name('veterinarians.destroy');
         Route::post('/veterinarios/{id}/aprobar', [SuperAdminController::class, 'approveVeterinarian'])->name('veterinarians.approve');
         Route::post('/veterinarios/{id}/rechazar', [SuperAdminController::class, 'rejectVeterinarian'])->name('veterinarians.reject');
+        Route::post('/veterinarios/{id}/reenviar-email', [SuperAdminController::class, 'resendPasswordSetupEmail'])->name('veterinarians.resend-email');
 
         // Gestión de Tutores
         Route::get('/tutores', [SuperAdminController::class, 'tutors'])->name('tutors');

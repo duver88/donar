@@ -9,9 +9,20 @@
 MAIL_ENCRYPTION=tls
 ```
 
-### 2. Verificar que el Queue Worker esté corriendo
+### 2. ⚠️ IMPORTANTE: Configuración Actual de Emails
 
-El sistema usa **colas (queues)** para enviar emails en segundo plano y no bloquear la creación de veterinarios.
+**CAMBIO RECIENTE (2025-11-17):**
+
+Los emails ahora se envían de forma **síncrona** (inmediata) en lugar de usar colas. Esto significa:
+
+- ✅ **Ventaja:** Los emails se envían inmediatamente sin necesidad de queue worker
+- ⚠️ **Desventaja:** La creación de veterinarios puede tardar 2-3 segundos más mientras se envía el email
+
+Si prefieres que los emails se envíen en segundo plano (más rápido pero requiere configuración), sigue la sección "Opcional: Configurar Queue Worker" más abajo.
+
+### 3. Opcional: Verificar que el Queue Worker esté corriendo
+
+Si quieres que los emails se envíen en segundo plano (recomendado para producción), necesitas configurar un queue worker:
 
 #### Opción A: Usar Supervisor (Recomendado para producción)
 
@@ -104,7 +115,7 @@ SELECT * FROM failed_jobs ORDER BY failed_at DESC LIMIT 10;
 
 ### Si la creación es lenta:
 
-✅ **YA SOLUCIONADO**: Ahora usa `Mail::queue()` en lugar de `Mail::send()`, lo que envía el email en segundo plano.
+⚠️ **NOTA (2025-11-17):** Actualmente usa `Mail::send()` síncrono. Si la creación tarda mucho (más de 5 segundos), considera configurar el queue worker (ver sección 3 arriba) y cambiar a `Mail::queue()`.
 
 ## 📊 Monitoreo
 
@@ -132,12 +143,12 @@ php artisan queue:monitor database
 
 Los logs ahora incluyen:
 - ✅ Generación de token de reset
-- ✅ Email enviado a cola
+- ✅ Email enviado exitosamente
 - ✅ Errores con stack trace completo
 - ✅ User ID y email para debugging
 
 Ejemplo de log exitoso:
 ```
 [2025-11-17 12:00:00] local.INFO: Generando token de reset para veterinario {"user_id":123,"email":"vet@example.com","token_generated":true}
-[2025-11-17 12:00:01] local.INFO: Email de configuración de contraseña enviado a cola {"user_id":123,"email":"vet@example.com"}
+[2025-11-17 12:00:01] local.INFO: Email de configuración de contraseña enviado exitosamente {"user_id":123,"email":"vet@example.com"}
 ```
