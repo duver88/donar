@@ -16,7 +16,12 @@
                         Administrar y revisar solicitudes de veterinarios
                     </p>
                 </div>
-                <div>
+                <div class="d-flex gap-2">
+                    <a href="{{ route('admin.dashboard') }}"
+                       class="btn"
+                       style="background: transparent; color: #43883D; border: 1px solid #43883D; border-radius: 8px; font-size: 0.9rem; padding: 12px 20px; font-weight: 500;">
+                        <i class="fas fa-arrow-left me-2"></i> Volver al Dashboard
+                    </a>
                     <a href="{{ route('admin.veterinarians.create') }}"
                        class="btn"
                        style="background: #43883D; color: white; border: none; border-radius: 8px; font-size: 0.9rem; padding: 12px 20px; font-weight: 500; transition: all 0.2s ease;"

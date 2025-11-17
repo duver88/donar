@@ -234,6 +234,25 @@
                 </a>
             </div>
 
+            {{-- Gestionar Tutores --}}
+            <div class="col-lg-3 col-md-6">
+                <a href="{{ route('admin.tutors') }}"
+                   class="card border-0 text-decoration-none h-100"
+                   style="background: white; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); transition: all 0.2s ease;"
+                   onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(40, 95, 25, 0.15)'"
+                   onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 1px 3px rgba(0,0,0,0.1)'">
+                    <div class="card-body text-center p-4">
+                        <div class="mb-3">
+                            <i class="fas fa-users" style="font-size: 2.5rem; color: #285F19;"></i>
+                        </div>
+                        <h6 class="fw-medium mb-2" style="color: #285F19; font-size: 1rem;">
+                            Gestionar Tutores
+                        </h6>
+                        <p class="text-muted small mb-0">Administrar dueños de mascotas</p>
+                    </div>
+                </a>
+            </div>
+
             {{-- Gestionar Mascotas --}}
             <div class="col-lg-3 col-md-6">
                 <a href="{{ route('admin.pets') }}"

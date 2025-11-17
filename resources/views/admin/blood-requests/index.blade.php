@@ -16,6 +16,13 @@
                         Administrar solicitudes de donación de sangre canina y felina
                     </p>
                 </div>
+                <div>
+                    <a href="{{ route('admin.dashboard') }}"
+                       class="btn"
+                       style="background: transparent; color: #43883D; border: 1px solid #43883D; border-radius: 8px; font-size: 0.9rem; padding: 12px 20px; font-weight: 500;">
+                        <i class="fas fa-arrow-left me-2"></i> Volver al Dashboard
+                    </a>
+                </div>
             </div>
         </div>
     </div>

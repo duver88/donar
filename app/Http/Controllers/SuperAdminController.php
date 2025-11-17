@@ -456,7 +456,15 @@ public function approveVeterinarian($id)
     {
         $tutor = User::where('role', 'tutor')->findOrFail($id);
 
-        // Verificar si tiene mascotas
+        // Verificar si tiene mascotas aprobadas
+        $approvedPetsCount = $tutor->pets()->where('donor_status', 'approved')->count();
+
+        if ($approvedPetsCount > 0) {
+            return redirect()->route('admin.tutors')
+                            ->with('error', 'No se puede eliminar un tutor que tiene mascotas aprobadas como donantes. Este tutor tiene ' . $approvedPetsCount . ' mascota(s) aprobada(s).');
+        }
+
+        // Verificar si tiene mascotas en general
         $petsCount = $tutor->pets()->count();
 
         if ($petsCount > 0) {
