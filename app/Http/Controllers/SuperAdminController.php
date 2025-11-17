@@ -348,6 +348,96 @@ public function approveVeterinarian($id)
     }
 
     // ========================================
+    // GESTIÓN DE TUTORES
+    // ========================================
+
+    public function tutors(Request $request)
+    {
+        $query = User::where('role', 'tutor')->with('pets');
+
+        // Filtros
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%")
+                  ->orWhere('phone', 'like', "%{$search}%")
+                  ->orWhere('document_id', 'like', "%{$search}%");
+            });
+        }
+
+        $tutors = $query->orderBy('created_at', 'desc')->paginate(15);
+
+        return view('admin.tutors.index', compact('tutors'));
+    }
+
+    public function showTutor($id)
+    {
+        $tutor = User::where('role', 'tutor')
+                    ->with(['pets.healthConditions', 'donationResponses.bloodRequest'])
+                    ->findOrFail($id);
+
+        return view('admin.tutors.show', compact('tutor'));
+    }
+
+    public function editTutor($id)
+    {
+        $tutor = User::where('role', 'tutor')->findOrFail($id);
+
+        return view('admin.tutors.edit', compact('tutor'));
+    }
+
+    public function updateTutor(Request $request, $id)
+    {
+        $tutor = User::where('role', 'tutor')->findOrFail($id);
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $id,
+            'phone' => 'required|string|max:20',
+            'document_id' => 'nullable|string|max:50'
+        ], [
+            'name.required' => 'El nombre completo es obligatorio.',
+            'email.required' => 'El email es obligatorio.',
+            'email.email' => 'El email debe ser una dirección válida.',
+            'email.unique' => 'Este email ya está registrado en el sistema.',
+            'phone.required' => 'El teléfono es obligatorio.',
+        ]);
+
+        $tutor->update([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'phone' => $validated['phone'],
+            'document_id' => $validated['document_id'],
+        ]);
+
+        return redirect()->route('admin.tutors')
+                        ->with('success', 'Tutor actualizado exitosamente');
+    }
+
+    public function destroyTutor($id)
+    {
+        $tutor = User::where('role', 'tutor')->findOrFail($id);
+
+        // Verificar si tiene mascotas
+        $petsCount = $tutor->pets()->count();
+
+        if ($petsCount > 0) {
+            return redirect()->route('admin.tutors')
+                            ->with('error', 'No se puede eliminar un tutor que tiene mascotas registradas. Primero elimine las mascotas asociadas.');
+        }
+
+        // Eliminar respuestas de donación
+        $tutor->donationResponses()->delete();
+
+        // Eliminar usuario
+        $tutor->delete();
+
+        return redirect()->route('admin.tutors')
+                        ->with('success', 'Tutor eliminado exitosamente');
+    }
+
+    // ========================================
     // GESTIÓN DE MASCOTAS
     // ========================================
 
@@ -399,6 +489,7 @@ public function approveVeterinarian($id)
         $pet = Pet::findOrFail($id);
 
         $validated = $request->validate([
+            // Datos de la mascota
             'name' => 'required|string|max:255',
             'breed' => 'required|string|max:255',
             'species' => 'required|in:perro,gato',
@@ -408,9 +499,30 @@ public function approveVeterinarian($id)
             'health_status' => 'required|in:excelente,bueno,regular,malo',
             'vaccines_up_to_date' => 'required|boolean',
             'has_donated_before' => 'required|boolean',
-            'donor_status' => 'required|in:pending,approved,rejected'
+            'donor_status' => 'required|in:pending,approved,rejected',
+
+            // Datos del tutor (opcionales, solo el admin puede editarlos)
+            'tutor_name' => 'nullable|string|max:255',
+            'tutor_email' => 'nullable|email|max:255',
+            'tutor_phone' => 'nullable|string|max:20',
+            'tutor_document_id' => 'nullable|string|max:50',
+        ], [
+            // Mensajes personalizados para la mascota
+            'name.required' => 'El nombre de la mascota es obligatorio.',
+            'breed.required' => 'La raza es obligatoria.',
+            'species.required' => 'La especie es obligatoria.',
+            'age_years.required' => 'La edad es obligatoria.',
+            'weight_kg.required' => 'El peso es obligatorio.',
+            'health_status.required' => 'El estado de salud es obligatorio.',
+            'vaccines_up_to_date.required' => 'Debe indicar el estado de vacunación.',
+            'has_donated_before.required' => 'Debe indicar si ha donado antes.',
+            'donor_status.required' => 'El estado de donante es obligatorio.',
+
+            // Mensajes personalizados para el tutor
+            'tutor_email.email' => 'El email del tutor debe ser una dirección válida.',
         ]);
 
+        // Actualizar información de la mascota
         $pet->update([
             'name' => $validated['name'],
             'breed' => $validated['breed'],
@@ -429,8 +541,60 @@ public function approveVeterinarian($id)
             'approved_at' => $validated['donor_status'] === 'approved' ? now() : null
         ]);
 
+        // Actualizar información del tutor si se proporcionó
+        if ($request->filled('tutor_name') || $request->filled('tutor_email') ||
+            $request->filled('tutor_phone') || $request->filled('tutor_document_id')) {
+
+            $tutor = $pet->user;
+
+            // Validar que el email sea único si se está cambiando
+            if ($request->filled('tutor_email') && $tutor->email !== $validated['tutor_email']) {
+                $emailExists = User::where('email', $validated['tutor_email'])
+                                  ->where('id', '!=', $tutor->id)
+                                  ->exists();
+
+                if ($emailExists) {
+                    return redirect()->back()
+                                    ->withInput()
+                                    ->with('error', 'El email del tutor ya está registrado en el sistema.');
+                }
+            }
+
+            // Validar que el documento sea único si se está cambiando
+            if ($request->filled('tutor_document_id') && $tutor->document_id !== $validated['tutor_document_id']) {
+                $documentExists = User::where('document_id', $validated['tutor_document_id'])
+                                     ->where('id', '!=', $tutor->id)
+                                     ->exists();
+
+                if ($documentExists) {
+                    return redirect()->back()
+                                    ->withInput()
+                                    ->with('error', 'El número de documento del tutor ya está registrado en el sistema.');
+                }
+            }
+
+            // Actualizar los datos del tutor
+            $tutorData = [];
+            if ($request->filled('tutor_name')) {
+                $tutorData['name'] = $validated['tutor_name'];
+            }
+            if ($request->filled('tutor_email')) {
+                $tutorData['email'] = $validated['tutor_email'];
+            }
+            if ($request->filled('tutor_phone')) {
+                $tutorData['phone'] = $validated['tutor_phone'];
+            }
+            if ($request->filled('tutor_document_id')) {
+                $tutorData['document_id'] = $validated['tutor_document_id'];
+            }
+
+            if (!empty($tutorData)) {
+                $tutor->update($tutorData);
+            }
+        }
+
         return redirect()->route('admin.pets')
-                        ->with('success', 'Mascota actualizada exitosamente');
+                        ->with('success', 'Mascota y tutor actualizados exitosamente');
     }
 
     public function destroyPet($id)

@@ -29,33 +29,36 @@
                         @csrf
                         @method('PUT')
 
-                        {{-- Información del Tutor (Solo lectura) --}}
+                        {{-- Información del Tutor (Editable por Admin) --}}
                         @if($pet->user)
                         <div class="mb-4">
-                            <h5 class="text-secondary border-bottom pb-2">
-                                <i class="fas fa-user"></i> Información del Tutor (Solo lectura)
+                            <h5 class="border-bottom pb-2" style="color: #43883D;">
+                                <i class="fas fa-user"></i> Información del Tutor
                             </h5>
+                            <div class="alert alert-info mt-2" style="font-size: 0.9rem;">
+                                <i class="fas fa-info-circle"></i> Como administrador, puedes editar la información del tutor desde aquí.
+                            </div>
                         </div>
 
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">Nombre del Tutor</label>
-                                <input type="text" class="form-control" value="{{ $pet->user->name }}" readonly>
+                                <label class="form-label">Nombre del Tutor *</label>
+                                <input type="text" class="form-control" name="tutor_name" value="{{ old('tutor_name', $pet->user->name) }}" required>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">Email del Tutor</label>
-                                <input type="email" class="form-control" value="{{ $pet->user->email }}" readonly>
+                                <label class="form-label">Email del Tutor *</label>
+                                <input type="email" class="form-control" name="tutor_email" value="{{ old('tutor_email', $pet->user->email) }}" required>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Documento del Tutor</label>
-                                <input type="text" class="form-control" value="{{ $pet->user->document_id ?? 'No registrado' }}" readonly>
+                                <input type="text" class="form-control" name="tutor_document_id" value="{{ old('tutor_document_id', $pet->user->document_id) }}" placeholder="Opcional">
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">Teléfono del Tutor</label>
-                                <input type="text" class="form-control" value="{{ $pet->user->phone ?? 'No registrado' }}" readonly>
+                                <label class="form-label">Teléfono del Tutor *</label>
+                                <input type="text" class="form-control" name="tutor_phone" value="{{ old('tutor_phone', $pet->user->phone) }}" required>
                             </div>
                         </div>
                         @endif

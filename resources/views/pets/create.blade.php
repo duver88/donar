@@ -103,7 +103,7 @@
                         <div class="row">
                             <div class="col-md-4 mb-3">
                                 <label for="pet_species" class="form-label">Especie *</label>
-                                <select class="form-select" name="pet_species" required>
+                                <select class="form-select" name="pet_species" id="pet_species" required>
                                     <option value="">-Seleccione-</option>
                                     <option value="perro" {{ old('pet_species') == 'perro' ? 'selected' : '' }}>Perro</option>
                                     <option value="gato" {{ old('pet_species') == 'gato' ? 'selected' : '' }}>Gato</option>
@@ -111,12 +111,12 @@
                             </div>
                             <div class="col-md-4 mb-3">
                                 <label for="pet_age" class="form-label">Edad de tu mascota (en años) *</label>
-                                <input type="number" class="form-control" name="pet_age" min="1" max="20" value="{{ old('pet_age') }}" required>
+                                <input type="number" class="form-control" name="pet_age" id="pet_age" min="1" max="20" value="{{ old('pet_age') }}" required>
                             </div>
                             <div class="col-md-4 mb-3">
                                 <label for="pet_weight" class="form-label">Peso de tu mascota (kg) *</label>
-                                <input type="number" class="form-control" name="pet_weight" step="0.1" min="1" value="{{ old('pet_weight') }}" required>
-                                <div class="form-text">Mínimo 25kg para donación</div>
+                                <input type="number" class="form-control" name="pet_weight" id="pet_weight" step="0.1" min="1" value="{{ old('pet_weight') }}" required>
+                                <div class="form-text" id="weight_help_text">Seleccione una especie primero</div>
                             </div>
                         </div>
 
@@ -328,7 +328,66 @@ document.addEventListener('DOMContentLoaded', function() {
     const phoneInput = document.getElementById('tutor_phone');
     const existingUserAlert = document.getElementById('existing_user_alert');
 
+    // Elementos para manejo de peso según especie
+    const speciesSelect = document.getElementById('pet_species');
+    const weightInput = document.getElementById('pet_weight');
+    const weightHelpText = document.getElementById('weight_help_text');
+
     let emailCheckTimeout;
+
+    // Función para actualizar peso mínimo según especie
+    function updateMinWeight() {
+        const species = speciesSelect.value;
+
+        if (species === 'perro') {
+            weightInput.setAttribute('min', '25');
+            weightHelpText.textContent = 'Mínimo 25kg para donación de perros';
+            weightHelpText.style.color = '#6c757d';
+        } else if (species === 'gato') {
+            weightInput.setAttribute('min', '7');
+            weightHelpText.textContent = 'Mínimo 7kg para donación de gatos';
+            weightHelpText.style.color = '#6c757d';
+        } else {
+            weightInput.setAttribute('min', '1');
+            weightHelpText.textContent = 'Seleccione una especie primero';
+            weightHelpText.style.color = '#6c757d';
+        }
+
+        // Validar peso actual si ya hay un valor
+        if (weightInput.value) {
+            validateWeight();
+        }
+    }
+
+    // Función para validar el peso
+    function validateWeight() {
+        const species = speciesSelect.value;
+        const weight = parseFloat(weightInput.value);
+
+        if (!species || !weight) return;
+
+        let minWeight = species === 'perro' ? 25 : 7;
+
+        if (weight < minWeight) {
+            weightInput.setCustomValidity(`El peso mínimo para ${species}s donantes es ${minWeight}kg`);
+            weightHelpText.textContent = `⚠️ El peso mínimo para ${species}s donantes es ${minWeight}kg`;
+            weightHelpText.style.color = '#dc3545';
+        } else {
+            weightInput.setCustomValidity('');
+            weightHelpText.textContent = `✓ Peso válido para donación de ${species}s`;
+            weightHelpText.style.color = '#28a745';
+        }
+    }
+
+    // Event listeners para especie y peso
+    speciesSelect.addEventListener('change', updateMinWeight);
+    weightInput.addEventListener('input', validateWeight);
+    weightInput.addEventListener('blur', validateWeight);
+
+    // Inicializar en caso de que haya un valor old()
+    if (speciesSelect.value) {
+        updateMinWeight();
+    }
 
     // Función para verificar si el email existe
     function checkEmailExists(email) {

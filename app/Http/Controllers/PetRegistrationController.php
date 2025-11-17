@@ -408,35 +408,38 @@ class PetRegistrationController extends Controller
     private function validatePetEligibility($data)
     {
         $rejectionReasons = [];
-        
+
         if ($data['has_diagnosed_disease']) {
             $rejectionReasons[] = "tiene enfermedad diagnosticada";
         }
-        
+
         if ($data['under_medical_treatment']) {
             $rejectionReasons[] = "está bajo tratamiento médico";
         }
-        
+
         if ($data['recent_surgery']) {
             $rejectionReasons[] = "tuvo cirugía reciente";
         }
-        
+
         if (!empty($data['diseases'])) {
             $rejectionReasons[] = "tiene enfermedades: " . implode(', ', $data['diseases']);
         }
-        
+
         if (!$data['vaccines_up_to_date']) {
             $rejectionReasons[] = "no tiene vacunas al día";
         }
-        
-        if ($data['pet_weight'] < 25) {
-            $rejectionReasons[] = "peso insuficiente (mínimo 25kg)";
+
+        // Validar peso según especie
+        $minWeight = $data['pet_species'] === 'perro' ? 25 : 7;
+        if ($data['pet_weight'] < $minWeight) {
+            $speciesName = $data['pet_species'] === 'perro' ? 'perros' : 'gatos';
+            $rejectionReasons[] = "peso insuficiente (mínimo {$minWeight}kg para {$speciesName})";
         }
 
         if ($data['pet_health_status'] === 'malo') {
             $rejectionReasons[] = "estado de salud malo";
         }
-        
+
         return $rejectionReasons;
     }
 

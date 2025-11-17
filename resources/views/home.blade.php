@@ -13,6 +13,7 @@
                  alt="Dognar Logo"
                  style="height: 150px; background: white; border-radius: 15px; padding: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
         </div>
+
         <p class="lead mb-5">Conectamos mascotas sanas con aquellas que necesitan una segunda oportunidad de vida</p>
         
         <div class="row justify-content-center">
@@ -120,6 +121,67 @@
 </section>
 @endif
 
+{{-- Sección de Bienvenida a Bienestar Animal --}}
+<section class="py-5" style="background: linear-gradient(135deg, rgba(67, 136, 61, 0.05) 0%, rgba(81, 173, 50, 0.05) 100%);">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="mb-3" style="color: #43883D; font-weight: 700; font-size: 2.5rem;">
+                🐾 Bienvenidos a la Unidad de Bienestar Animal de Bucaramanga
+            </h2>
+        </div>
+
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-10">
+                <div class="card border-0 shadow-lg" style="border-radius: 20px; overflow: hidden;">
+                    <div class="card-body p-5">
+                        <p class="lead text-center mb-4" style="font-size: 1.2rem; color: #2c3e50; line-height: 1.8;">
+                            Este es el espacio oficial de la <strong style="color: #43883D;">Alcaldía de Bucaramanga</strong> dedicado a la protección,
+                            el cuidado y el bienestar de los animales de nuestra ciudad. Aquí podrás encontrar
+                            toda la información sobre nuestras acciones, programas y servicios en favor de la vida animal.
+                        </p>
+
+                        <div class="row g-4 mt-4">
+                            <div class="col-md-4">
+                                <div class="text-center p-4 h-100" style="background: linear-gradient(135deg, #F8DC0B 0%, #FCF2B1 100%); border-radius: 15px;">
+                                    <i class="fas fa-home fa-3x mb-3" style="color: #285F19;"></i>
+                                    <h5 style="color: #285F19; font-weight: 600;">Peluditos en Adopción</h5>
+                                    <p style="color: #2c3e50; margin: 0;">Perros y gatos rescatados que esperan un hogar responsable y lleno de amor</p>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="text-center p-4 h-100" style="background: linear-gradient(135deg, #93C01F 0%, #C7D300 100%); border-radius: 15px;">
+                                    <i class="fas fa-search-location fa-3x mb-3" style="color: #285F19;"></i>
+                                    <h5 style="color: #285F19; font-weight: 600;">Animales Encontrados</h5>
+                                    <p style="color: #2c3e50; margin: 0;">Si reconoces a alguno, ayúdanos a reunirlos con sus familias</p>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="text-center p-4 h-100" style="background: linear-gradient(135deg, #C20E1A 0%, #E53E3E 100%); border-radius: 15px;">
+                                    <i class="fas fa-heartbeat fa-3x mb-3" style="color: white;"></i>
+                                    <h5 style="color: white; font-weight: 600;">Dognar Salva</h5>
+                                    <p style="color: white; margin: 0;">Conecta animales que necesitan donación de sangre con donantes</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-5 p-4 text-center" style="background: linear-gradient(135deg, #43883D 0%, #51AD32 100%); border-radius: 15px;">
+                            <h4 class="text-white mb-2" style="font-weight: 700;">
+                                <i class="fas fa-heart me-2"></i>
+                                Bucaramanga: Ciudad 100% Animalista
+                            </h4>
+                            <p class="text-white mb-0" style="font-size: 1.1rem;">
+                                Donde cada vida importa y la protección animal es una prioridad
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 {{-- Información sobre donación --}}
 <section class="py-5">
     <div class="container">
@@ -138,7 +200,7 @@
                     </div>
                     <div class="col-12 mb-3">
                         <div class="d-flex">
-                            <i class="fas fa-shield-alt fa-2x me-3 mt-1" style="color: #43883D;"></i>
+                            <i class="fas fa-user-shield fa-2x me-3 mt-1" style="color: #43883D;"></i>
                             <div>
                                 <h5>Proceso seguro</h5>
                                 <p class="text-muted">Todos los donantes pasan por evaluación médica completa.</p>

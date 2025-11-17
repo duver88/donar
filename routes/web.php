@@ -147,6 +147,13 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/veterinarios/{id}/aprobar', [SuperAdminController::class, 'approveVeterinarian'])->name('veterinarians.approve');
         Route::post('/veterinarios/{id}/rechazar', [SuperAdminController::class, 'rejectVeterinarian'])->name('veterinarians.reject');
 
+        // Gestión de Tutores
+        Route::get('/tutores', [SuperAdminController::class, 'tutors'])->name('tutors');
+        Route::get('/tutores/{id}', [SuperAdminController::class, 'showTutor'])->name('tutors.show');
+        Route::get('/tutores/{id}/editar', [SuperAdminController::class, 'editTutor'])->name('tutors.edit');
+        Route::put('/tutores/{id}', [SuperAdminController::class, 'updateTutor'])->name('tutors.update');
+        Route::delete('/tutores/{id}', [SuperAdminController::class, 'destroyTutor'])->name('tutors.destroy');
+
         // Gestión de Mascotas
         Route::get('/mascotas', [SuperAdminController::class, 'pets'])->name('pets');
         Route::get('/mascotas/{id}', [SuperAdminController::class, 'showPet'])->name('pets.show');
